@@ -89,8 +89,9 @@ export default function HospitalSettings() {
                 .eq('id', userId);
 
             alert('設定を保存しました。');
-        } catch (err: any) {
-            alert('保存に失敗しました: ' + err.message);
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : '不明なエラー';
+            alert('保存に失敗しました: ' + message);
         } finally {
             setSaving(false);
         }

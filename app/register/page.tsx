@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import Image from 'next/image';
 
 export default function Register() {
     const router = useRouter();
@@ -107,7 +108,7 @@ export default function Register() {
             <header className="bg-white shadow-sm py-4">
                 <div className="max-w-3xl mx-auto px-4 flex justify-between items-center">
                     <Link href="/" className="flex items-center text-life-red font-bold text-xl">
-                        <img src="/assets/logo.png" alt="AnimalBloodConnect" className="h-10 w-auto mr-2" />
+                        <Image src="/assets/logo.png" alt="AnimalBloodConnect" width={40} height={40} className="h-10 w-auto mr-2" />
                         <span className="text-life-green">Animal</span>
                         <span className="text-life-red">Blood</span>
                         <span className="text-trust-blue">Connect</span>

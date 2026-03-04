@@ -252,7 +252,7 @@ export default function HospitalDashboard() {
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
-                            {(donors as (Donor & { match_id: string, match_status: string })[]).map((donor) => (
+                            {(donors as (Donor & { match_id: string, match_status: string, hasUnread: boolean })[]).map((donor) => (
                                 <div key={donor.match_id} className={`bg-white rounded-3xl shadow-sm border ${donor.match_status === 'cancelled' || donor.match_status === 'hospital_cancelled' ? 'border-red-200 bg-red-50/20 opacity-70' : 'border-gray-100'} p-8 hover:shadow-xl transition duration-500 overflow-hidden relative group`}>
                                     {/* Status Badge */}
                                     <div className="absolute top-4 right-4">
@@ -298,7 +298,7 @@ export default function HospitalDashboard() {
                                     ) : (
                                         <Link href={`/chat/${donor.id}?matchId=${donor.match_id}&view=hospital`} className="relative block">
                                             <span className={`block w-full py-4 ${donor.match_status === 'accepted' ? 'bg-life-green shadow-green-100 hover:bg-green-600' : 'bg-[#0F172A] hover:bg-trust-blue shadow-blue-50'} text-white text-center rounded-2xl font-black text-xs transition shadow-lg tracking-widest uppercase relative`}>
-                                                {(donor as any).hasUnread && (
+                                                {donor.hasUnread && (
                                                     <span className="absolute -top-1 -right-1 flex h-4 w-4">
                                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                                                         <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 border-2 border-white"></span>
