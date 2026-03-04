@@ -38,9 +38,14 @@ export default function HospitalLandingPage() {
                             承認済みドナーのみを表示。<br />
                             貴院が最終判断を行います。
                         </p>
-                        <Link href="/hospital/login" className="bg-life-red text-white text-lg font-black px-12 py-5 rounded-full shadow-2xl shadow-red-200 hover:bg-red-600 transition inline-block">
-                            提携病院として利用を開始する
-                        </Link>
+                        <div className="flex flex-col sm:flex-row justify-center gap-4">
+                            <Link href="/hospital/login" className="bg-life-red text-white text-lg font-black px-12 py-5 rounded-full shadow-2xl shadow-red-200 hover:bg-red-600 transition inline-block">
+                                管理画面へログイン
+                            </Link>
+                            <Link href="/hospital/inquiry" className="bg-white text-trust-blue border-2 border-trust-blue text-lg font-black px-12 py-5 rounded-full hover:bg-blue-50 transition inline-block">
+                                新規提携のお問い合わせ
+                            </Link>
+                        </div>
                     </div>
                 </section>
 

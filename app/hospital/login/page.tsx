@@ -114,7 +114,7 @@ export default function HospitalLogin() {
                     <div className="mt-8 pt-8 border-t border-gray-50 text-center">
                         <p className="text-gray-400 text-xs font-medium leading-relaxed">
                             Japan Animal Rescue Agency (JARA)<br />
-                            新規提携をご希望の病院様は <a href="#" className="text-trust-blue font-black hover:underline">お問合せフォーム</a> へ
+                            新規提携をご希望の病院様は <Link href="/hospital/inquiry" className="text-trust-blue font-black hover:underline">お問合せフォーム</Link> へ
                         </p>
                     </div>
                 </div>
