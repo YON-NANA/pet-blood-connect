@@ -66,6 +66,7 @@ export default function MyPage() {
         rest_period: false,
         privacy_agree: false
     });
+    const [selectedPetId, setSelectedPetId] = useState<string>('');
 
     // ペット登録フォーム用ステータス
     const [isRegistering, setIsRegistering] = useState(false);
@@ -103,7 +104,12 @@ export default function MyPage() {
                     .select('*')
                     .eq('owner_id', user.id)
                     .order('created_at', { ascending: false });
-                if (petsData) setPets(petsData as Pet[]);
+                if (petsData) {
+                    setPets(petsData as Pet[]);
+                    if (petsData.length > 0) {
+                        setSelectedPetId(petsData[0].id);
+                    }
+                }
 
                 // Active Blood Requests
                 const { data: requestsData } = await supabase
@@ -176,11 +182,9 @@ export default function MyPage() {
 
         if (!selectedRequest) return;
 
-        // 仮: 現在のユーザーが登録している最初のペットを対象ドナーとする
-        // ※ 本来はどのペットで応募するか選ばせるUIが必要ですが、今回は1番目のペットを自動選択
-        const targetPet = pets[0];
+        const targetPet = pets.find(p => p.id === selectedPetId);
         if (!targetPet) {
-            alert("ドナーが登録されていません。先に「登録中のドナー」から追加してください。");
+            alert("ドナーが選択されていません。");
             return;
         }
 
@@ -517,9 +521,24 @@ export default function MyPage() {
                     <div className="bg-white w-full max-w-lg rounded-[48px] shadow-2xl relative z-10 overflow-hidden animate-in zoom-in duration-300">
                         <div className="p-10 md:p-14 text-left">
                             <h3 className="text-2xl font-black text-deep-blue tracking-tighter leading-tight mb-4">要請への応答（二段階承認）</h3>
-                            <p className="text-xs text-gray-400 font-bold leading-relaxed mb-10">
+                            <p className="text-xs text-gray-400 font-bold leading-relaxed mb-6">
                                 この要請に応答すると、あなたの情報が{selectedRequest.hospitals?.hospital_name}へ「承認済み候補」として開示されます。
                             </p>
+
+                            <div className="mb-6">
+                                <label className="block text-[10px] font-black text-gray-400 mb-2 uppercase tracking-widest leading-none">対象ドナー（ペット）を選択</label>
+                                <select
+                                    value={selectedPetId}
+                                    onChange={(e) => setSelectedPetId(e.target.value)}
+                                    className="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-4 text-sm font-bold focus:border-life-red outline-none transition appearance-none"
+                                >
+                                    {pets.map(pet => (
+                                        <option key={pet.id} value={pet.id}>
+                                            {pet.pet_name} ({pet.species === 'dog' ? '犬' : '猫'} / {pet.blood_type || '血液型不明'})
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
                             <div className="space-y-6">
                                 <label className="flex items-start space-x-4 cursor-pointer group">

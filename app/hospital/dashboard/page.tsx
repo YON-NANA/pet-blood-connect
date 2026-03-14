@@ -25,6 +25,7 @@ export default function HospitalDashboard() {
     const [donors, setDonors] = useState<Donor[]>([]);
     const [loading, setLoading] = useState(true);
     const [hospitalName, setHospitalName] = useState('読み込み中...');
+    const [isProfileIncomplete, setIsProfileIncomplete] = useState(false);
     const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
 
     // 要請フォームのステート
@@ -44,14 +45,19 @@ export default function HospitalDashboard() {
 
         const { data, error } = await supabase
             .from('hospitals')
-            .select('hospital_name')
+            .select('hospital_name, phone_number, address_city')
             .eq('id', user.id)
             .single();
 
         if (error || !data) {
             setHospitalName('（病院未登録）');
+            setIsProfileIncomplete(true);
         } else {
             setHospitalName(data.hospital_name);
+            // 電話番号または市区町村が未入力なら未完成と判定
+            if (!data.phone_number || !data.address_city) {
+                setIsProfileIncomplete(true);
+            }
         }
     }, [router]);
 
@@ -217,6 +223,27 @@ export default function HospitalDashboard() {
                             新しい要請を発令
                         </button>
                     </div>
+
+                    {/* 🟡 オンボーディングバナー（プロフィール未完成時） */}
+                    {isProfileIncomplete && (
+                        <div className="bg-amber-50 border border-amber-200 rounded-3xl p-6 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 animate-in slide-in-from-top duration-500">
+                            <div className="flex items-start space-x-4">
+                                <span className="text-2xl flex-shrink-0">📝</span>
+                                <div>
+                                    <p className="font-black text-amber-800 text-sm mb-1">病院情報が未入力です</p>
+                                    <p className="text-xs text-amber-600 font-bold leading-relaxed">
+                                        電話番号・住所・病院案内文を登録すると、ドナーからの信頼度が向上します。後からでも登録できます。
+                                    </p>
+                                </div>
+                            </div>
+                            <a
+                                href="/hospital/settings"
+                                className="flex-shrink-0 bg-amber-500 text-white font-black px-6 py-3 rounded-2xl text-sm hover:bg-amber-600 transition shadow-lg shadow-amber-100 whitespace-nowrap"
+                            >
+                                病院情報を入力する →
+                            </a>
+                        </div>
+                    )}
 
                     <div className="bg-blue-50/50 p-6 rounded-3xl border border-blue-50 flex items-center text-blue-900/60 font-medium text-sm shadow-sm">
                         <span className="mr-4 text-xl">ℹ️</span>

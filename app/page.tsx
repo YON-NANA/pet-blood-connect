@@ -6,9 +6,18 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
 
+interface ActiveRequest {
+  id: string;
+  species: string;
+  urgency: string;
+  hospitals: { hospital_name: string; address_city?: string };
+}
+
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeRequests, setActiveRequests] = useState<ActiveRequest[]>([]);
+
   useEffect(() => {
     // 認証状態の監視
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -18,6 +27,18 @@ export default function Home() {
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user);
     });
+
+    // アクティブな緊急要請を取得
+    supabase
+      .from('blood_requests')
+      .select('id, species, urgency, hospitals(hospital_name, address_city)')
+      .eq('status', 'active')
+      .in('urgency', ['urgent', 'emergency'])
+      .order('created_at', { ascending: false })
+      .limit(3)
+      .then(({ data }) => {
+        if (data) setActiveRequests(data as unknown as ActiveRequest[]);
+      });
 
     return () => subscription.unsubscribe();
   }, []);
@@ -29,6 +50,40 @@ export default function Home() {
 
   return (
     <div className="bg-[#FAFAFA] min-h-screen font-sans text-gray-800 antialiased overflow-x-hidden">
+
+      {/* 🚨 緊急要請バナー（アクティブな要請がある場合のみ表示） */}
+      {activeRequests.length > 0 && (
+        <div className="bg-life-red text-white py-2 px-4 z-[60] relative">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center space-x-3 overflow-hidden">
+              <span className="flex h-2.5 w-2.5 relative flex-shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+              </span>
+              <p className="text-xs font-black tracking-widest uppercase whitespace-nowrap">
+                🩸 緊急供血要請 {activeRequests.length}件 発令中
+              </p>
+              <div className="hidden sm:flex items-center space-x-3 overflow-hidden">
+                {activeRequests.slice(0, 2).map(req => (
+                  <span key={req.id} className="bg-white/20 rounded-full px-3 py-0.5 text-[10px] font-black whitespace-nowrap">
+                    {req.species === 'dog' ? '🐶' : '🐱'} {req.hospitals?.hospital_name}
+                  </span>
+                ))}
+              </div>
+            </div>
+            {user ? (
+              <Link href="/mypage" className="text-white text-[10px] font-black border border-white/40 rounded-full px-3 py-1 hover:bg-white/20 transition whitespace-nowrap flex-shrink-0">
+                要請を確認 →
+              </Link>
+            ) : (
+              <Link href="/login?redirect=/mypage" className="text-white text-[10px] font-black border border-white/40 rounded-full px-3 py-1 hover:bg-white/20 transition whitespace-nowrap flex-shrink-0">
+                ログインして確認 →
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-md shadow-sm fixed w-full z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -144,6 +199,22 @@ export default function Home() {
               ドナー登録して備える
             </Link>
           </div>
+
+          {/* Stats */}
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-8 text-center bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+            <div>
+              <div className="text-3xl font-bold text-white">128</div>
+              <div className="text-sm text-gray-300">現在の登録ドナー数</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-white">15</div>
+              <div className="text-sm text-gray-300">今月救われた命</div>
+            </div>
+            <div className="col-span-2 md:col-span-1">
+              <div className="text-3xl font-bold text-white">42</div>
+              <div className="text-sm text-gray-300">提携動物病院</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -201,6 +272,107 @@ export default function Home() {
           <p className="mt-8 text-center text-xs text-gray-400 font-bold">
             ※本システム上でのマッチングは必ず医療機関（病院）の介入と判断を経て行われます。
           </p>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-24 bg-white px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-black text-deep-blue mb-4">選ばれる3つの理由</h2>
+            <div className="w-20 h-1 bg-life-red mx-auto rounded-full"></div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {/* Feature 1 */}
+            <div className="bg-white p-8 rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 hover:shadow-2xl transition duration-300">
+              <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6 text-trust-blue">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-black mb-3 text-deep-blue">完全匿名で安心</h3>
+              <p className="text-gray-500 leading-relaxed font-bold text-sm">
+                チャット機能でやり取りするため、病院に行くまで個人の連絡先を交換する必要はありません。
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="bg-white p-8 rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 hover:shadow-2xl transition duration-300">
+              <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-6 text-life-red">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-black mb-3 text-deep-blue">金銭授受なし</h3>
+              <p className="text-gray-500 leading-relaxed font-bold text-sm">
+                善意のボランティアベースです。謝礼などの金銭トラブルを未然に防ぐルールを徹底しています。
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="bg-white p-8 rounded-2xl shadow-xl shadow-gray-200/50 border border-gray-100 hover:shadow-2xl transition duration-300">
+              <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mb-6 text-life-green">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-black mb-3 text-deep-blue">病院認証制</h3>
+              <p className="text-gray-500 leading-relaxed font-bold text-sm">
+                登録・検索できるのは、事前に審査・承認された動物病院のみ。安心してご参加いただけます。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-black text-deep-blue mb-8">
+            あなたの協力が必要です
+          </h2>
+          <p className="text-lg text-gray-500 font-bold mb-10 max-w-2xl mx-auto leading-relaxed">
+            輸血さえあれば助かる命があります。<br />
+            しかし、血液は長期保存ができず、常に不足しています。<br />
+            あなたの愛犬・愛猫が、明日誰かのヒーローになるかもしれません。
+          </p>
+          <Link
+            href="/register"
+            className="inline-block bg-trust-blue text-white text-lg font-black px-12 py-5 rounded-full shadow-xl shadow-blue-200 hover:bg-blue-600 transition transform hover:scale-105"
+          >
+            ドナー登録を始める（無料）
+          </Link>
+          <p className="mt-4 text-sm text-gray-400 font-bold">所要時間：約3分</p>
+        </div>
+      </section>
+
+      {/* Partner Shelters Section */}
+      <section className="py-20 bg-white border-y border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h2 className="text-2xl font-black text-deep-blue mb-2">協力パートナー（動物保護団体）</h2>
+          <p className="text-gray-400 font-bold mb-12 text-sm">全国の保護団体と連携し、支援の輪を広げています。</p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-70 grayscale hover:grayscale-0 transition duration-500">
+            <div className="flex items-center justify-center p-6 border-2 border-gray-100 rounded-[24px] shadow-sm">
+              <span className="font-black text-gray-400">Yonnana Rescue</span>
+            </div>
+            <div className="flex items-center justify-center p-6 border-2 border-gray-100 rounded-[24px] shadow-sm">
+              <span className="font-black text-gray-400">Partner A</span>
+            </div>
+            <div className="flex items-center justify-center p-6 border-2 border-gray-100 rounded-[24px] shadow-sm">
+              <span className="font-black text-gray-400">Partner B</span>
+            </div>
+            <div className="flex items-center justify-center p-6 border-2 border-gray-100 rounded-[24px] shadow-sm">
+              <span className="font-black text-gray-400">Partner C</span>
+            </div>
+          </div>
+
+          <div className="mt-10">
+            <Link href="/hospital/inquiry" className="text-life-red font-black hover:underline text-sm flex items-center justify-center">
+              保護団体の皆様へ：パートナー登録について <span className="ml-1">→</span>
+            </Link>
+          </div>
         </div>
       </section>
 

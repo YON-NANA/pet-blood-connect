@@ -30,27 +30,30 @@ export default function HospitalLandingPage() {
                 {/* ① ファーストビュー */}
                 <section className="pt-40 pb-24 bg-gradient-to-b from-blue-50 to-white px-6">
                     <div className="max-w-4xl mx-auto text-center">
+                        <div className="inline-block bg-green-100 text-life-green text-xs font-black px-4 py-2 rounded-full uppercase tracking-widest mb-6">
+                            ✅ 審査不要・今すぐ利用可能
+                        </div>
                         <h1 className="text-4xl md:text-5xl font-black text-deep-blue mb-6 leading-tight">
                             医療判断に集中できる<br />
                             供血マッチング
                         </h1>
                         <p className="text-xl md:text-2xl text-trust-blue font-black mb-12">
-                            承認済みドナーのみを表示。<br />
-                            貴院が最終判断を行います。
+                            登録3分、審査なし。<br />
+                            すぐにドナー検索を始められます。
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
                             <Link href="/hospital/login" className="bg-life-red text-white text-lg font-black px-12 py-5 rounded-full shadow-2xl shadow-red-200 hover:bg-red-600 transition inline-block">
-                                管理画面へログイン
+                                🏥 無料で登録して始める
                             </Link>
-                            <Link href="/hospital/inquiry" className="bg-white text-trust-blue border-2 border-trust-blue text-lg font-black px-12 py-5 rounded-full hover:bg-blue-50 transition inline-block">
-                                新規提携のお問い合わせ
-                            </Link>
+                            <a href="#how-it-works" className="bg-white text-trust-blue border-2 border-trust-blue text-lg font-black px-12 py-5 rounded-full hover:bg-blue-50 transition inline-block">
+                                仕組みを見る
+                            </a>
                         </div>
                     </div>
                 </section>
 
                 {/* ② 仕組み（簡潔図解） */}
-                <section className="py-24 px-6 border-y border-gray-50">
+                <section id="how-it-works" className="py-24 px-6 border-y border-gray-50">
                     <div className="max-w-6xl mx-auto">
                         <h2 className="text-3xl font-black text-deep-blue text-center mb-16">当院主導の要請フロー</h2>
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -99,13 +102,13 @@ export default function HospitalLandingPage() {
                 {/* ④ 実際の操作フロー */}
                 <section className="py-24 px-6">
                     <div className="max-w-4xl mx-auto">
-                        <h2 className="text-3xl font-black text-deep-blue text-center mb-16">導入から運用まで</h2>
+                        <h2 className="text-3xl font-black text-deep-blue text-center mb-16">登録から運用まで</h2>
                         <div className="space-y-4">
                             {[
-                                { step: "登録", desc: "専用フォームから病院情報を送信" },
-                                { step: "承認", desc: "JARA事務局による管理承認" },
-                                { step: "発令", desc: "管理画面の要請ボタンで全体へ通知" },
-                                { step: "選択", desc: "候補者から1名を選択しチャット開始" }
+                                { step: '1分', label: '登録', desc: '病院名・メール・パスワードだけで即座に登録完了' },
+                                { step: '即時', label: '利用開始', desc: '審査なし。ダッシュボードからすぐに要請を発令できます' },
+                                { step: '3分', desc: `あとから電話番号・住所・病院紹介を入力してプロフィール完成`, label: '情報補完' },
+                                { step: '随時', label: '選択', desc: '候補者から1名を選択しチャット開始。完全無料' }
                             ].map((item, idx) => (
                                 <div key={idx} className="flex items-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
                                     <div className="bg-trust-blue text-white font-black px-4 py-1 rounded-lg text-xs mr-6">
