@@ -97,6 +97,30 @@ export default function HospitalSettings() {
         }
     };
 
+    const handleDeleteAccount = async () => {
+        if (!window.confirm("退会してアカウントに関連する情報を削除してもよろしいですか？\n※この操作は取り消せません。")) {
+            return;
+        }
+
+        try {
+            if (!userId) return;
+
+            const { error: deleteError } = await supabase
+                .from('hospitals')
+                .delete()
+                .eq('id', userId);
+            
+            if (deleteError) throw deleteError;
+
+            alert('退会処理が完了しました。ご利用ありがとうございました。');
+            await supabase.auth.signOut();
+            router.push('/');
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : '不明なエラー';
+            alert('退会処理に失敗しました: ' + message);
+        }
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -235,11 +259,18 @@ export default function HospitalSettings() {
                             </div>
                         </section>
 
-                        <div className="pt-6 border-t border-gray-100 flex justify-end">
+                        <div className="pt-6 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+                            <button
+                                type="button"
+                                onClick={handleDeleteAccount}
+                                className="text-xs md:text-sm font-bold text-red-400 hover:text-red-600 underline transition"
+                            >
+                                病院アカウントを削除して退会する
+                            </button>
                             <button
                                 type="submit"
                                 disabled={saving}
-                                className="bg-trust-blue text-white font-black px-12 py-5 rounded-[24px] shadow-xl shadow-blue-500/20 hover:scale-105 active:scale-95 transition disabled:opacity-50"
+                                className="w-full md:w-auto bg-trust-blue text-white font-black px-12 py-5 rounded-[24px] shadow-xl shadow-blue-500/20 hover:scale-105 active:scale-95 transition disabled:opacity-50"
                             >
                                 {saving ? '保存中...' : '設定を保存する'}
                             </button>
