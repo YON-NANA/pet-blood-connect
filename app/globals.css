@@ -69,7 +69,14 @@ body {
 /* スマホ: 背景の犬猫が両方見えるように調整 */
 @media (max-width: 767px) {
   .hero-bg {
-    background-position: 10% center !important; /* 強制的にさらに左へ（鼻がしっかり見える位置） */
+    background-position: 5% center !important; /* 強制的に左へ */
+  }
+}
+
+/* Pixel 8 等の標準的な Android 縦画面サイズ (412px前後) への最適化 */
+@media (max-width: 420px) {
+  .hero-bg {
+    background-position: 8% center !important; 
   }
 }
 
