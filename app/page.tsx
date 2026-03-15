@@ -264,9 +264,19 @@ export default function Home() {
             <p className="text-life-green font-black tracking-[0.3em] uppercase text-xs">太陽がくれた、命のバトン</p>
           </div>
           
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div className="space-y-6 text-base md:text-lg font-medium leading-relaxed text-blue-50/90">
-              <p>2年前の夜、一本の電話が鳴りました。<br />「近くの駐車場で、犬が血まみれで倒れている」</p>
+              <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="flex-grow">
+                  <p>2年前の夜、一本の電話が鳴りました。<br />「近くの駐車場で、犬が血まみれで倒れている」</p>
+                </div>
+                {/* ☀️ Taiyou Top Image - Fixed position */}
+                <div className="w-full md:w-48 flex-shrink-0">
+                  <div className="rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl transform md:-rotate-2">
+                    <Image src="/assets/taiyou_top.jpg" alt="Taiyou Top" width={300} height={300} className="object-cover w-full h-40 md:h-48" />
+                  </div>
+                </div>
+              </div>
               <p>すぐに向かうと、ライトに照らされた地面は真っ赤でした。国道で車に巻き込まれた野犬。包帯を巻く間も、命がこぼれていくような絶望的な状況でした。</p>
               <p>緊急手術で左前脚を断脚し、なんとか一命を取り留めたその子に、私たちは<span className="text-white font-black border-b-2 border-life-green">「太陽」</span>と名付けました。</p>
               
@@ -294,12 +304,11 @@ export default function Home() {
             <div className="relative">
               <div className="flex flex-wrap gap-4 justify-center lg:justify-end">
                 {[
-                  { src: "/assets/taiyou_1.jpg", alt: "Taiyou rescued", rotate: "-rotate-3" },
-                  { src: "/assets/taiyou_5.jpg", alt: "Taiyou post surgery", rotate: "rotate-2" },
-                  { src: "/assets/taiyou_2.jpg", alt: "Taiyou with friends", rotate: "-rotate-2" },
-                  { src: "/assets/taiyou_3.jpg", alt: "Taiyou smile", rotate: "rotate-3" },
-                  { src: "/assets/taiyou_6.jpg", alt: "Taiyou daily life", rotate: "rotate-1" },
-                  { src: "/assets/taiyou_4.jpg", alt: "Taiyou walking", rotate: "-rotate-2" },
+                  { src: "/assets/taiyou_1.jpg", alt: "Taiyou 1", rotate: "-rotate-3" },
+                  { src: "/assets/taiyou_2.jpg", alt: "Taiyou 2", rotate: "rotate-2" },
+                  { src: "/assets/taiyou_3.jpg", alt: "Taiyou 3", rotate: "-rotate-1" },
+                  { src: "/assets/taiyou_4.jpg", alt: "Taiyou 4", rotate: "rotate-3" },
+                  { src: "/assets/taiyou_5.jpg", alt: "Taiyou 5", rotate: "-rotate-2" },
                 ].map((img, idx) => (
                   <div 
                     key={idx} 
