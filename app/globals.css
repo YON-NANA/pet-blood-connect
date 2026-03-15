@@ -69,7 +69,7 @@ body {
 /* スマホ: 背景の犬猫が両方見えるように調整 */
 @media (max-width: 767px) {
   .hero-bg {
-    background-position: 15% center; /* 鼻が合わさる部分をボタン付近に調整 */
+    background-position: 10% center !important; /* 強制的にさらに左へ（鼻がしっかり見える位置） */
   }
 }
 

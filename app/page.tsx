@@ -273,7 +273,13 @@ export default function Home() {
                 {/* ☀️ Taiyou Top Image - Fixed position */}
                 <div className="w-full md:w-48 flex-shrink-0">
                   <div className="rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl transform md:-rotate-2">
-                    <Image src="/assets/taiyou_top.jpg" alt="Taiyou Top" width={300} height={300} className="object-cover w-full h-40 md:h-48" />
+                    <Image 
+                      src="/assets/taiyou_top.jpg" 
+                      alt="Taiyou Top" 
+                      width={400} 
+                      height={400} 
+                      className="object-contain w-full h-auto max-h-64 bg-deep-blue/20" 
+                    />
                   </div>
                 </div>
               </div>
@@ -312,20 +318,21 @@ export default function Home() {
                 ].map((img, idx) => (
                   <div 
                     key={idx} 
-                    className={`group relative w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-2 border-white/20 transform ${img.rotate} hover:rotate-0 hover:scale-[2.5] hover:z-50 transition-all duration-500 ease-out cursor-zoom-in`}
+                    className={`group relative w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-2 border-white/20 transform ${img.rotate} hover:rotate-0 hover:scale-[2] active:scale-[2] active:rotate-0 active:z-50 hover:z-50 transition-all duration-500 ease-out cursor-zoom-in`}
+                    tabIndex={0}
                   >
                     <Image 
                       src={img.src} 
                       alt={img.alt} 
                       fill
-                      className="object-cover"
+                      className="object-cover pointer-events-none"
                     />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300"></div>
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent group-active:bg-transparent transition-colors duration-300 pointer-events-none"></div>
                   </div>
                 ))}
               </div>
               <p className="text-[10px] text-blue-300/60 mt-8 text-center lg:text-right font-bold italic">
-                * 写真にカーソルを合わせると大きく表示されます
+                * 写真を長押し、またはマウスを合わせると大きく表示されます
               </p>
             </div>
           </div>
