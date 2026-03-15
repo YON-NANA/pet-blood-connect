@@ -323,6 +323,7 @@ export default function Home() {
               <div className="flex flex-col md:flex-row gap-6 items-start">
                 <div className="flex-grow">
                   <p>2年前の夜、一本の電話が鳴りました。<br />「近くの駐車場で、犬が血まみれで倒れている」</p>
+                  <p className="text-xs md:text-sm text-blue-200/60 mt-2 leading-relaxed">Two years ago at night, the phone rang. <br />&quot;There&#39;s a dog lying bleeding in a parking lot nearby.&quot;</p>
                 </div>
                 {/* ☀️ Taiyou Top Image - Fixed size to fit content */}
                 <div className="w-full md:w-48 flex-shrink-0 flex justify-center md:block">
@@ -337,27 +338,52 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <p>すぐに向かうと、ライトに照らされた地面は真っ赤でした。国道で車に巻き込まれた野犬。包帯を巻く間も、命がこぼれていくような絶望的な状況でした。</p>
-              <p>緊急手術で左前脚を断脚し、なんとか一命を取り留めたその子に、私たちは<span className="text-white font-black border-b-2 border-life-green">「太陽」</span>と名付けました。</p>
+              <div>
+                <p>すぐに向かうと、ライトに照らされた地面は真っ赤でした。国道で車に巻き込まれた野犬。包帯を巻く間も、命がこぼれていくような絶望的な状況でした。</p>
+                <p className="text-xs md:text-sm text-blue-200/60 mt-2 leading-relaxed">When we arrived, the ground illuminated by the headlights was bright red. A stray dog had been hit by a car on the highway. Even while wrapping his bandages, it felt like his life was slipping away.</p>
+              </div>
+              
+              <div>
+                <p>緊急手術で左前脚を断脚し、なんとか一命を取り留めたその子に、私たちは<span className="text-white font-black border-b-2 border-life-green">「太陽」</span>と名付けました。</p>
+                <p className="text-xs md:text-sm text-blue-200/60 mt-2 leading-relaxed">Left with no choice but to amputate his left front leg in an emergency surgery, he miraculously survived. We named him &quot;Taiyou&quot; (Sun).</p>
+              </div>
               
               <div className="py-4">
                 <p className="text-2xl md:text-3xl font-black text-white italic leading-tight">太陽は、強い子でした。</p>
+                <p className="text-sm md:text-base text-life-green mt-2 font-bold italic">Taiyou was a tough boy.</p>
               </div>
 
-              <p>三本脚になっても、1メートルの高さを軽々と跳び越え、誰より速く走る。そして、猫たちが自分から寄ってくるほど、穏やかな性格をしていました。散歩の帰り道、脚が疲れた太陽を何度も抱きかかえて帰ったのは、今では温かい思い出です。</p>
+              <div>
+                <p>三本脚になっても、1メートルの高さを軽々と跳び越え、誰より速く走る。そして、猫たちが自分から寄ってくるほど、穏やかな性格をしていました。散歩の帰り道、脚が疲れた太陽を何度も抱きかかえて帰ったのは、今では温かい思い出です。</p>
+                <p className="text-xs md:text-sm text-blue-200/60 mt-2 leading-relaxed">Even on three legs, he could easily jump over a meter high and run faster than anyone. He was so gentle that cats would naturally approach him. Carrying Taiyou home many times when his leg got tired after walks is now a warm memory.</p>
+              </div>
               
-              <p>それから2年後。また一本の電話が鳴りました。それは、かつて太陽を救ってくれた動物病院の院長からでした。</p>
-              <p className="bg-white/10 border-l-4 border-life-red p-4 font-bold text-white">
-                「手術で、緊急に血液が必要になった。太陽の力を貸してほしい」
-              </p>
+              <div>
+                <p>それから2年後。また一本の電話が鳴りました。それは、かつて太陽を救ってくれた動物病院の院長からでした。</p>
+                <p className="text-xs md:text-sm text-blue-200/60 mt-2 leading-relaxed">Two years later, the phone rang again. It was from the director of the veterinary hospital that had once saved Taiyou.</p>
+              </div>
               
-              <p>かつて自分を救ってくれた場所へ。怖がりの太陽でしたが、私たちがそばにいると、静かに供血を受け入れてくれました。あの日、地面を赤く染めた太陽の血が、今度は別の命を救うために、誰かの体の中へと繋がったのです。</p>
+              <div className="bg-white/10 border-l-4 border-life-red p-4">
+                <p className="font-bold text-white">「手術で、緊急に血液が必要になった。太陽の力を貸してほしい」</p>
+                <p className="text-xs md:text-sm text-blue-200/80 mt-2 italic">&quot;We urgently need blood for a surgery. We need Taiyou&#39;s help.&quot;</p>
+              </div>
+              
+              <div>
+                <p>かつて自分を救ってくれた場所へ。怖がりの太陽でしたが、私たちがそばにいると、静かに供血を受け入れてくれました。あの日、地面を赤く染めた太陽の血が、今度は別の命を救うために、誰かの体の中へと繋がったのです。</p>
+                <p className="text-xs md:text-sm text-blue-200/60 mt-2 leading-relaxed">Returning to the place that once saved him, the normally timid Taiyou quietly accepted the blood donation process with us by his side. The blood that had once stained the ground red was now flowing into someone else to save another life.</p>
+              </div>
               
               <div className="pt-8">
-                <p className="text-xl font-black text-life-green mb-4">これが、私たちがABCを作った理由です。</p>
-                <p className="text-sm border border-white/20 p-6 rounded-2xl bg-white/5">
-                  ドナーが見つからずに救えない命がある。その現実を変えるために、徳島から始めます。太陽のように、助けられた命が、また誰かを助ける命になる。その連鎖を、当たり前の「仕組み」にしたい。
-                </p>
+                <p className="text-xl font-black text-life-green mb-1">これが、私たちがABCを作った理由です。</p>
+                <p className="text-xs md:text-sm text-blue-200/80 mb-4 font-bold tracking-widest uppercase">This is why we created ABC.</p>
+                <div className="border border-white/20 p-6 rounded-2xl bg-white/5 space-y-4">
+                  <p className="text-sm">
+                    ドナーが見つからずに救えない命がある。その現実を変えるために、徳島から始めます。太陽のように、助けられた命が、また誰かを助ける命になる。その連鎖を、当たり前の「仕組み」にしたい。
+                  </p>
+                  <p className="text-xs text-blue-200/60 leading-relaxed border-t border-white/10 pt-4">
+                    There are lives that cannot be saved simply because a donor cannot be found. We are starting from Tokushima to change this reality. Just like Taiyou, a saved life becomes a life that saves someone else. We want to turn this chain of life into a standard system.
+                  </p>
+                </div>
               </div>
             </div>
 
