@@ -17,6 +17,7 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeRequests, setActiveRequests] = useState<ActiveRequest[]>([]);
+  const [activeImage, setActiveImage] = useState<number | null>(null);
 
   useEffect(() => {
     // 認証状態の監視
@@ -368,10 +369,17 @@ export default function Home() {
                   { src: "/assets/taiyou_3.jpg", alt: "Taiyou 3", rotate: "-rotate-1" },
                   { src: "/assets/taiyou_4.jpg", alt: "Taiyou 4", rotate: "rotate-3" },
                   { src: "/assets/taiyou_5.jpg", alt: "Taiyou 5", rotate: "-rotate-2" },
-                ].map((img, idx) => (
+                ].map((img, idx) => {
+                  const isActive = activeImage === idx;
+                  return (
                   <div 
                     key={idx} 
-                    className={`group relative w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-2 border-white/20 transform ${img.rotate} hover:rotate-0 hover:scale-[2] active:scale-[2] active:rotate-0 active:z-50 hover:z-50 transition-all duration-500 ease-out cursor-zoom-in`}
+                    onClick={() => setActiveImage(isActive ? null : idx)}
+                    className={`group relative w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-2 border-white/20 transform transition-all duration-500 ease-out cursor-pointer ${
+                      isActive 
+                        ? 'scale-[2.5] md:scale-[2] rotate-0 z-50 shadow-2xl bg-black' 
+                        : `${img.rotate} hover:rotate-0 hover:scale-110 hover:z-40`
+                    }`}
                     tabIndex={0}
                   >
                     <Image 
@@ -380,12 +388,12 @@ export default function Home() {
                       fill
                       className="object-cover pointer-events-none"
                     />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent group-active:bg-transparent transition-colors duration-300 pointer-events-none"></div>
+                    <div className={`absolute inset-0 bg-black/20 pointer-events-none transition-colors duration-300 ${isActive ? 'bg-transparent' : 'group-hover:bg-transparent'}`}></div>
                   </div>
-                ))}
+                )})}
               </div>
               <p className="text-[10px] text-blue-300/60 mt-8 text-center lg:text-right font-bold italic">
-                * 写真を長押し、またはマウスを合わせると大きく表示されます
+                * 写真をタップ（クリック）すると拡大、もう一度タップで元に戻ります
               </p>
             </div>
           </div>
