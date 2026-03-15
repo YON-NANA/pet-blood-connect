@@ -16,15 +16,20 @@ export default function PartnerInquiry() {
         animalCount: '',
         dogCount: '',
         catCount: '',
-        message: ''
+        message: '',
+        supportInjuredAnimal: false
     });
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const { name, value, type } = e.target;
+        if (type === 'checkbox') {
+            setFormData(prev => ({ ...prev, [name]: (e.target as HTMLInputElement).checked }));
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -237,6 +242,20 @@ export default function PartnerInquiry() {
                                             className="w-full px-4 py-3 rounded-xl bg-white focus:ring-2 focus:ring-life-green outline-none transition text-gray-800 font-bold" />
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className="bg-red-50/50 border border-red-100 rounded-2xl p-6">
+                                <label className="flex items-start cursor-pointer">
+                                    <input type="checkbox" name="supportInjuredAnimal" required
+                                        checked={formData.supportInjuredAnimal} onChange={handleChange}
+                                        className="mt-1 mr-3 w-5 h-5 rounded text-life-red focus:ring-life-red border-gray-300" />
+                                    <div>
+                                        <span className="text-sm font-black text-deep-blue block mb-1">地域の負傷動物のサポートに協力する <span className="text-life-red">*</span></span>
+                                        <span className="text-xs text-gray-600 font-medium leading-relaxed">
+                                            プラットフォーム参加の条件として、近隣の市民から道端で負傷した動物についての相談があった際、可能な範囲でのサポート（アドバイスや引き取り先の相談など）にご協力いただくことをお願いしています。
+                                        </span>
+                                    </div>
+                                </label>
                             </div>
 
                             <div className="space-y-2">

@@ -108,14 +108,33 @@ export default function RescueGuidePage() {
                 <h2 className="text-2xl font-black text-white mb-3 tracking-tighter">一人で不安なときは</h2>
                 <div className="space-y-4 text-gray-300 font-medium leading-relaxed">
                   <p>
-                    「どうしていいかわからない」「治療費やその後の引き取り先が見つからない」など、お困りの場合は、各地域の動物保護団体や保護活動家、サポート団体に、ご自身の安全を第一にご相談ください。
+                    「どうしていいかわからない」「治療費やその後の引き取り先が見つからない」など、お困りの場合は、本プラットフォームに登録して負傷動物のサポートに同意している<strong className="text-life-red">地域の保護団体・パートナー</strong>にご相談ください。
                   </p>
-                  <div className="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-3xl mt-6">
-                    <h3 className="font-black text-white text-lg mb-2">地域の動物保護団体を探す</h3>
-                    <p className="text-sm text-gray-400 mb-4">
-                      ※お住まいの地域名と「動物保護団体」で検索し、連絡を取ってみてください。
+                  
+                  {/* ABC Registered Partners */}
+                  <div className="bg-deep-blue border border-white/20 p-6 rounded-3xl mt-6 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-trust-blue/10 rounded-full blur-3xl -z-0"></div>
+                    <h3 className="font-black text-white text-lg mb-4 flex items-center">
+                      <span className="text-trust-blue mr-2">🤝</span>最寄りの登録パートナー
+                    </h3>
+                    
+                    {/* Placeholder for Dynamic Partner List */}
+                    <div className="bg-black/40 rounded-2xl p-5 border border-white/5 space-y-3 relative z-10 text-center">
+                      <p className="text-sm font-bold text-gray-300">
+                        近隣の登録パートナーを表示（システム連携準備中）
+                      </p>
+                      <button disabled className="bg-trust-blue/50 text-white font-black px-6 py-3 rounded-xl cursor-not-allowed opacity-70 text-sm">
+                        📍 現在地からパートナーを探す
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/5 border border-white/10 p-5 rounded-3xl mt-4">
+                    <h3 className="font-bold text-white text-sm mb-2 opacity-80">または一般検索から探す</h3>
+                    <p className="text-xs text-gray-400 mb-4">
+                      ※お近くに登録パートナーが見つからない場合は、お住まいの地域名と「動物保護団体」で検索し、連絡を取ってみてください。
                     </p>
-                    <a href="https://www.google.com/search?q=%E5%8B%95%E7%89%A9%E4%BF%9D%E8%AD%B7%E5%9B%A3%E4%BD%93" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 bg-life-red text-white font-black px-6 py-4 rounded-2xl hover:bg-red-700 transition w-full md:w-auto justify-center shadow-xl shadow-red-900/50">
+                    <a href="https://www.google.com/search?q=%E5%8B%95%E7%89%A9%E4%BF%9D%E8%AD%B7%E5%9B%A3%E4%BD%93" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-3 rounded-xl transition text-sm shadow-sm">
                       <span>🔍 Googleで近くの保護団体を検索</span>
                     </a>
                   </div>
