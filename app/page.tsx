@@ -207,12 +207,21 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-5 items-center">
+          <div className="flex flex-col md:flex-row justify-center gap-4 items-center max-w-3xl mx-auto w-full px-4">
             <Link
               href="/register"
-              className="w-full sm:w-auto bg-life-red text-white text-lg font-black px-12 py-5 rounded-full shadow-2xl shadow-red-200 hover:bg-red-600 transform hover:scale-105 transition duration-300"
+              className="w-full md:w-auto flex flex-col items-center justify-center bg-life-red text-white px-10 py-4 rounded-full shadow-2xl shadow-red-500/30 hover:bg-red-600 transform hover:scale-105 transition duration-300"
             >
-              ドナー登録して備える
+              <span className="text-lg md:text-xl font-black">供血ドナー登録はこちら</span>
+              <span className="text-[10px] md:text-xs font-bold tracking-widest mt-1 opacity-90">Donor Registration</span>
+            </Link>
+
+            <Link
+              href="/hospital"
+              className="w-full md:w-auto flex flex-col items-center justify-center bg-white/20 backdrop-blur-md border border-white/40 text-white px-10 py-4 rounded-full shadow-2xl hover:bg-white/30 transform hover:scale-105 transition duration-300"
+            >
+              <span className="text-lg md:text-xl font-black">動物病院の方はこちら</span>
+              <span className="text-[10px] md:text-xs font-bold tracking-widest mt-1 opacity-90">For Veterinary Hospitals</span>
             </Link>
           </div>
 
