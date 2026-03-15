@@ -62,7 +62,7 @@ body {
 .hero-bg {
   background-image: url('/assets/hero-bg.png');
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   position: relative;
 }
 
@@ -71,8 +71,17 @@ body {
   position: absolute;
   inset: 0;
   background: rgba(29, 53, 87, 0.6);
-  /* Deep Blue Overlay with 60% opacity */
   z-index: 0;
+}
+
+/* スマホ: オーバーレイを30%薄く（0.6 → 0.4）+ 背景位置を調整 */
+@media (max-width: 767px) {
+  .hero-bg {
+    background-position: center top;
+  }
+  .hero-bg::before {
+    background: rgba(29, 53, 87, 0.4);
+  }
 }
 
 .bg-paw-pattern {

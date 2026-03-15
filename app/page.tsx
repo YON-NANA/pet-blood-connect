@@ -181,14 +181,18 @@ export default function Home() {
             JARA: 日本動物救済機構
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-black mb-8 leading-[1.2] tracking-tight">
+          <h1 className="text-2xl md:text-6xl font-black mb-8 leading-[1.2] tracking-tight">
             命を、<span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-red-100 italic">静かにつなぐ</span>仕組み。
           </h1>
 
-          <p className="text-base md:text-xl mb-12 text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">
+          <p className="text-sm md:text-xl mb-8 text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">
             動物医療には、人の医療のような血液バンクがありません。<br className="hidden md:block" />
-            私たちは、必要な時に、静かに、確実につなぐための<br className="hidden md:block" />
-            「社会インフラ」としての供血ネットワークを構築しました。
+            私たちは、静かに、そして確実につなぐための<br className="hidden md:block" />
+            供血ネットワークを構築しました。
+          </p>
+          <p className="text-[11px] md:text-sm mb-12 text-white/50 font-bold tracking-wide italic">
+            Animal Blood Connect is designed<br className="md:hidden" />{" "}
+            as a scalable animal medical support platform.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-5 items-center">
@@ -413,6 +417,9 @@ export default function Home() {
 
         <div className="max-w-6xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/20">
           <p>© 2026 Japan Animal Rescue Agency (JARA)</p>
+          <a href="mailto:animalbloodconnect@gmail.com" className="text-white/40 hover:text-white/60 transition normal-case tracking-normal">
+            📧 animalbloodconnect@gmail.com
+          </a>
         </div>
       </footer>
     </div>
