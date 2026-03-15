@@ -108,15 +108,15 @@ export default function RescueGuidePage() {
                 <h2 className="text-2xl font-black text-white mb-3 tracking-tighter">一人で不安なときは</h2>
                 <div className="space-y-4 text-gray-300 font-medium leading-relaxed">
                   <p>
-                    「どうしていいかわからない」「治療費やその後の引き取り先が見つからない」など、お困りの場合は、動物愛護団体ヨンナナをはじめとする、各地域の保護活動家・サポート団体にご本人の安全を第一にご相談ください。
+                    「どうしていいかわからない」「治療費やその後の引き取り先が見つからない」など、お困りの場合は、各地域の動物保護団体や保護活動家、サポート団体に、ご自身の安全を第一にご相談ください。
                   </p>
                   <div className="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-3xl mt-6">
-                    <h3 className="font-black text-white text-lg mb-2">動物保護団体ヨンナナへ相談</h3>
+                    <h3 className="font-black text-white text-lg mb-2">地域の動物保護団体を探す</h3>
                     <p className="text-sm text-gray-400 mb-4">
-                      ※緊急対応中などですぐに電話に出られない場合があります。
+                      ※お住まいの地域名と「動物保護団体」で検索し、連絡を取ってみてください。
                     </p>
-                    <a href="tel:090-0000-0000" className="inline-flex items-center space-x-2 bg-life-red text-white font-black px-6 py-4 rounded-2xl hover:bg-red-700 transition w-full md:w-auto justify-center shadow-xl shadow-red-900/50">
-                      <span>📞 緊急連絡先: ヨンナナ事務局へかける</span>
+                    <a href="https://www.google.com/search?q=%E5%8B%95%E7%89%A9%E4%BF%9D%E8%AD%B7%E5%9B%A3%E4%BD%93" target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 bg-life-red text-white font-black px-6 py-4 rounded-2xl hover:bg-red-700 transition w-full md:w-auto justify-center shadow-xl shadow-red-900/50">
+                      <span>🔍 Googleで近くの保護団体を検索</span>
                     </a>
                   </div>
                 </div>
