@@ -193,7 +193,7 @@ export default function Home() {
                 動物の命をつなぐ<br className="md:hidden" />供血ネットワーク
               </h1>
               <p className="text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] text-white/80">
-                Save lives through pet blood donation
+                Save lives through animal blood donation
               </p>
             </div>
 
@@ -201,16 +201,16 @@ export default function Home() {
               <p className="text-xl md:text-3xl font-black text-white tracking-tight">
                 あなたの愛犬・愛猫も命を救える
               </p>
-              <p className="text-[10px] md:text-sm font-bold uppercase tracking-[0.1em] text-white/70 leading-relaxed max-w-2xl mx-auto">
-                Register donor dogs and cats for emergency transfusion support.
+              <p className="text-sm md:text-base font-bold text-white/90 leading-relaxed max-w-2xl mx-auto tracking-wide">
+                登録は1分で完了します
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row justify-center gap-4 items-center max-w-3xl mx-auto w-full px-4">
+          <div className="flex flex-col md:flex-row justify-center gap-4 items-center max-w-3xl mx-auto w-full px-4 mb-20">
             <Link
               href="/register"
-              className="w-full md:w-auto flex flex-col items-center justify-center bg-life-red text-white px-10 py-4 rounded-full shadow-2xl shadow-red-500/30 hover:bg-red-600 transform hover:scale-105 transition duration-300"
+              className="w-full md:w-auto flex flex-col items-center justify-center bg-life-red text-white px-10 py-5 rounded-full shadow-[0_0_30px_rgba(211,47,47,0.4)] hover:bg-red-600 transform hover:scale-105 transition duration-300"
             >
               <span className="text-lg md:text-xl font-black">供血ドナー登録はこちら</span>
               <span className="text-[10px] md:text-xs font-bold tracking-widest mt-1 opacity-90">Donor Registration</span>
@@ -218,11 +218,49 @@ export default function Home() {
 
             <Link
               href="/hospital"
-              className="w-full md:w-auto flex flex-col items-center justify-center bg-white/20 backdrop-blur-md border border-white/40 text-white px-10 py-4 rounded-full shadow-2xl hover:bg-white/30 transform hover:scale-105 transition duration-300"
+              className="w-full md:w-auto flex flex-col items-center justify-center bg-white/20 backdrop-blur-md border border-white/40 text-white px-10 py-5 rounded-full shadow-2xl hover:bg-white/30 transform hover:scale-105 transition duration-300"
             >
               <span className="text-lg md:text-xl font-black">動物病院の方はこちら</span>
               <span className="text-[10px] md:text-xs font-bold tracking-widest mt-1 opacity-90">For Veterinary Hospitals</span>
             </Link>
+          </div>
+
+          {/* Taiyou Intro Block */}
+          <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-8 md:p-10 max-w-3xl mx-auto text-center space-y-8 shadow-2xl mb-12 relative overflow-hidden">
+            {/* Subtle highlight effect */}
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+            
+            <div className="relative z-10">
+              <p className="text-xl md:text-3xl font-black text-white leading-relaxed tracking-tight">
+                このネットワークは、<br className="md:hidden" />1匹の野犬から始まりました
+              </p>
+              <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.1em] text-white/50 mt-3">
+                This network began with one rescued stray dog.
+              </p>
+            </div>
+            
+            <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full overflow-hidden border-4 border-white/20 shadow-2xl relative z-10">
+              <Image 
+                src="/assets/taiyou_top.jpg" 
+                alt="Taiyou Header" 
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div className="space-y-6 relative z-10">
+              <p className="text-base md:text-xl font-bold text-white/90">
+                助けられた命が、次の命を救いました。
+              </p>
+              <Link 
+                href="#story" 
+                className="inline-flex items-center justify-center group"
+              >
+                <span className="text-sm md:text-base font-black text-life-green bg-white rounded-full px-8 py-4 shadow-[0_0_20px_rgba(255,255,255,0.2)] group-hover:bg-gray-100 group-hover:scale-105 transition-all duration-300">
+                  太陽のストーリーを見る →
+                </span>
+              </Link>
+            </div>
           </div>
 
           {/* Stats */}
