@@ -108,6 +108,7 @@ export default function Home() {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-10 text-sm font-bold">
+              <Link href="/rescue" className="text-life-red hover:text-red-700 font-bold flex items-center transition"><span className="animate-pulse mr-1">🚨</span>緊急時のレスキュー</Link>
               <a href="#about" className="text-gray-500 hover:text-life-red transition">仕組み</a>
               <a href="#story" className="text-gray-500 hover:text-life-red transition">ストーリー</a>
               <Link href="/hospital/login" className="text-trust-blue hover:text-blue-700 transition">動物病院の方へ</Link>
@@ -153,6 +154,7 @@ export default function Home() {
         {isMenuOpen && (
           <div className="md:hidden bg-white border-b border-gray-100 py-8 px-6 space-y-6 animate-in fade-in slide-in-from-top-4 duration-300">
             <div className="flex flex-col space-y-6 text-lg font-black text-deep-blue">
+              <Link href="/rescue" onClick={() => setIsMenuOpen(false)} className="text-life-red hover:text-red-700 transition flex items-center"><span className="animate-pulse mr-2">🚨</span>緊急時のレスキュー</Link>
               <a href="#about" onClick={() => setIsMenuOpen(false)} className="hover:text-life-red transition">仕組み</a>
               <a href="#story" onClick={() => setIsMenuOpen(false)} className="hover:text-life-red transition">ストーリー</a>
               <Link href="/hospital/login" onClick={() => setIsMenuOpen(false)} className="hover:text-life-red transition">動物病院の方へ</Link>
@@ -204,6 +206,13 @@ export default function Home() {
               <p className="text-sm md:text-base font-bold text-white/90 leading-relaxed max-w-2xl mx-auto tracking-wide">
                 登録は1分で完了します
               </p>
+            </div>
+            
+            <div className="pt-6">
+              <Link href="/rescue" className="inline-flex items-center space-x-2 bg-red-600/90 hover:bg-red-500 border border-red-400/50 backdrop-blur-md text-white px-6 py-3 rounded-full font-black text-sm md:text-base transition-all duration-300 shadow-[0_0_20px_rgba(220,38,38,0.4)]">
+                <span className="animate-pulse">🚨</span>
+                <span>道端で負傷動物を見つけたらこちら</span>
+              </Link>
             </div>
           </div>
 
