@@ -291,25 +291,31 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 relative">
-              <div className="space-y-4">
-                <div className="rounded-[32px] overflow-hidden shadow-2xl transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white/10">
-                  <Image src="/assets/taiyou_1.jpg" alt="Taiyou rescued" width={400} height={500} className="object-cover w-full h-48 md:h-64 scale-110 hover:scale-100 transition duration-700" />
-                </div>
-                <div className="rounded-[32px] overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition duration-500 border-4 border-white/10">
-                  <Image src="/assets/taiyou_3.jpg" alt="Taiyou smile" width={400} height={500} className="object-cover w-full h-64 md:h-80 scale-110 hover:scale-100 transition duration-700" />
-                </div>
+            <div className="relative">
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-end">
+                {[
+                  { src: "/assets/taiyou_1.jpg", alt: "Taiyou rescued", rotate: "-rotate-3" },
+                  { src: "/assets/taiyou_5.jpg", alt: "Taiyou post surgery", rotate: "rotate-2" },
+                  { src: "/assets/taiyou_3.jpg", alt: "Taiyou smile", rotate: "rotate-3" },
+                  { src: "/assets/taiyou_4.jpg", alt: "Taiyou walking", rotate: "-rotate-2" },
+                ].map((img, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`group relative w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl border-2 border-white/20 transform ${img.rotate} hover:rotate-0 hover:scale-[2.5] hover:z-50 transition-all duration-500 ease-out cursor-zoom-in`}
+                  >
+                    <Image 
+                      src={img.src} 
+                      alt={img.alt} 
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300"></div>
+                  </div>
+                ))}
               </div>
-              <div className="space-y-4 pt-12">
-                <div className="rounded-[32px] overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500 border-4 border-white/10">
-                  <Image src="/assets/taiyou_5.jpg" alt="Taiyou post surgery" width={400} height={500} className="object-cover w-full h-64 md:h-80 scale-110 hover:scale-100 transition duration-700" />
-                </div>
-                <div className="rounded-[32px] overflow-hidden shadow-2xl transform -rotate-3 hover:rotate-0 transition duration-500 border-4 border-white/10">
-                  <Image src="/assets/taiyou_4.jpg" alt="Taiyou walking" width={400} height={500} className="object-cover w-full h-48 md:h-64 scale-110 hover:scale-100 transition duration-700" />
-                </div>
-              </div>
-              {/* Decorative circle */}
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-life-green/20 rounded-full blur-3xl"></div>
+              <p className="text-[10px] text-blue-300/60 mt-8 text-center lg:text-right font-bold italic">
+                * 写真にカーソルを合わせると大きく表示されます
+              </p>
             </div>
           </div>
         </div>
