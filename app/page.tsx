@@ -187,19 +187,25 @@ export default function Home() {
             日本動物共助機構<br className="md:hidden" /><span className="md:ml-2 opacity-80">(AMAJ) Animal Mutual Aid Japan</span>
           </div>
 
-          <h1 className="text-3xl md:text-6xl font-black mb-8 leading-[1.3] tracking-tight">
-            あなたの大切な子が、<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-red-100 italic">誰かの大切な子を救える。</span>
-          </h1>
+          <div className="mb-12 space-y-8">
+            <div className="space-y-3">
+              <h1 className="text-3xl md:text-6xl font-black leading-tight tracking-tighter">
+                動物の命をつなぐ<br className="md:hidden" />供血ネットワーク
+              </h1>
+              <p className="text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] text-white/80">
+                Save lives through pet blood donation
+              </p>
+            </div>
 
-          <p className="text-sm md:text-xl mb-8 text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">
-            動物医療には、人の医療のような血液バンクがありません。<br className="hidden md:block" />
-            私たちは、静かに、そして確実につなぐための<br className="hidden md:block" />
-            供血ネットワークを構築しました。
-          </p>
-          <p className="text-[11px] md:text-sm mb-12 text-white/50 font-bold tracking-wide italic">
-            Animal Blood Connect is designed<br className="md:hidden" />{" "}
-            as a scalable animal medical support platform.
-          </p>
+            <div className="pt-4 space-y-3">
+              <p className="text-xl md:text-3xl font-black text-white tracking-tight">
+                あなたの愛犬・愛猫も命を救える
+              </p>
+              <p className="text-[10px] md:text-sm font-bold uppercase tracking-[0.1em] text-white/70 leading-relaxed max-w-2xl mx-auto">
+                Register donor dogs and cats for emergency transfusion support.
+              </p>
+            </div>
+          </div>
 
           <div className="flex flex-col sm:flex-row justify-center gap-5 items-center">
             <Link
