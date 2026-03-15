@@ -179,6 +179,7 @@ export default function Home() {
       {/* Hero Section */}
       <section 
         className="hero-bg pt-32 pb-24 md:pt-48 md:pb-40 px-4 overflow-hidden text-white relative"
+        style={{ backgroundPosition: '55% center' }}
       >
         <div className="absolute inset-0 bg-deep-blue/40 md:bg-deep-blue/60 z-0"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
