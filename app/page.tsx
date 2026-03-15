@@ -270,15 +270,15 @@ export default function Home() {
                 <div className="flex-grow">
                   <p>2年前の夜、一本の電話が鳴りました。<br />「近くの駐車場で、犬が血まみれで倒れている」</p>
                 </div>
-                {/* ☀️ Taiyou Top Image - Fixed position */}
-                <div className="w-full md:w-48 flex-shrink-0">
-                  <div className="rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl transform md:-rotate-2">
+                {/* ☀️ Taiyou Top Image - Fixed size to fit content */}
+                <div className="w-full md:w-48 flex-shrink-0 flex justify-center md:block">
+                  <div className="rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl transform md:-rotate-2 inline-block">
                     <Image 
                       src="/assets/taiyou_top.jpg" 
                       alt="Taiyou Top" 
                       width={400} 
                       height={400} 
-                      className="object-contain w-full h-auto max-h-64 bg-deep-blue/20" 
+                      className="object-contain w-auto h-48 md:h-48 bg-deep-blue/10" 
                     />
                   </div>
                 </div>
