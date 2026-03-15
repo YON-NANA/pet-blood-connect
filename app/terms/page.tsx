@@ -118,7 +118,7 @@ export default function TermsPage() {
             <footer className="bg-deep-blue py-12 px-6">
                 <div className="max-w-4xl mx-auto text-center">
                     <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.2em]">
-                        © 2026 Japan Animal Rescue Agency (JARA)
+                        © 2026 Animal Mutual Aid Japan (AMAJ)
                     </p>
                 </div>
             </footer>

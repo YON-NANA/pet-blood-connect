@@ -390,7 +390,7 @@ export default function MyPage() {
                             className="h-8 w-auto object-contain transition duration-300 contrast-125 brightness-200"
                         />
                         <span className="ml-3 text-lg font-black tracking-tighter leading-none text-white opacity-90">
-                            JARA Public Net
+                            AMAJ Public Net
                         </span>
                     </Link>
                     <button onClick={handleLogout} className="text-[10px] font-black tracking-widest text-white/40 hover:text-white transition uppercase">

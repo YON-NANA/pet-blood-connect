@@ -133,7 +133,7 @@ export default function HospitalLandingPage() {
             </div>
 
             <footer className="bg-deep-blue/95 text-white/40 py-8 px-6 text-center text-[10px] font-black uppercase tracking-widest border-t border-white/5">
-                © 2026 Japan Animal Rescue Agency (JARA)
+                © 2026 Animal Mutual Aid Japan (AMAJ)
             </footer>
         </div>
     );

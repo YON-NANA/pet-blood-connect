@@ -169,7 +169,7 @@ export default function HospitalDashboard() {
                             className="h-8 w-auto object-contain transition duration-300"
                         />
                         <span className="ml-3 text-lg font-black tracking-tighter leading-none text-white opacity-80">
-                            JARA Medical
+                            AMAJ Medical
                         </span>
                     </Link>
                 </div>
@@ -297,7 +297,7 @@ export default function HospitalDashboard() {
                                             <div>
                                                 <h3 className="font-black text-lg text-gray-800 leading-tight">{donor.pet_name}</h3>
                                                 <div className="flex items-center mt-1">
-                                                    {/* JARA Trust Score Rendering */}
+                                                    {/* AMAJ Trust Score Rendering */}
                                                     <span className={`text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-widest mr-2 leading-none ${((donor as unknown as { trust_score?: number }).trust_score ?? 100) < 70 ? 'text-life-red bg-red-50' : 'text-life-green bg-green-50'}`}>
                                                         信頼: {((donor as unknown as { trust_score?: number }).trust_score ?? 100)}%
                                                     </span>

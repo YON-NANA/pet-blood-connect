@@ -290,7 +290,7 @@ export default function HospitalLogin() {
                         <div className="mt-6 pt-6 border-t border-gray-50 text-center space-y-2">
                             <p className="text-gray-400 text-xs font-medium leading-relaxed">
                                 Animal Blood Connect（ABC）<br />
-                                運営: 動物保護団体ヨンナナ × JARA
+                                運営: 動物保護団体ヨンナナ × AMAJ
                             </p>
                             <Link href="/hospital" className="text-trust-blue text-xs font-black hover:underline block">
                                 病院様向けサービス紹介を見る →
