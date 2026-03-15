@@ -77,7 +77,7 @@ body {
 /* スマホ: オーバーレイを30%薄く + 背景の犬猫が両方見えるように中央配置 */
 @media (max-width: 767px) {
   .hero-bg {
-    background-position: center center;
+    background-position: 30% center;
     background-size: cover;
   }
   .hero-bg::before {

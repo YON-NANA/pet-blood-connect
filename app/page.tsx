@@ -373,7 +373,7 @@ export default function Home() {
           </div>
 
           <div className="mt-10">
-            <Link href="/hospital/inquiry" className="text-life-red font-black hover:underline text-sm flex items-center justify-center">
+            <Link href="/partner" className="text-life-red font-black hover:underline text-sm flex items-center justify-center">
               保護団体の皆様へ：パートナー登録について <span className="ml-1">→</span>
             </Link>
           </div>
