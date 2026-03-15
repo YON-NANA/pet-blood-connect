@@ -7,7 +7,7 @@ import Image from 'next/image';
 export default function PartnerInquiry() {
     const [formData, setFormData] = useState({
         orgName: '',
-        orgType: '動物保護団体',
+        orgType: '動物保護・愛護団体',
         contactName: '',
         email: '',
         phone: '',
@@ -69,8 +69,8 @@ export default function PartnerInquiry() {
                 <header className="bg-white shadow-sm py-4 h-20 sticky top-0 z-50">
                     <div className="max-w-7xl mx-auto px-4 h-full flex items-center">
                         <Link href="/" className="flex items-center group">
-                            <Image src="/assets/logo_v2.png" alt="Logo" width={50} height={50}
-                                className="h-12 w-auto object-contain" />
+                            <Image src="/assets/logo_v2.png" alt="Logo" width={60} height={60}
+                                className="h-14 w-auto object-contain" />
                             <span className="ml-3 text-xl font-black tracking-tighter hidden sm:block leading-none">
                                 <span className="text-life-green">Animal</span>
                                 <span className="text-life-red">Blood</span>
@@ -105,8 +105,8 @@ export default function PartnerInquiry() {
             <header className="bg-white shadow-sm py-4 h-20 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
                     <Link href="/" className="flex items-center group">
-                        <Image src="/assets/logo_v2.png" alt="Logo" width={50} height={50}
-                            className="h-12 w-auto object-contain" />
+                        <Image src="/assets/logo_v2.png" alt="Logo" width={60} height={60}
+                            className="h-14 w-auto object-contain" />
                         <span className="ml-3 text-xl font-black tracking-tighter hidden sm:block leading-none">
                             <span className="text-life-green">Animal</span>
                             <span className="text-life-red">Blood</span>
@@ -127,8 +127,9 @@ export default function PartnerInquiry() {
                         </div>
                         <h1 className="text-3xl md:text-4xl font-black text-deep-blue mb-4">保護団体パートナー登録</h1>
                         <p className="text-gray-500 font-medium text-sm leading-relaxed">
-                            動物保護団体・里親ネットワーク・シェルターの皆さまへ。<br />
-                            ABCの供血ネットワークにパートナーとして参加しませんか？
+                            動物保護・愛護団体、個人ボランティア、シェルター、多頭飼育をされている皆さまへ。<br />
+                            ABCの供血ネットワークにパートナーとして参加しませんか？<br />
+                            <span className="text-[10px] text-gray-400 mt-1 block">※個人での活動や、多頭飼育をされている有志の方の登録も大歓迎です。</span>
                         </p>
                     </div>
 
@@ -157,10 +158,11 @@ export default function PartnerInquiry() {
                                 <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">団体種別<span className="text-life-red ml-1">*</span></label>
                                 <select name="orgType" value={formData.orgType} onChange={handleChange}
                                     className="w-full px-5 py-4 rounded-2xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-life-green outline-none transition text-gray-800 font-bold appearance-none">
-                                    <option value="動物保護団体">動物保護団体</option>
-                                    <option value="里親ネットワーク">里親ネットワーク</option>
+                                    <option value="動物保護・愛護団体">動物保護・愛護団体</option>
+                                    <option value="個人ボランティア・活動家">個人ボランティア・活動家</option>
                                     <option value="アニマルシェルター">アニマルシェルター</option>
-                                    <option value="ボランティア団体">ボランティア団体</option>
+                                    <option value="里親ネットワーク">里親ネットワーク</option>
+                                    <option value="多頭飼育有志">多頭飼育有志</option>
                                     <option value="その他">その他</option>
                                 </select>
                             </div>
@@ -170,7 +172,7 @@ export default function PartnerInquiry() {
                                     <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">団体・組織名<span className="text-life-red ml-1">*</span></label>
                                     <input type="text" name="orgName" required
                                         value={formData.orgName} onChange={handleChange}
-                                        placeholder="動物保護団体ヨンナナ"
+                                        placeholder="愛護の会 / 個人活動名 など"
                                         className="w-full px-5 py-4 rounded-2xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-life-green outline-none transition text-gray-800 font-bold" />
                                 </div>
                                 <div className="space-y-2">
@@ -260,7 +262,7 @@ export default function PartnerInquiry() {
                                     ) : '🤝 パートナー登録を申請する'}
                                 </button>
                                 <p className="text-center text-[10px] text-gray-400 font-black uppercase tracking-widest mt-6">
-                                    Animal Blood Connect — JARA
+                                    Animal Blood Connect — AMAJ
                                 </p>
                             </div>
                         </form>

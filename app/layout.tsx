@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AnimalBloodConnect | Japan Animal Rescue Agency (JARA)",
-  description: "全国の動物病院と飼い主を繋ぐ、命を救うための献血マッチングプラットフォーム。日本動物救済機構（JARA）が提供する非営利プロジェクトです。",
+  title: "AnimalBloodConnect | Animal Mutual Aid Japan (AMAJ)",
+  description: "全国の動物病院と飼い主を繋ぐ、命を救うための献血マッチングプラットフォーム。日本動物共助機構 (AMAJ) が提供する非営利プロジェクトです。",
 };
 
 export default function RootLayout({

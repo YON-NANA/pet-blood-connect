@@ -62,26 +62,14 @@ body {
 .hero-bg {
   background-image: url('/assets/hero-bg.png');
   background-size: cover;
-  background-position: center center;
+  background-position: 75% center; /* 犬猫の両方が見える位置に調整 */
   position: relative;
 }
 
-.hero-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(29, 53, 87, 0.6);
-  z-index: 0;
-}
-
-/* スマホ: オーバーレイを30%薄く + 背景の犬猫が両方見えるように中央配置 */
+/* スマホ: 背景の犬猫が両方見えるように調整 */
 @media (max-width: 767px) {
   .hero-bg {
-    background-position: 30% center;
-    background-size: cover;
-  }
-  .hero-bg::before {
-    background: rgba(29, 53, 87, 0.4);
+    background-position: 65% center; /* スマホでの見え方を微調整 */
   }
 }
 

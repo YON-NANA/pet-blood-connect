@@ -93,10 +93,10 @@ export default function Home() {
                 <Image
                   src="/assets/logo_v2.png"
                   alt="ABC Logo"
-                  width={60}
-                  height={60}
+                  width={80}
+                  height={80}
                   priority
-                  className="h-12 w-auto object-contain transform group-hover:scale-110 transition duration-300"
+                  className="h-14 md:h-16 w-auto object-contain transform group-hover:scale-110 transition duration-300"
                 />
                 <span className="ml-3 text-2xl font-black tracking-tighter hidden sm:block leading-none">
                   <span className="text-life-green">Animal</span>
@@ -109,6 +109,7 @@ export default function Home() {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-10 text-sm font-bold">
               <a href="#about" className="text-gray-500 hover:text-life-red transition">仕組み</a>
+              <a href="#story" className="text-gray-500 hover:text-life-red transition">ストーリー</a>
               <Link href="/hospital/login" className="text-trust-blue hover:text-blue-700 transition">動物病院の方へ</Link>
 
               <div className="h-6 w-px bg-gray-200"></div>
@@ -153,6 +154,7 @@ export default function Home() {
           <div className="md:hidden bg-white border-b border-gray-100 py-8 px-6 space-y-6 animate-in fade-in slide-in-from-top-4 duration-300">
             <div className="flex flex-col space-y-6 text-lg font-black text-deep-blue">
               <a href="#about" onClick={() => setIsMenuOpen(false)} className="hover:text-life-red transition">仕組み</a>
+              <a href="#story" onClick={() => setIsMenuOpen(false)} className="hover:text-life-red transition">ストーリー</a>
               <Link href="/hospital/login" onClick={() => setIsMenuOpen(false)} className="hover:text-life-red transition">動物病院の方へ</Link>
               {user ? (
                 <>
@@ -175,14 +177,18 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="hero-bg pt-32 pb-24 md:pt-48 md:pb-40 px-4 overflow-hidden text-white">
+      <section 
+        className="hero-bg pt-32 pb-24 md:pt-48 md:pb-40 px-4 overflow-hidden text-white relative"
+        style={{ backgroundPosition: 'center center' }} // 一旦センターに戻し、様子を見ます
+      >
+        <div className="absolute inset-0 bg-deep-blue/40 md:bg-deep-blue/60 z-0"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-md text-white rounded-full text-xs font-black uppercase tracking-widest mb-8 border border-white/20">
-            JARA: 日本動物救済機構
+          <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-md text-white rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest mb-8 border border-white/20">
+            日本動物共助機構<br className="md:hidden" /><span className="md:ml-2 opacity-80">(AMAJ) Animal Mutual Aid Japan</span>
           </div>
 
-          <h1 className="text-2xl md:text-6xl font-black mb-8 leading-[1.2] tracking-tight">
-            命を、<span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-red-100 italic">静かにつなぐ</span>仕組み。
+          <h1 className="text-3xl md:text-6xl font-black mb-8 leading-[1.3] tracking-tight">
+            あなたの大切な子が、<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-red-100 italic">誰かの大切な子を救える。</span>
           </h1>
 
           <p className="text-sm md:text-xl mb-8 text-white/90 max-w-3xl mx-auto leading-relaxed font-medium">
@@ -245,6 +251,66 @@ export default function Home() {
             <p className="text-gray-400 text-sm">
               この仕組みは、多くの協力と信頼によって成り立っています。静かな社会インフラとして、必要な瞬間を支え続けます。
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ☀️ Taiyou Story Section */}
+      <section id="story" className="py-24 bg-deep-blue text-white overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-white/5 to-transparent pointer-events-none"></div>
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tighter">The Story that Inspired this Network.</h2>
+            <p className="text-life-green font-black tracking-[0.3em] uppercase text-xs">太陽がくれた、命のバトン</p>
+          </div>
+          
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-6 text-base md:text-lg font-medium leading-relaxed text-blue-50/90">
+              <p>2年前の夜、一本の電話が鳴りました。<br />「近くの駐車場で、犬が血まみれで倒れている」</p>
+              <p>すぐに向かうと、ライトに照らされた地面は真っ赤でした。国道で車に巻き込まれた野犬。包帯を巻く間も、命がこぼれていくような絶望的な状況でした。</p>
+              <p>緊急手術で左前脚を断脚し、なんとか一命を取り留めたその子に、私たちは<span className="text-white font-black border-b-2 border-life-green">「太陽」</span>と名付けました。</p>
+              
+              <div className="py-4">
+                <p className="text-2xl md:text-3xl font-black text-white italic leading-tight">太陽は、強い子でした。</p>
+              </div>
+
+              <p>三本脚になっても、1メートルの高さを軽々と跳び越え、誰より速く走る。そして、猫たちが自分から寄ってくるほど、穏やかな性格をしていました。散歩の帰り道、脚が疲れた太陽を何度も抱きかかえて帰ったのは、今では温かい思い出です。</p>
+              
+              <p>それから2年後。また一本の電話が鳴りました。それは、かつて太陽を救ってくれた動物病院の院長からでした。</p>
+              <p className="bg-white/10 border-l-4 border-life-red p-4 font-bold text-white">
+                「手術で、緊急に血液が必要になった。太陽の力を貸してほしい」
+              </p>
+              
+              <p>かつて自分を救ってくれた場所へ。怖がりの太陽でしたが、私たちがそばにいると、静かに供血を受け入れてくれました。あの日、地面を赤く染めた太陽の血が、今度は別の命を救うために、誰かの体の中へと繋がったのです。</p>
+              
+              <div className="pt-8">
+                <p className="text-xl font-black text-life-green mb-4">これが、私たちがABCを作った理由です。</p>
+                <p className="text-sm border border-white/20 p-6 rounded-2xl bg-white/5">
+                  ドナーが見つからずに救えない命がある。その現実を変えるために、徳島から始めます。太陽のように、助けられた命が、また誰かを助ける命になる。その連鎖を、当たり前の「仕組み」にしたい。
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 relative">
+              <div className="space-y-4">
+                <div className="rounded-[32px] overflow-hidden shadow-2xl transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-white/10">
+                  <Image src="/assets/taiyou_1.jpg" alt="Taiyou rescued" width={400} height={500} className="object-cover w-full h-48 md:h-64 scale-110 hover:scale-100 transition duration-700" />
+                </div>
+                <div className="rounded-[32px] overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition duration-500 border-4 border-white/10">
+                  <Image src="/assets/taiyou_3.jpg" alt="Taiyou smile" width={400} height={500} className="object-cover w-full h-64 md:h-80 scale-110 hover:scale-100 transition duration-700" />
+                </div>
+              </div>
+              <div className="space-y-4 pt-12">
+                <div className="rounded-[32px] overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition duration-500 border-4 border-white/10">
+                  <Image src="/assets/taiyou_5.jpg" alt="Taiyou post surgery" width={400} height={500} className="object-cover w-full h-64 md:h-80 scale-110 hover:scale-100 transition duration-700" />
+                </div>
+                <div className="rounded-[32px] overflow-hidden shadow-2xl transform -rotate-3 hover:rotate-0 transition duration-500 border-4 border-white/10">
+                  <Image src="/assets/taiyou_4.jpg" alt="Taiyou walking" width={400} height={500} className="object-cover w-full h-48 md:h-64 scale-110 hover:scale-100 transition duration-700" />
+                </div>
+              </div>
+              {/* Decorative circle */}
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-life-green/20 rounded-full blur-3xl"></div>
+            </div>
           </div>
         </div>
       </section>
@@ -359,7 +425,7 @@ export default function Home() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-70 grayscale hover:grayscale-0 transition duration-500">
             <div className="flex items-center justify-center p-6 border-2 border-gray-100 rounded-[24px] shadow-sm">
-              <span className="font-black text-gray-400">Yonnana Rescue</span>
+              <span className="font-black text-gray-400">Region A Support</span>
             </div>
             <div className="flex items-center justify-center p-6 border-2 border-gray-100 rounded-[24px] shadow-sm">
               <span className="font-black text-gray-400">Partner A</span>
@@ -398,7 +464,7 @@ export default function Home() {
             </div>
             <p className="text-blue-300 max-w-sm text-xs font-medium leading-relaxed">
               すべては動物たちの明るい未来のために。<br />
-              日本動物救済機構（JARA）が提供する非営利プロジェクトです。
+              日本動物共助機構 (AMAJ) が提供する非営利プロジェクトです。
             </p>
           </div>
 
@@ -416,7 +482,7 @@ export default function Home() {
         </div>
 
         <div className="max-w-6xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/20">
-          <p>© 2026 Japan Animal Rescue Agency (JARA)</p>
+          <p>© 2026 Animal Mutual Aid Japan (AMAJ)</p>
           <a href="mailto:animalbloodconnect@gmail.com" className="text-white/40 hover:text-white/60 transition normal-case tracking-normal">
             📧 animalbloodconnect@gmail.com
           </a>
