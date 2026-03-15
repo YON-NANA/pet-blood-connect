@@ -58,26 +58,12 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
-/* Custom Utility Classes */
+/* 基本の背景設定（位置はプログラム側で制御） */
 .hero-bg {
   background-image: url('/assets/hero-bg.png');
   background-size: cover;
-  background-position: 75% center; /* 犬猫の両方が見える位置に調整 */
+  background-position: center center;
   position: relative;
-}
-
-/* スマホ: 背景の犬猫が両方見えるように調整 */
-@media (max-width: 767px) {
-  .hero-bg {
-    background-position: 55% center !important; /* 犬と猫の鼻が合わさる中央付近を表示 */
-  }
-}
-
-/* Pixel 8 等の標準的な Android 縦画面サイズ (412px前後) への最適化 */
-@media (max-width: 420px) {
-  .hero-bg {
-    background-position: 55% center !important; 
-  }
 }
 
 .bg-paw-pattern {
