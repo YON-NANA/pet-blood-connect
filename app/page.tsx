@@ -296,7 +296,9 @@ export default function Home() {
                 {[
                   { src: "/assets/taiyou_1.jpg", alt: "Taiyou rescued", rotate: "-rotate-3" },
                   { src: "/assets/taiyou_5.jpg", alt: "Taiyou post surgery", rotate: "rotate-2" },
+                  { src: "/assets/taiyou_2.jpg", alt: "Taiyou with friends", rotate: "-rotate-2" },
                   { src: "/assets/taiyou_3.jpg", alt: "Taiyou smile", rotate: "rotate-3" },
+                  { src: "/assets/taiyou_6.jpg", alt: "Taiyou daily life", rotate: "rotate-1" },
                   { src: "/assets/taiyou_4.jpg", alt: "Taiyou walking", rotate: "-rotate-2" },
                 ].map((img, idx) => (
                   <div 
