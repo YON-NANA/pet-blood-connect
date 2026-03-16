@@ -82,7 +82,7 @@ export default function HospitalDashboard() {
         if (!confirm('この要請を取り消しますか？')) return;
         const { error } = await supabase
             .from('blood_requests')
-            .update({ status: 'closed' })
+            .update({ status: 'cancelled' })
             .eq('id', requestId);
         if (error) {
             alert('取り消しに失敗しました: ' + error.message);
