@@ -96,10 +96,10 @@ export default function StoryPage() {
                   <p className="text-xs md:text-sm text-blue-200/80 mb-4 font-bold tracking-widest uppercase">This is why we created ABC.</p>
                   <div className="border border-white/20 p-6 rounded-2xl bg-white/5 space-y-4">
                     <p className="text-sm">
-                      ドナーが見つからずに救えない命がある。その現実を変えるために、徳島から始めます。太陽のように、助けられた命が、また誰かを助ける命になる。その連鎖を、当たり前の「仕組み」にしたい。
+                      ドナーが見つからずに救えない命がある。その現実を変えるために、ここから始めます。太陽のように、助けられた命が、また誰かを助ける命になる。その連鎖を、当たり前の「仕組み」にしたい。
                     </p>
                     <p className="text-xs text-blue-200/60 leading-relaxed border-t border-white/10 pt-4">
-                      There are lives that cannot be saved simply because a donor cannot be found. We are starting from Tokushima to change this reality. Just like Taiyou, a saved life becomes a life that saves someone else. We want to turn this chain of life into a standard system.
+                      There are lives that cannot be saved simply because a donor cannot be found. We are starting from here to change this reality. Just like Taiyou, a saved life becomes a life that saves someone else. We want to turn this chain of life into a standard system.
                     </p>
                   </div>
                 </div>
