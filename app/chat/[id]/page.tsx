@@ -68,13 +68,6 @@ function ChatContent() {
             if (myProfile) setProfile(myProfile);
 
             try {
-                // 1. プロフィールと病院レコードの修復
-                await supabase.from('profiles').upsert({ id: user.id, role: 'hospital', display_name: '管理者' });
-                await supabase.from('hospitals').upsert({
-                    id: user.id, hospital_name: '代々木セントラル動物病院',
-                    phone_number: '03-1234-5678',
-                    address_prefecture: '東京都', address_city: '渋谷区', is_verified: true
-                });
 
                 // 2. ドナー情報取得
                 const { data: donorData, error: donorError } = await supabase
