@@ -36,6 +36,11 @@ export default function HospitalDashboard() {
         message: ''
     });
 
+    // 発令中の要請
+    const [activeRequests, setActiveRequests] = useState<{
+        id: string; species: string; urgency: string; blood_type: string | null; message: string | null; created_at: string;
+    }[]>([]);
+
     const fetchHospitalInfo = React.useCallback(async () => {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) {
@@ -60,6 +65,32 @@ export default function HospitalDashboard() {
             }
         }
     }, [router]);
+
+    const fetchActiveRequests = React.useCallback(async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+        const { data } = await supabase
+            .from('blood_requests')
+            .select('id, species, urgency, blood_type, message, created_at')
+            .eq('hospital_id', user.id)
+            .eq('status', 'active')
+            .order('created_at', { ascending: false });
+        if (data) setActiveRequests(data);
+    }, []);
+
+    const handleCancelRequest = async (requestId: string) => {
+        if (!confirm('この要請を取り消しますか？')) return;
+        const { error } = await supabase
+            .from('blood_requests')
+            .update({ status: 'closed' })
+            .eq('id', requestId);
+        if (error) {
+            alert('取り消しに失敗しました: ' + error.message);
+        } else {
+            setActiveRequests(prev => prev.filter(r => r.id !== requestId));
+            alert('要請を取り消しました。');
+        }
+    };
 
     const fetchMatchedCandidates = React.useCallback(async () => {
         try {
@@ -118,7 +149,8 @@ export default function HospitalDashboard() {
     useEffect(() => {
         fetchHospitalInfo();
         fetchMatchedCandidates();
-    }, [fetchHospitalInfo, fetchMatchedCandidates]);
+        fetchActiveRequests();
+    }, [fetchHospitalInfo, fetchMatchedCandidates, fetchActiveRequests]);
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
@@ -147,6 +179,7 @@ export default function HospitalDashboard() {
             setIsRequestModalOpen(false);
             // フォームリセット
             setRequestForm({ species: 'dog', blood_type: '', urgency: 'normal', message: '' });
+            fetchActiveRequests();
 
         } catch (err: unknown) {
             const message = err instanceof Error ? err.message : '不明なエラー';
@@ -249,6 +282,44 @@ export default function HospitalDashboard() {
                         <span className="mr-4 text-xl">ℹ️</span>
                         要請発令後、登録ドナーへ通知が送られ、条件を承認した候補者のみが表示されます。
                     </div>
+
+                    {/* 発令中の要請リスト */}
+                    {activeRequests.length > 0 && (
+                        <div className="mt-8 bg-red-50 border border-red-100 rounded-3xl p-6">
+                            <h2 className="text-sm font-black text-life-red uppercase tracking-widest mb-4 flex items-center">
+                                <span className="animate-pulse mr-2">🚨</span>現在発令中の要請 ({activeRequests.length}件)
+                            </h2>
+                            <div className="space-y-3">
+                                {activeRequests.map(req => (
+                                    <div key={req.id} className="bg-white rounded-2xl p-4 flex items-center justify-between border border-red-100 shadow-sm">
+                                        <div className="flex items-center space-x-4">
+                                            <span className="text-2xl">{req.species === 'dog' ? '🐶' : '🐱'}</span>
+                                            <div>
+                                                <p className="font-black text-gray-800 text-sm">
+                                                    {req.species === 'dog' ? '犬' : '猫'} ／
+                                                    <span className={`ml-2 px-2 py-0.5 rounded text-[10px] font-black uppercase ${
+                                                        req.urgency === 'emergency' ? 'bg-red-100 text-red-600' :
+                                                        req.urgency === 'urgent' ? 'bg-orange-100 text-orange-600' :
+                                                        'bg-gray-100 text-gray-500'
+                                                    }`}>
+                                                        {req.urgency === 'emergency' ? '緊急' : req.urgency === 'urgent' ? '至急' : '通常'}
+                                                    </span>
+                                                    {req.blood_type && <span className="ml-2 text-xs text-gray-400">血液型: {req.blood_type}</span>}
+                                                </p>
+                                                <p className="text-[10px] text-gray-400 mt-0.5">{new Date(req.created_at).toLocaleString('ja-JP')}</p>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() => handleCancelRequest(req.id)}
+                                            className="flex-shrink-0 bg-red-600 hover:bg-red-700 text-white font-black text-xs px-4 py-2 rounded-xl transition active:scale-95"
+                                        >
+                                            取り消す
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </header>
 
                 <section className="text-left">
