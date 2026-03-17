@@ -90,14 +90,54 @@ export default function AdminDashboard() {
     const handleDeleteUser = async (table: string, id: string, name: string) => {
         if (!confirm(`【警告】${name} をシステムから完全に削除しますか？\nこの操作は取り消せません。関連するすべてのデータが削除されます。`)) return;
         
+        setLoading(true);
         try {
-            const { error } = await supabase.from(table).delete().eq('id', id);
-            if (error) throw error;
+            // 順序: 子テーブルから先に消す (もし制約があれば)
+            // 病院の場合： hospitals -> profiles
+            // ドナーの場合： donors (profilesは飼い主なので消さない場合が多いが、管理判断)
+
+            if (table === 'hospitals') {
+                // 1. hospitalsテーブルから削除
+                const { error: hError, count: hCount } = await supabase
+                    .from('hospitals')
+                    .delete({ count: 'exact' })
+                    .eq('id', id);
+                
+                if (hError) throw hError;
+
+                // 2. profilesテーブルからも削除を試みる (オプション)
+                const { error: pError } = await supabase
+                    .from('profiles')
+                    .delete()
+                    .eq('id', id);
+
+                if (pError) {
+                    console.warn('Profiles deletion note:', pError.message);
+                }
+
+                if (hCount === 0) {
+                    throw new Error('指定された病院が見つからないか、権限により削除できませんでした。RLSポリシーが正しく適用されているか確認してください。');
+                }
+            } else if (table === 'donors') {
+                const { error, count } = await supabase
+                    .from('donors')
+                    .delete({ count: 'exact' })
+                    .eq('id', id);
+                
+                if (error) throw error;
+                if (count === 0) throw new Error('指定されたドナーが見つからないか、権限により削除できませんでした。');
+            } else {
+                const { error } = await supabase.from(table).delete().eq('id', id);
+                if (error) throw error;
+            }
             
-            alert('削除が完了しました。');
+            alert('削除が正常に完了しました。');
             window.location.reload();
         } catch (err: any) {
-            alert('削除に失敗しました: ' + err.message);
+            console.error('Delete Error:', err);
+            alert('削除に失敗しました: ' + (err.message || '不明なエラー'));
+        } finally {
+            setLoading(false);
         }
     };
 
