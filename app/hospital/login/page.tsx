@@ -15,6 +15,7 @@ export default function HospitalLogin() {
     const [prefecture, setPrefecture] = useState('徳島県');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [completed, setCompleted] = useState(false);
 
     // ── ログイン ──
     const handleLogin = async (e: React.FormEvent) => {
@@ -82,8 +83,9 @@ export default function HospitalLogin() {
                 is_verified: false, // 後から運営が確認する（使用には影響しない）
             });
 
-            // 4. ダッシュボードへ
-            router.push('/hospital/dashboard');
+            // 4. 完了画面へ
+            setCompleted(true);
+            window.scrollTo(0, 0);
         } catch (err: unknown) {
             const msg = err instanceof Error ? err.message : '不明なエラー';
             if (msg.includes('already registered') || msg.includes('already been registered')) {
@@ -105,6 +107,52 @@ export default function HospitalLogin() {
         '徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県',
         '熊本県','大分県','宮崎県','鹿児島県','沖縄県',
     ];
+
+    if (completed) {
+        return (
+            <div className="bg-gradient-to-b from-blue-50 to-gray-50 min-h-screen flex items-center justify-center px-4 font-sans">
+                <div className="max-w-md w-full bg-white rounded-[40px] shadow-2xl p-10 md:p-16 text-center border border-blue-100">
+                    <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center text-5xl mx-auto mb-8 animate-bounce">
+                        🏥
+                    </div>
+                    <div className="inline-block px-4 py-1.5 bg-blue-100 text-trust-blue text-xs font-black rounded-full uppercase tracking-widest mb-6">
+                        登録完了
+                    </div>
+                    <h1 className="text-3xl font-black text-deep-blue mb-4 tracking-tight">
+                        病院登録が完了しました
+                    </h1>
+                    <p className="text-gray-500 font-bold leading-relaxed mb-4">
+                        <span className="text-trust-blue font-black">{hospitalName}</span> 様、ご登録ありがとうございます。
+                    </p>
+                    <p className="text-gray-400 text-sm font-medium leading-relaxed mb-10">
+                        すぐにダッシュボードから供血要請の発令や、ドナー候補の確認が可能です。<br />
+                        命をつなぐネットワークへようこそ。
+                    </p>
+                    
+                    <div className="bg-green-50 rounded-2xl p-5 mb-8 text-left border border-green-100">
+                        <p className="text-xs font-black text-life-green uppercase tracking-widest mb-2">💡 次のステップ</p>
+                        <ul className="text-sm text-gray-600 font-bold space-y-2">
+                            <li>🏥 ダッシュボードで現在の要請状況を確認</li>
+                            <li>📝 「設定」から詳細情報を追加（信頼性向上）</li>
+                            <li>🚨 緊急時はその場ですぐに要請を発令可能</li>
+                        </ul>
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                        <Link href="/hospital/dashboard" className="block w-full bg-[#0F172A] text-white font-black py-4 rounded-[24px] shadow-xl hover:bg-trust-blue transition transform active:scale-95 leading-none">
+                            管理画面（ダッシュボード）へ進む
+                        </Link>
+                        <button 
+                            onClick={() => setCompleted(false)} 
+                            className="text-gray-400 font-bold py-3 hover:text-gray-600 transition text-sm"
+                        >
+                            戻る
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-gradient-to-b from-blue-50 to-gray-50 min-h-screen flex flex-col font-sans">
