@@ -62,9 +62,10 @@ export default function Register() {
         pet_name: '',
         breed: '',
         weight: '',
-        birth_date: '',
+        birth_year: '',
+        birth_month: '',
         blood_type: '',
-        prefecture: '徳島県',
+        prefecture: '',
         city: '',
         travel_distance_km: '20',
         contact_name: '',
@@ -74,6 +75,13 @@ export default function Register() {
         no_previous_transfusion: false,
         rabies_vaccination: false, // 犬のみ
     });
+
+    // 年・月 → ISO 日付文字列（YYYY-MM-DD）またはnull
+    const getBirthDateISO = (): string | null => {
+        if (!formData.birth_year) return null;
+        const month = formData.birth_month ? formData.birth_month.padStart(2, '0') : '01';
+        return `${formData.birth_year}-${month}-01`;
+    };
 
     // 種別変更時に血液型をリセット
     const handleTypeChange = (newType: string) => {
@@ -100,6 +108,7 @@ export default function Register() {
                     species: formData.type,
                     breed: formData.breed,
                     weight_kg: parseFloat(formData.weight) || 0,
+                    birth_date: getBirthDateISO(),
                     blood_type: formData.blood_type || null,
                     prefecture: formData.prefecture,
                     city: formData.city,
@@ -264,10 +273,33 @@ export default function Register() {
                                 </p>
                             </div>
                             <div>
-                                <label className="block text-xs font-black text-gray-400 mb-2 uppercase tracking-widest">生年月日・年齢 <span className="text-red-400">*</span></label>
-                                <input type="text" name="birth_date" value={formData.birth_date} onChange={handleChange}
-                                    placeholder="2020年5月生まれ（5歳）" required
-                                    className="w-full bg-gray-50 border-none rounded-2xl p-4 font-bold text-gray-800 placeholder-gray-300 focus:ring-2 focus:ring-life-red outline-none transition" />
+                                <label className="block text-xs font-black text-gray-400 mb-2 uppercase tracking-widest">生年月日（目安） <span className="text-red-400">*</span></label>
+                                <div className="flex gap-2">
+                                    <select
+                                        name="birth_year"
+                                        value={formData.birth_year}
+                                        onChange={handleChange}
+                                        required
+                                        className="flex-1 bg-gray-50 border-none rounded-2xl p-4 font-bold text-gray-800 focus:ring-2 focus:ring-life-red outline-none transition appearance-none"
+                                    >
+                                        <option value="">年を選択</option>
+                                        {Array.from({ length: 20 }, (_, i) => {
+                                            const year = new Date().getFullYear() - i;
+                                            return <option key={year} value={String(year)}>{year}年</option>;
+                                        })}
+                                    </select>
+                                    <select
+                                        name="birth_month"
+                                        value={formData.birth_month}
+                                        onChange={handleChange}
+                                        className="flex-1 bg-gray-50 border-none rounded-2xl p-4 font-bold text-gray-800 focus:ring-2 focus:ring-life-red outline-none transition appearance-none"
+                                    >
+                                        <option value="">月（任意）</option>
+                                        {Array.from({ length: 12 }, (_, i) => (
+                                            <option key={i + 1} value={String(i + 1)}>{i + 1}月</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -26,14 +26,25 @@ function LoginContent() {
 
         try {
             if (isLogin) {
-                const { error: authError } = await supabase.auth.signInWithPassword({
+                const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
                     email,
                     password,
                 });
                 if (authError) throw authError;
+
+                // ログイン成功時にプロフィールが存在することを確認/作成
+                if (authData.user) {
+                    await supabase.from('profiles').upsert({
+                        id: authData.user.id,
+                        role: 'donor', // 病院側は別ページなのでここでは donor 固定
+                        display_name: authData.user.email?.split('@')[0],
+                    }, { onConflict: 'id' });
+                }
+
                 router.push(redirectTo);
             } else {
-                const { error: authError } = await supabase.auth.signUp({
+                // 1. Auth アカウント作成
+                const { data: authData, error: authError } = await supabase.auth.signUp({
                     email,
                     password,
                     options: {
@@ -41,12 +52,37 @@ function LoginContent() {
                     },
                 });
                 if (authError) throw authError;
-                setMessage('確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。');
+
+                const userId = authData.user?.id;
+
+                if (userId) {
+                    // 2. profiles テーブルへドナーロールで登録を試みる
+                    const { error: profileError } = await supabase.from('profiles').upsert({
+                        id: userId,
+                        role: 'donor',
+                        display_name: email.split('@')[0],
+                    });
+                    
+                    if (profileError) {
+                        console.warn('Profile sync warning:', profileError.message);
+                    }
+
+                    // セッションがある場合は即時遷移
+                    if (authData.session) {
+                        router.push(redirectTo);
+                        return;
+                    }
+                }
+
+                // メール確認が必要な場合
+                setMessage('登録ありがとうございます！確認メールを送信しました。メール内のリンクをクリックして登録を完了してください。');
+                setEmail('');
+                setPassword('');
             }
         } catch (err: unknown) {
-            const message = err instanceof Error ? err.message : '不明なエラー';
-            console.error('Auth error:', message);
-            setError(message === 'Invalid login credentials' ? 'メールアドレスまたはパスワードが正しくありません。' : message);
+            const msg = err instanceof Error ? err.message : '不明なエラー';
+            console.error('Full Auth Error:', err);
+            setError(translateError(msg));
         } finally {
             setLoading(false);
         }
@@ -85,16 +121,18 @@ function LoginContent() {
                     </div>
 
                     {error && (
-                        <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-2xl text-sm mb-6 flex items-start">
-                            <span className="mr-2">⚠️</span>
-                            {error}
+                        <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-2xl text-sm mb-6 flex items-start flex-col">
+                            <div className="flex items-center">
+                                <span className="mr-2">⚠️</span>
+                                <span className="font-bold">{error}</span>
+                            </div>
                         </div>
                     )}
 
                     {message && (
                         <div className="bg-green-50 border border-green-100 text-green-700 px-4 py-4 rounded-2xl text-sm mb-6 flex items-start">
                             <span className="mr-2">✅</span>
-                            {message}
+                            <span className="font-bold">{message}</span>
                         </div>
                     )}
 
@@ -150,6 +188,29 @@ function LoginContent() {
             </main>
         </div>
     );
+}
+
+// 簡単なエラー翻訳
+function translateError(msg: string) {
+    if (msg.includes('already registered') || msg.includes('already been registered')) {
+        return 'このメールアドレスは既に登録されています。ログインをお試しください。';
+    }
+    if (msg.includes('Password should be')) {
+        return 'パスワードは6文字以上で設定してください。';
+    }
+    if (msg.includes('valid email')) {
+        return '有効なメールアドレスを入力してください。';
+    }
+    if (msg === 'Invalid login credentials') {
+        return 'メールアドレスまたはパスワードが正しくありません。';
+    }
+    if (msg.includes('rate limit')) {
+        return 'セキュリティ保護のため、一時的にブロックされています。1分ほど待ってから再度お試しいただくか、既にアカウントがある場合はログインをお試しください。';
+    }
+    if (msg.includes('Email not confirmed')) {
+        return 'メールアドレスが確認されていません。確認メールのリンクをクリックして登録を完了してください。';
+    }
+    return 'エラーが発生しました: ' + msg;
 }
 
 export default function LoginPage() {

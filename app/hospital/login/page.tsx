@@ -22,11 +22,25 @@ export default function HospitalLogin() {
         setLoading(true);
         setError(null);
         try {
-            const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+            const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
             if (authError) throw authError;
+
+            // プロフィール補完
+            if (data.user) {
+                await supabase.from('profiles').upsert({
+                    id: data.user.id,
+                    role: 'hospital',
+                }, { onConflict: 'id' });
+            }
+
             router.push('/hospital/dashboard');
-        } catch {
-            setError('メールアドレスまたはパスワードが正しくありません。');
+        } catch (err: unknown) {
+            const msg = err instanceof Error ? err.message : '';
+            if (msg.includes('Email not confirmed')) {
+                setError('メールアドレスの認証が完了していません。登録時に送信されたメール内の確認リンクをクリックしてください。');
+            } else {
+                setError('メールアドレスまたはパスワードが正しくありません。');
+            }
         } finally {
             setLoading(false);
         }
