@@ -20,6 +20,8 @@ interface Pet {
     blood_type: string | null;
     prefecture: string;
     city: string;
+    contact_name: string;
+    contact_phone: string;
     created_at: string;
 }
 
@@ -79,7 +81,9 @@ export default function MyPage() {
         weight_kg: '',
         blood_type: '',
         prefecture: '東京都',
-        city: ''
+        city: '',
+        contact_name: '',
+        contact_phone: ''
     });
 
     // ペット編集フォーム用ステータス
@@ -91,7 +95,9 @@ export default function MyPage() {
         weight_kg: '',
         blood_type: '',
         prefecture: '東京都',
-        city: ''
+        city: '',
+        contact_name: '',
+        contact_phone: ''
     });
 
     useEffect(() => {
@@ -301,7 +307,9 @@ export default function MyPage() {
                     weight_kg: Number(newDonor.weight_kg),
                     blood_type: newDonor.blood_type || null,
                     prefecture: newDonor.prefecture,
-                    city: newDonor.city
+                    city: newDonor.city,
+                    contact_name: newDonor.contact_name,
+                    contact_phone: newDonor.contact_phone
                 }])
                 .select();
 
@@ -311,7 +319,7 @@ export default function MyPage() {
                 setPets([data[0] as unknown as Pet, ...pets]);
             }
             setIsRegistering(false);
-            setNewDonor({ pet_name: '', species: 'dog', breed: '', weight_kg: '', blood_type: '', prefecture: '東京都', city: '' });
+            setNewDonor({ pet_name: '', species: 'dog', breed: '', weight_kg: '', blood_type: '', prefecture: '東京都', city: '', contact_name: '', contact_phone: '' });
             alert('ドナーペットの登録が完了しました。');
         } catch (err: unknown) {
             const message = err instanceof Error ? err.message : '不明なエラー';
@@ -328,7 +336,9 @@ export default function MyPage() {
             weight_kg: String(pet.weight_kg),
             blood_type: pet.blood_type || '',
             prefecture: pet.prefecture || '東京都',
-            city: pet.city || ''
+            city: pet.city || '',
+            contact_name: pet.contact_name || '',
+            contact_phone: pet.contact_phone || ''
         });
     };
 
@@ -346,7 +356,9 @@ export default function MyPage() {
                     weight_kg: Number(editDonor.weight_kg),
                     blood_type: editDonor.blood_type || null,
                     prefecture: editDonor.prefecture,
-                    city: editDonor.city
+                    city: editDonor.city,
+                    contact_name: editDonor.contact_name,
+                    contact_phone: editDonor.contact_phone
                 })
                 .eq('id', editingPetId)
                 .select();
@@ -781,6 +793,30 @@ export default function MyPage() {
                                     />
                                 </div>
                             </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Owner Name</label>
+                                    <input
+                                        type="text"
+                                        value={newDonor.contact_name}
+                                        onChange={e => setNewDonor({ ...newDonor, contact_name: e.target.value })}
+                                        className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
+                                        placeholder="山田 太郎"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        value={newDonor.contact_phone}
+                                        onChange={e => setNewDonor({ ...newDonor, contact_phone: e.target.value })}
+                                        className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
+                                        placeholder="090-1234-5678"
+                                        required
+                                    />
+                                </div>
+                            </div>
 
                             <button
                                 type="submit"
@@ -851,6 +887,29 @@ export default function MyPage() {
                                         step="0.1"
                                         value={editDonor.weight_kg}
                                         onChange={e => setEditDonor({ ...editDonor, weight_kg: e.target.value })}
+                                        className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Owner Name</label>
+                                    <input
+                                        type="text"
+                                        value={editDonor.contact_name}
+                                        onChange={e => setEditDonor({ ...editDonor, contact_name: e.target.value })}
+                                        className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        value={editDonor.contact_phone}
+                                        onChange={e => setEditDonor({ ...editDonor, contact_phone: e.target.value })}
                                         className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
                                         required
                                     />

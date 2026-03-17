@@ -311,7 +311,7 @@ export default function AdminDashboard() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-8 py-6 text-white/60 font-black text-xs">{d.contact_name}</td>
+                                        <td className="px-8 py-6 text-white/60 font-black text-xs">{d.contact_name || '(未登録)'}</td>
                                         <td className="px-8 py-6 text-white/40 text-[10px] tracking-widest">{d.contact_phone || '(未登録)'}</td>
                                         <td className="px-8 py-6 text-white/40 text-xs">{d.prefecture} {d.city}</td>
                                         <td className="px-8 py-6 text-right">
