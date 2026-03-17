@@ -68,16 +68,13 @@ export default function AdminDashboard() {
                     supabase.from('matches').select('*, hospitals(hospital_name), donors(pet_name)').order('created_at', { ascending: false })
                 ]);
 
-                if (hospRes.error) console.error('Hospitals fetch error:', hospRes.error);
-                if (donorRes.error) console.error('Donors fetch error:', donorRes.error);
-                if (matchRes.error) console.error('Matches fetch error:', matchRes.error);
-
                 if (hospRes.data) setHospitals(hospRes.data);
                 if (donorRes.data) setDonors(donorRes.data);
                 if (matchRes.data) setMatches(matchRes.data);
 
                 if (hospRes.error || donorRes.error || matchRes.error) {
-                    setError('データの取得中にエラーが発生しました。RLS（権限設定）を確認してください。');
+                    const e = hospRes.error || donorRes.error || matchRes.error;
+                    setError(`データの取得中にエラーが発生しました (${e?.code}: ${e?.message})。RLS（権限設定）を確認してください。`);
                 }
 
             } catch (err: any) {
