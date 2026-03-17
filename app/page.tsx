@@ -31,6 +31,9 @@ export default function Home() {
 
     // 統計データの取得
     const fetchStats = async () => {
+      const now = new Date();
+      const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+
       const [
         { count: donorCount },
         { count: hospitalCount },
@@ -38,7 +41,9 @@ export default function Home() {
       ] = await Promise.all([
         supabase.from('donors').select('*', { count: 'exact', head: true }),
         supabase.from('hospitals').select('*', { count: 'exact', head: true }),
-        supabase.from('matches').select('*', { count: 'exact', head: true }).eq('status', 'completed')
+        supabase.from('matches').select('*', { count: 'exact', head: true })
+          .eq('status', 'completed')
+          .gte('created_at', firstDayOfMonth)
       ]);
 
       setStats({

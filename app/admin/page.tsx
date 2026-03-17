@@ -30,6 +30,16 @@ interface Donor {
     created_at?: string;
 }
 
+interface Match {
+    id: string;
+    hospital_id: string;
+    donor_id: string;
+    status: string;
+    created_at: string;
+    hospitals?: { hospital_name: string };
+    donors?: { pet_name: string };
+}
+
 export default function AdminDashboard() {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
@@ -38,7 +48,7 @@ export default function AdminDashboard() {
     
     const [hospitals, setHospitals] = useState<Hospital[]>([]);
     const [donors, setDonors] = useState<Donor[]>([]);
-    const [matches, setMatches] = useState<any[]>([]);
+    const [matches, setMatches] = useState<Match[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -77,9 +87,10 @@ export default function AdminDashboard() {
                     setError(`データの取得中にエラーが発生しました (${e?.code}: ${e?.message})。RLS（権限設定）を確認してください。`);
                 }
 
-            } catch (err: any) {
+            } catch (err: unknown) {
                 console.error('Admin Fetch Error:', err);
-                setError('予期せぬエラーが発生しました: ' + err.message);
+                const msg = err instanceof Error ? err.message : '不明なエラー';
+                setError('予期せぬエラーが発生しました: ' + msg);
             } finally {
                 setLoading(false);
             }
@@ -145,9 +156,9 @@ export default function AdminDashboard() {
             
             alert('関連データを含め、すべての削除が完了しました。');
             window.location.reload();
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Delete Error:', err);
-            let msg = err.message || '不明なエラー';
+            let msg = err instanceof Error ? err.message : '不明なエラー';
             if (msg.includes('foreign key constraint')) {
                 msg = '関連するデータ（要請や相談履歴）が残っているため削除できません。関連データを先に削除するか、データベースの設定を確認してください。';
             }
@@ -225,7 +236,7 @@ export default function AdminDashboard() {
                     ].map((t) => (
                         <button
                             key={t.id}
-                            onClick={() => setActiveTab(t.id as any)}
+                            onClick={() => setActiveTab(t.id as 'hospitals' | 'donors' | 'matches')}
                             className={`px-8 py-3 rounded-xl font-black text-xs tracking-widest uppercase transition-all duration-300 ${activeTab === t.id ? 'bg-life-red text-white shadow-lg' : 'text-white/40 hover:text-white/60'}`}
                         >
                             {t.label}
@@ -282,7 +293,8 @@ export default function AdminDashboard() {
                             <thead className="bg-white/5 text-[10px] font-black text-white/30 uppercase tracking-[0.2em] border-b border-white/10">
                                 <tr>
                                     <th className="px-8 py-6">ペット / 品種</th>
-                                    <th className="px-8 py-6">飼い主</th>
+                                    <th className="px-8 py-6">飼い主名</th>
+                                    <th className="px-8 py-6">電話番号</th>
                                     <th className="px-8 py-6">所在地</th>
                                     <th className="px-8 py-6 text-right">Actions</th>
                                 </tr>
@@ -299,10 +311,8 @@ export default function AdminDashboard() {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-8 py-6">
-                                            <div className="text-white/60 font-black text-xs">{d.contact_name}</div>
-                                            <div className="text-[10px] text-white/30 mt-1 uppercase tracking-widest">{d.contact_phone}</div>
-                                        </td>
+                                        <td className="px-8 py-6 text-white/60 font-black text-xs">{d.contact_name}</td>
+                                        <td className="px-8 py-6 text-white/40 text-[10px] tracking-widest">{d.contact_phone || '(未登録)'}</td>
                                         <td className="px-8 py-6 text-white/40 text-xs">{d.prefecture} {d.city}</td>
                                         <td className="px-8 py-6 text-right">
                                             <button 

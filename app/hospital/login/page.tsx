@@ -143,6 +143,15 @@ export default function HospitalLogin() {
                             管理画面（ダッシュボード）へ進む
                         </Link>
                         <button 
+                            onClick={() => {
+                                setTab('login');
+                                setCompleted(false);
+                            }} 
+                            className="bg-white border-2 border-gray-100 text-gray-500 font-black py-4 rounded-[24px] hover:bg-gray-50 transition transform active:scale-95 leading-none"
+                        >
+                            ログイン画面へ戻る
+                        </button>
+                        <button 
                             onClick={() => setCompleted(false)} 
                             className="text-gray-400 font-bold py-3 hover:text-gray-600 transition text-sm"
                         >

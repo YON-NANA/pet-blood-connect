@@ -341,13 +341,13 @@ function ChatContent() {
                         </svg>
                     </button>
                     <div className="flex items-center">
-                        <div className="w-11 h-11 bg-red-50 rounded-2xl flex items-center justify-center text-2xl mr-3 shadow-sm border border-red-100/50">
+                        <div className={`w-11 h-11 ${donor?.species === 'dog' ? 'bg-orange-50' : 'bg-blue-50'} rounded-2xl flex items-center justify-center text-2xl mr-3 shadow-sm border ${donor?.species === 'dog' ? 'border-orange-100/50' : 'border-blue-100/50'}`}>
                             {donor?.species === 'dog' ? '🐶' : '🐱'}
                         </div>
                         <div>
                             <div className="flex items-center space-x-2">
                                 <h1 className="text-base font-black text-gray-900 tracking-tight leading-none">
-                                    {donor?.pet_name}
+                                    {donor?.species === 'dog' ? '犬' : '猫'}の「{donor?.pet_name}」さん
                                 </h1>
                                 <span className="px-2 py-0.5 bg-gray-100 text-[10px] font-black text-gray-400 rounded-md uppercase tracking-wider">
                                     {donor?.breed}
@@ -355,10 +355,12 @@ function ChatContent() {
                             </div>
                             <div className="flex items-center space-x-1.5 mt-1.5">
                                 <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-life-green opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-life-green"></span>
+                                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${donor?.species === 'dog' ? 'bg-orange-400' : 'bg-blue-400'} opacity-75`}></span>
+                                    <span className={`relative inline-flex rounded-full h-2 w-2 ${donor?.species === 'dog' ? 'bg-orange-500' : 'bg-blue-500'}`}></span>
                                 </span>
-                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.1em]">Online / 相談受付中</span>
+                                <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.1em]">
+                                    {donor?.species === 'dog' ? 'Dog' : 'Cat'} Blood Connect / チャット中
+                                </span>
                             </div>
                         </div>
                     </div>
