@@ -459,7 +459,7 @@ export default function HospitalDashboard() {
                                     <label className="block text-[10px] font-black text-gray-400 mb-2 uppercase tracking-widest leading-none">希望血液型（任意）</label>
                                     <input
                                         type="text"
-                                        placeholder="例: DEA1.1 positivo / A型"
+                                        placeholder={requestForm.species === 'dog' ? '例: DEA1.1+ / DEA1.1-' : '例: A型 / B型 / AB型'}
                                         value={requestForm.blood_type}
                                         onChange={(e) => setRequestForm({ ...requestForm, blood_type: e.target.value })}
                                         className="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-4 text-sm font-bold focus:border-trust-blue outline-none transition"

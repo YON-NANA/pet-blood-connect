@@ -6,19 +6,9 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 
-const DOG_BLOOD_TYPES = [
-    { value: '', label: '不明 / まだ検査していない' },
-    { value: 'DEA1.1+', label: 'DEA 1.1 陽性 (+) ※最多' },
-    { value: 'DEA1.1-', label: 'DEA 1.1 陰性 (-) ※希少・特に重要' },
-    { value: 'other_dog', label: 'その他' },
-];
+// DOG_BLOOD_TYPES and CAT_BLOOD_TYPES handled inline via bloodTypes for responsiveness
 
-const CAT_BLOOD_TYPES = [
-    { value: '', label: '不明 / まだ検査していない' },
-    { value: 'A', label: 'A型 ※約90%の猫' },
-    { value: 'B', label: 'B型 ※希少・危険な組み合わせあり' },
-    { value: 'AB', label: 'AB型 ※極めて希少' },
-];
+
 
 const TRAVEL_DISTANCES = [
     { value: '5', label: '5km以内（地元のみ）' },
@@ -146,7 +136,21 @@ export default function Register() {
         }
     };
 
-    const bloodTypes = formData.type === 'dog' ? DOG_BLOOD_TYPES : CAT_BLOOD_TYPES;
+    const bloodTypes = formData.type === 'dog' ? [
+        { value: '', label: '不明 / まだ検査していない' },
+        { value: 'DEA1.1+', label: 'DEA 1.1 陽性 (+)' },
+        { value: 'DEA1.1-', label: 'DEA 1.1 陰性 (-)' },
+        { value: 'DEA1.2', label: 'DEA 1.2' },
+        { value: 'DEA3', label: 'DEA 3' },
+        { value: 'DEA4', label: 'DEA 4' },
+        { value: 'DEA5', label: 'DEA 5' },
+        { value: 'DEA7', label: 'DEA 7' },
+    ] : [
+        { value: '', label: '不明 / まだ検査していない' },
+        { value: 'A', label: 'A型' },
+        { value: 'B', label: 'B型' },
+        { value: 'AB', label: 'AB型' },
+    ];
 
     // ✅ 登録完了画面
     if (completed) {

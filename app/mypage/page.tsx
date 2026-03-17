@@ -750,11 +750,23 @@ export default function MyPage() {
                                         className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
                                     >
                                         <option value="">不明</option>
-                                        <option value="DEA1.1+">DEA 1.1 + (犬)</option>
-                                        <option value="DEA1.1-">DEA 1.1 - (犬)</option>
-                                        <option value="A">A型 (猫)</option>
-                                        <option value="B">B型 (猫)</option>
-                                        <option value="AB">AB型 (猫)</option>
+                                        {newDonor.species === 'dog' ? (
+                                            <>
+                                                <option value="DEA1.1+">DEA 1.1 +</option>
+                                                <option value="DEA1.1-">DEA 1.1 -</option>
+                                                <option value="DEA1.2">DEA 1.2</option>
+                                                <option value="DEA3">DEA 3</option>
+                                                <option value="DEA4">DEA 4</option>
+                                                <option value="DEA5">DEA 5</option>
+                                                <option value="DEA7">DEA 7</option>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <option value="A">A型</option>
+                                                <option value="B">B型</option>
+                                                <option value="AB">AB型</option>
+                                            </>
+                                        )}
                                     </select>
                                 </div>
                                 <div>
@@ -854,11 +866,23 @@ export default function MyPage() {
                                         className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
                                     >
                                         <option value="">不明</option>
-                                        <option value="DEA1.1+">DEA 1.1 + (犬)</option>
-                                        <option value="DEA1.1-">DEA 1.1 - (犬)</option>
-                                        <option value="A">A型 (猫)</option>
-                                        <option value="B">B型 (猫)</option>
-                                        <option value="AB">AB型 (猫)</option>
+                                        {editDonor.species === 'dog' ? (
+                                            <>
+                                                <option value="DEA1.1+">DEA 1.1 +</option>
+                                                <option value="DEA1.1-">DEA 1.1 -</option>
+                                                <option value="DEA1.2">DEA 1.2</option>
+                                                <option value="DEA3">DEA 3</option>
+                                                <option value="DEA4">DEA 4</option>
+                                                <option value="DEA5">DEA 5</option>
+                                                <option value="DEA7">DEA 7</option>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <option value="A">A型</option>
+                                                <option value="B">B型</option>
+                                                <option value="AB">AB型</option>
+                                            </>
+                                        )}
                                     </select>
                                 </div>
                                 <div>
