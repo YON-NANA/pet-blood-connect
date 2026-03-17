@@ -17,6 +17,7 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeRequests, setActiveRequests] = useState<ActiveRequest[]>([]);
+  const [stats, setStats] = useState({ donors: 0, livesSaved: 0, hospitals: 0 });
 
   useEffect(() => {
     // 認証状態の監視
@@ -27,6 +28,26 @@ export default function Home() {
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user);
     });
+
+    // 統計データの取得
+    const fetchStats = async () => {
+      const [
+        { count: donorCount },
+        { count: hospitalCount },
+        { count: completedMatchCount }
+      ] = await Promise.all([
+        supabase.from('donors').select('*', { count: 'exact', head: true }),
+        supabase.from('hospitals').select('*', { count: 'exact', head: true }),
+        supabase.from('matches').select('*', { count: 'exact', head: true }).eq('status', 'completed')
+      ]);
+
+      setStats({
+        donors: donorCount || 0,
+        hospitals: hospitalCount || 0,
+        livesSaved: completedMatchCount || 0
+      });
+    };
+    fetchStats();
 
     // アクティブな緊急要請を取得
     supabase
@@ -275,15 +296,15 @@ export default function Home() {
           {/* Stats */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-8 text-center bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
             <div>
-              <div className="text-3xl font-bold text-white">128</div>
+              <div className="text-3xl font-bold text-white">{stats.donors}</div>
               <div className="text-sm text-gray-300">現在の登録ドナー数</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-white">15</div>
+              <div className="text-3xl font-bold text-white">{stats.livesSaved}</div>
               <div className="text-sm text-gray-300">今月救われた命</div>
             </div>
             <div className="col-span-2 md:col-span-1">
-              <div className="text-3xl font-bold text-white">42</div>
+              <div className="text-3xl font-bold text-white">{stats.hospitals}</div>
               <div className="text-sm text-gray-300">提携動物病院</div>
             </div>
           </div>
