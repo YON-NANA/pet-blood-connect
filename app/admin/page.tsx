@@ -39,6 +39,7 @@ export default function AdminDashboard() {
     const [hospitals, setHospitals] = useState<Hospital[]>([]);
     const [donors, setDonors] = useState<Donor[]>([]);
     const [matches, setMatches] = useState<any[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function checkAdminAndFetch() {
@@ -61,18 +62,27 @@ export default function AdminDashboard() {
                 setIsAdmin(true);
 
                 // 全データの取得
-                const [hospData, donorData, matchData] = await Promise.all([
+                const [hospRes, donorRes, matchRes] = await Promise.all([
                     supabase.from('hospitals').select('*').order('created_at', { ascending: false }),
                     supabase.from('donors').select('*').order('created_at', { ascending: false }),
                     supabase.from('matches').select('*, hospitals(hospital_name), donors(pet_name)').order('created_at', { ascending: false })
                 ]);
 
-                if (hospData.data) setHospitals(hospData.data);
-                if (donorData.data) setDonors(donorData.data);
-                if (matchData.data) setMatches(matchData.data);
+                if (hospRes.error) console.error('Hospitals fetch error:', hospRes.error);
+                if (donorRes.error) console.error('Donors fetch error:', donorRes.error);
+                if (matchRes.error) console.error('Matches fetch error:', matchRes.error);
 
-            } catch (err) {
+                if (hospRes.data) setHospitals(hospRes.data);
+                if (donorRes.data) setDonors(donorRes.data);
+                if (matchRes.data) setMatches(matchRes.data);
+
+                if (hospRes.error || donorRes.error || matchRes.error) {
+                    setError('データの取得中にエラーが発生しました。RLS（権限設定）を確認してください。');
+                }
+
+            } catch (err: any) {
                 console.error('Admin Fetch Error:', err);
+                setError('予期せぬエラーが発生しました: ' + err.message);
             } finally {
                 setLoading(false);
             }
@@ -140,6 +150,18 @@ export default function AdminDashboard() {
                         </div>
                     ))}
                 </div>
+
+                {/* Error Message */}
+                {error && (
+                    <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-6 rounded-[30px] mb-12 flex items-start">
+                        <span className="mr-3 text-xl">⚠️</span>
+                        <div>
+                            <p className="font-black text-sm uppercase tracking-widest mb-1">Data Fetch Error</p>
+                            <p className="font-medium text-xs opacity-80 leading-relaxed">{error}</p>
+                            <p className="mt-2 text-[10px] opacity-60">※SupabaseのRLS（行単位セキュリティ）により、閲覧権限が制限されている可能性があります。</p>
+                        </div>
+                    </div>
+                )}
 
                 {/* Tabs */}
                 <div className="flex space-x-2 mb-10 bg-white/5 p-1 rounded-2xl w-fit border border-white/5">
