@@ -12,7 +12,7 @@ interface Hospital {
     address_prefecture: string;
     address_city: string;
     phone_number: string;
-    created_at: string;
+    created_at?: string;
     is_verified: boolean;
 }
 
@@ -27,7 +27,7 @@ interface Donor {
     city: string;
     contact_name: string;
     contact_phone: string;
-    created_at: string;
+    created_at?: string;
 }
 
 export default function AdminDashboard() {
@@ -63,9 +63,9 @@ export default function AdminDashboard() {
 
                 // 全データの取得
                 const [hospRes, donorRes, matchRes] = await Promise.all([
-                    supabase.from('hospitals').select('*').order('created_at', { ascending: false }),
-                    supabase.from('donors').select('*').order('created_at', { ascending: false }),
-                    supabase.from('matches').select('*, hospitals(hospital_name), donors(pet_name)').order('created_at', { ascending: false })
+                    supabase.from('hospitals').select('*'),
+                    supabase.from('donors').select('*'),
+                    supabase.from('matches').select('*, hospitals(hospital_name), donors(pet_name)')
                 ]);
 
                 if (hospRes.data) setHospitals(hospRes.data);
@@ -198,7 +198,7 @@ export default function AdminDashboard() {
                                             <div className="text-[11px] text-white/40">{h.address_prefecture} {h.address_city}</div>
                                         </td>
                                         <td className="px-8 py-6 text-white/60">{h.phone_number || '(未登録)'}</td>
-                                        <td className="px-8 py-6 text-white/30 text-xs">{new Date(h.created_at).toLocaleDateString('ja-JP')}</td>
+                                        <td className="px-8 py-6 text-white/30 text-xs">{h.created_at ? new Date(h.created_at).toLocaleDateString('ja-JP') : '-'}</td>
                                         <td className="px-8 py-6">
                                             <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${h.is_verified ? 'bg-life-green/10 text-life-green' : 'bg-orange-500/10 text-orange-400'}`}>
                                                 {h.is_verified ? 'Verified' : 'Pending'}
@@ -297,7 +297,7 @@ export default function AdminDashboard() {
                                                 {m.status}
                                             </span>
                                         </td>
-                                        <td className="px-8 py-6 text-white/30 text-xs">{new Date(m.created_at).toLocaleDateString('ja-JP')}</td>
+                                        <td className="px-8 py-6 text-white/30 text-xs">{m.created_at ? new Date(m.created_at).toLocaleDateString('ja-JP') : '-'}</td>
                                         <td className="px-8 py-6 text-right">
                                             <button 
                                                 className="text-white/20 hover:text-white transition font-black text-[10px] uppercase tracking-widest underline underline-offset-4"
