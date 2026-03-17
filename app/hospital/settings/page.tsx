@@ -85,8 +85,7 @@ export default function HospitalSettings() {
                     address_detail: formData.address_detail,
                     phone_number: formData.phone_number,
                     website_url: formData.website_url,
-                    description: formData.description,
-                    updated_at: new Date().toISOString()
+                    description: formData.description
                 })
                 .eq('id', userId);
 
