@@ -78,7 +78,8 @@ export default function HospitalSettings() {
         try {
             const { error } = await supabase
                 .from('hospitals')
-                .update({
+                .upsert({
+                    id: userId,
                     hospital_name: formData.hospital_name,
                     address_prefecture: formData.address_prefecture,
                     address_city: formData.address_city,
@@ -86,8 +87,7 @@ export default function HospitalSettings() {
                     phone_number: formData.phone_number,
                     website_url: formData.website_url,
                     description: formData.description
-                })
-                .eq('id', userId);
+                });
 
             if (error) throw error;
 
