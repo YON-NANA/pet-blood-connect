@@ -88,16 +88,24 @@ export default function AdminDashboard() {
     }, [router]);
 
     const handleDeleteUser = async (table: string, id: string, name: string) => {
-        if (!confirm(`【警告】${name} をシステムから完全に削除しますか？\nこの操作は取り消せません。関連するすべてのデータが削除されます。`)) return;
+        if (!confirm(`【警告】${name} をシステムから完全に削除しますか？\nこの操作は取り消せません。過去の要請やチャット履歴もすべて削除されます。`)) return;
         
         setLoading(true);
         try {
-            // 順序: 子テーブルから先に消す (もし制約があれば)
-            // 病院の場合： hospitals -> profiles
-            // ドナーの場合： donors (profilesは飼い主なので消さない場合が多いが、管理判断)
-
             if (table === 'hospitals') {
-                // 1. hospitalsテーブルから削除
+                // 1. マッチングに紐づくメッセージを削除
+                const { data: mIds } = await supabase.from('matches').select('id').eq('hospital_id', id);
+                if (mIds && mIds.length > 0) {
+                    const ids = mIds.map(m => m.id);
+                    await supabase.from('messages').delete().in('match_id', ids);
+                    // 2. マッチング自体を削除
+                    await supabase.from('matches').delete().in('id', ids);
+                }
+
+                // 3. 供血要請を削除
+                await supabase.from('blood_requests').delete().eq('hospital_id', id);
+
+                // 4. 病院情報を削除
                 const { error: hError, count: hCount } = await supabase
                     .from('hospitals')
                     .delete({ count: 'exact' })
@@ -105,20 +113,27 @@ export default function AdminDashboard() {
                 
                 if (hError) throw hError;
 
-                // 2. profilesテーブルからも削除を試みる (オプション)
+                // 5. プロフィールを削除 (ログイン権限の初期化)
                 const { error: pError } = await supabase
                     .from('profiles')
                     .delete()
                     .eq('id', id);
 
-                if (pError) {
-                    console.warn('Profiles deletion note:', pError.message);
-                }
+                if (pError) console.warn('Profiles cleanup note:', pError.message);
 
                 if (hCount === 0) {
-                    throw new Error('指定された病院が見つからないか、権限により削除できませんでした。RLSポリシーが正しく適用されているか確認してください。');
+                    throw new Error('指定された病院が見つからないか、権限により削除できませんでした。');
                 }
             } else if (table === 'donors') {
+                // 1. ドナーに関連するマッチングとメッセージを削除
+                const { data: mIds } = await supabase.from('matches').select('id').eq('donor_id', id);
+                if (mIds && mIds.length > 0) {
+                    const ids = mIds.map(m => m.id);
+                    await supabase.from('messages').delete().in('match_id', ids);
+                    await supabase.from('matches').delete().in('id', ids);
+                }
+
+                // 2. ドナー情報を削除
                 const { error, count } = await supabase
                     .from('donors')
                     .delete({ count: 'exact' })
@@ -126,16 +141,17 @@ export default function AdminDashboard() {
                 
                 if (error) throw error;
                 if (count === 0) throw new Error('指定されたドナーが見つからないか、権限により削除できませんでした。');
-            } else {
-                const { error } = await supabase.from(table).delete().eq('id', id);
-                if (error) throw error;
             }
             
-            alert('削除が正常に完了しました。');
+            alert('関連データを含め、すべての削除が完了しました。');
             window.location.reload();
         } catch (err: any) {
             console.error('Delete Error:', err);
-            alert('削除に失敗しました: ' + (err.message || '不明なエラー'));
+            let msg = err.message || '不明なエラー';
+            if (msg.includes('foreign key constraint')) {
+                msg = '関連するデータ（要請や相談履歴）が残っているため削除できません。関連データを先に削除するか、データベースの設定を確認してください。';
+            }
+            alert('削除に失敗しました: ' + msg);
         } finally {
             setLoading(false);
         }
