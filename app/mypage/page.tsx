@@ -445,8 +445,11 @@ export default function MyPage() {
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {activeRequests.map(req => {
-                                        // この病院とすでにマッチング済みかどうかを確認
-                                        const existingMatch = matches.find(m => m.hospital_id === req.hospital_id);
+                                        // この病院 かつ 「同じ動物種（犬・猫）」のペットですでにマッチング済みかどうかを確認
+                                        const existingMatch = matches.find(m => 
+                                            m.hospital_id === req.hospital_id && 
+                                            pets.find(p => p.id === m.donor_id)?.species === req.species
+                                        );
                                         const isAlreadyMatched = !!existingMatch;
 
                                         return (
@@ -479,7 +482,14 @@ export default function MyPage() {
                                                 ) : (
                                                     // 未対応の場合は二段階承認へ
                                                     <button
-                                                        onClick={() => setSelectedRequest(req)}
+                                                        onClick={() => {
+                                                            setSelectedRequest(req);
+                                                            // 要請と同じ種類のペットをデフォルトで選択
+                                                            const firstMatchingPet = pets.find(p => p.species === req.species);
+                                                            if (firstMatchingPet) {
+                                                                setSelectedPetId(firstMatchingPet.id);
+                                                            }
+                                                        }}
                                                         className="w-full py-4 bg-life-red text-white rounded-2xl font-black text-xs tracking-widest uppercase shadow-lg shadow-red-100 hover:bg-black transition transform active:scale-95"
                                                     >
                                                         要請に応じる（二段階承認へ）
@@ -594,11 +604,14 @@ export default function MyPage() {
                                     onChange={(e) => setSelectedPetId(e.target.value)}
                                     className="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-4 text-sm font-bold focus:border-life-red outline-none transition appearance-none"
                                 >
-                                    {pets.map(pet => (
+                                    {pets.filter(p => p.species === selectedRequest.species).map(pet => (
                                         <option key={pet.id} value={pet.id}>
                                             {pet.pet_name} ({pet.species === 'dog' ? '犬' : '猫'} / {pet.blood_type || '血液型不明'})
                                         </option>
                                     ))}
+                                    {pets.filter(p => p.species === selectedRequest.species).length === 0 && (
+                                        <option value="">対象のペットが登録されていません</option>
+                                    )}
                                 </select>
                             </div>
 
