@@ -175,7 +175,42 @@ export default function HospitalDashboard() {
 
             if (error) throw error;
 
-            alert('供血要請を発令しました。近隣の登録ドナーへ通知されます。');
+            // 📢 プッシュ通知の送信プロセス
+            try {
+                // 1. 該当する種類のペットを登録している飼い主のIDを取得
+                const { data: targetDonors } = await supabase
+                    .from('donors')
+                    .select('owner_id')
+                    .eq('species', requestForm.species);
+
+                if (targetDonors && targetDonors.length > 0) {
+                    const uniqueOwnerIds = Array.from(new Set(targetDonors.map(d => d.owner_id)));
+                    
+                    // 2. 購読（Subscription）情報を取得
+                    const { data: subs } = await supabase
+                        .from('push_subscriptions')
+                        .select('subscription')
+                        .in('user_id', uniqueOwnerIds);
+
+                    if (subs && subs.length > 0) {
+                        // 3. APIルート経由でプッシュ送信
+                        await fetch('/api/push/send', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                subscriptions: subs.map(s => s.subscription),
+                                title: `🚨 緊急供血要請 (${requestForm.species === 'dog' ? '犬' : '猫'})`,
+                                body: `${hospitalName}より要請: ${requestForm.message || '至急対応可能なドナーを探しています'}`,
+                                url: '/mypage'
+                            })
+                        });
+                    }
+                }
+            } catch (pushErr) {
+                console.error('Push notification failed:', pushErr);
+            }
+
+            alert('供血要請を発令しました。登録ドナーへプッシュ通知が送信されます。');
             setIsRequestModalOpen(false);
             // フォームリセット
             setRequestForm({ species: 'dog', blood_type: '', urgency: 'normal', message: '' });

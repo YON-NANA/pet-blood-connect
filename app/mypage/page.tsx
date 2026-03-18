@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { subscribeToNotifications } from '@/lib/push-notifications';
 
 interface Profile {
     display_name: string | null;
@@ -428,8 +429,14 @@ export default function MyPage() {
                             </div>
 
                             <div className="pt-6 border-t border-gray-50 space-y-2 relative z-10">
-                                <button className="w-full py-4 bg-gray-50 hover:bg-gray-100 text-gray-500 rounded-2xl text-[11px] font-black tracking-widest uppercase transition">
+                                <button className="w-full py-4 bg-gray-50 hover:bg-gray-100 text-gray-500 rounded-2xl text-[11px] font-black tracking-widest uppercase transition mb-2">
                                     Edit Profile
+                                </button>
+                                <button 
+                                    onClick={subscribeToNotifications}
+                                    className="w-full py-4 bg-trust-blue text-white rounded-2xl text-[11px] font-black tracking-widest uppercase transition shadow-lg shadow-blue-100"
+                                >
+                                    通知を有効にする
                                 </button>
                             </div>
                         </div>
