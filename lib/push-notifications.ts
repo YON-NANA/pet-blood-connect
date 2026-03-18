@@ -54,11 +54,14 @@ export async function subscribeToNotifications() {
 
         if (error) {
             console.error('Error saving subscription:', error);
+            alert(`通知設定の保存に失敗しました: ${error.message}\n※データベースに push_subscriptions テーブルが作成されているか確認してください。`);
         } else {
-            console.log('Push notification subscription successful');
+            alert('✅ 通信設定が有効になりました！緊急要請などの通知を受け取れます。');
         }
 
     } catch (error) {
         console.error('Error subscribing to push notifications:', error);
+        const msg = error instanceof Error ? error.message : String(error);
+        alert(`通知の登録中にエラーが発生しました: ${msg}`);
     }
 }

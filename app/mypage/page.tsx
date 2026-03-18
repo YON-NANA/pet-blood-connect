@@ -63,6 +63,7 @@ export default function MyPage() {
     const [matches, setMatches] = useState<Match[]>([]);
     const [activeRequests, setActiveRequests] = useState<BloodRequest[]>([]);
     const [selectedRequest, setSelectedRequest] = useState<BloodRequest | null>(null);
+    const [isSubscribed, setIsSubscribed] = useState(false);
 
     // 二段階承認のチェックリスト
     const [approvalChecks, setApprovalChecks] = useState({
@@ -142,6 +143,14 @@ export default function MyPage() {
                     .eq('status', 'active')
                     .order('created_at', { ascending: false });
                 if (requestsData) setActiveRequests(requestsData as unknown as BloodRequest[]);
+
+                // 🔔 Push Subscription Check
+                const { data: subData } = await supabase
+                    .from('push_subscriptions')
+                    .select('user_id')
+                    .eq('user_id', user.id)
+                    .single();
+                if (subData) setIsSubscribed(true);
 
                 // Matches - 自分のペット(ドナー)のIDリストで絞り込む
                 // まずpetsDataからIDを取得
@@ -433,11 +442,18 @@ export default function MyPage() {
                                     Edit Profile
                                 </button>
                                 <button 
-                                    onClick={subscribeToNotifications}
-                                    className="w-full py-4 bg-trust-blue text-white rounded-2xl text-[11px] font-black tracking-widest uppercase transition shadow-lg shadow-blue-100"
+                                    onClick={async () => {
+                                        await subscribeToNotifications();
+                                        // 登録後に状態を再チェックするように促すか、簡易的にtrueにする
+                                        setIsSubscribed(true);
+                                    }}
+                                    className={`w-full py-4 ${isSubscribed ? 'bg-green-500' : 'bg-trust-blue'} text-white rounded-2xl text-[11px] font-black tracking-widest uppercase transition shadow-lg shadow-blue-100`}
                                 >
-                                    通知を有効にする
+                                    {isSubscribed ? '✅ 通知は有効です' : '🔔 通知を有効にする'}
                                 </button>
+                                {isSubscribed && (
+                                    <p className="text-[10px] text-green-600 font-bold mt-2">緊急要請をリアルタイムで受信できます</p>
+                                )}
                             </div>
                         </div>
 
