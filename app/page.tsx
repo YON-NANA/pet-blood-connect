@@ -500,7 +500,7 @@ export default function Home() {
             <div className="flex flex-col space-y-4">
               <p className="font-black text-white/40 uppercase tracking-widest text-[10px]">Information</p>
               <Link href="/terms" className="font-bold hover:text-life-red transition text-white/60">利用規約（厳格版・草案）</Link>
-              <a href="#" className="font-bold hover:text-life-red transition text-white/60">プライバシーポリシー</a>
+              <Link href="/privacy" className="font-bold hover:text-life-red transition text-white/60">プライバシーポリシー</Link>
             </div>
             <div className="flex flex-col space-y-4">
               <p className="font-black text-white/40 uppercase tracking-widest text-[10px]">Admin</p>

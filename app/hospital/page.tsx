@@ -132,8 +132,12 @@ export default function HospitalLandingPage() {
                 </div>
             </div>
 
-            <footer className="bg-deep-blue/95 text-white/40 py-8 px-6 text-center text-[10px] font-black uppercase tracking-widest border-t border-white/5">
-                © 2026 Animal Mutual Aid Japan (AMAJ)
+            <footer className="bg-deep-blue/95 text-white/40 py-8 px-6 text-center text-[10px] font-black uppercase tracking-widest border-t border-white/5 flex flex-col items-center gap-4">
+                <div className="flex gap-8">
+                    <Link href="/terms" className="hover:text-white transition">利用規約</Link>
+                    <Link href="/privacy" className="hover:text-white transition">プライバシーポリシー</Link>
+                </div>
+                <p>© 2026 Animal Mutual Aid Japan (AMAJ)</p>
             </footer>
         </div>
     );
