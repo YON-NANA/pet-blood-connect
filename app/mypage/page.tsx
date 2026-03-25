@@ -493,7 +493,13 @@ export default function MyPage() {
                                                     {req.urgency === 'emergency' ? '🚨 緊急' : '⚠️ 至急'}
                                                 </div>
                                                 <div className="flex items-center space-x-3 mb-4">
-                                                    <span className="text-2xl">{req.species === 'dog' ? '🐶' : '🐱'}</span>
+                                                    <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center p-1 border border-red-50">
+                                                        <img 
+                                                          src={req.species === 'dog' ? '/assets/icon_dog.png' : '/assets/icon_cat.png'} 
+                                                          alt={req.species}
+                                                          className="w-full h-full object-contain"
+                                                        />
+                                                    </div>
                                                     <span className="text-[10px] font-black text-gray-400 border border-gray-100 px-2 py-0.5 rounded leading-none">血液型: {req.blood_type || '不問'}</span>
                                                 </div>
                                                 <h3 className="font-black text-lg text-deep-blue mb-2 leading-tight">{req.hospitals?.hospital_name}</h3>
@@ -540,7 +546,10 @@ export default function MyPage() {
                         {/* Registered Pets */}
                         <section>
                             <div className="flex items-center justify-between mb-8">
-                                <h2 className="text-2xl font-black text-deep-blue tracking-tight">🐾 登録中のドナー</h2>
+                                <h2 className="text-2xl font-black text-deep-blue tracking-tight flex items-center gap-2">
+                                    <img src="/assets/icon_dog.png" alt="paw" className="w-6 h-6 object-contain" />
+                                    登録中のドナー
+                                </h2>
                                 <button onClick={() => setIsRegistering(true)} className="text-[10px] font-black text-life-red bg-red-50 px-4 py-2 rounded-full tracking-widest uppercase hover:bg-red-100 transition">
                                     ＋ Add Donor
                                 </button>
@@ -558,8 +567,12 @@ export default function MyPage() {
                                     {pets.map(pet => (
                                         <div key={pet.id} className="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 group relative transition duration-500 hover:shadow-2xl hover:shadow-gray-200/50">
                                             <div className="flex items-center space-x-5">
-                                                <div className="w-16 h-16 bg-gray-50 text-3xl flex items-center justify-center rounded-[24px] shadow-inner font-bold">
-                                                    {pet.species === 'dog' ? '🐶' : '🐱'}
+                                                <div className="w-16 h-16 bg-gray-50 flex items-center justify-center rounded-[24px] shadow-inner p-2">
+                                                    <img 
+                                                      src={pet.species === 'dog' ? '/assets/icon_dog.png' : '/assets/icon_cat.png'} 
+                                                      alt={pet.species}
+                                                      className="w-full h-full object-contain"
+                                                    />
                                                 </div>
                                                 <div className="flex-grow">
                                                     <h3 className="font-black text-xl text-deep-blue leading-none mb-2">{pet.pet_name}</h3>
@@ -586,7 +599,10 @@ export default function MyPage() {
 
                         {/* Recent Matches */}
                         <section>
-                            <h2 className="text-2xl font-black text-deep-blue mb-8 tracking-tight">💬 病院との個別チャット</h2>
+                            <h2 className="text-2xl font-black text-deep-blue mb-8 tracking-tight flex items-center gap-2">
+                                <img src="/assets/icon_cat.png" alt="chat" className="w-6 h-6 object-contain" />
+                                病院との個別チャット
+                            </h2>
                             <div className="bg-white rounded-[40px] p-1 shadow-sm border border-gray-100 overflow-hidden">
                                 {matches.length === 0 ? (
                                     <div className="p-20 text-center">
@@ -708,7 +724,7 @@ export default function MyPage() {
                 </div>
             )}
 
-            {/* 🐶 新規ドナー登録モーダル */}
+            {/* 🐕 新規ドナー登録モーダル */}
             {isRegistering && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-[#0F172A]/80 backdrop-blur-xl" onClick={() => setIsRegistering(false)}></div>

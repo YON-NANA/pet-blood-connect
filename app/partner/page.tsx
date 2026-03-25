@@ -228,14 +228,20 @@ export default function PartnerInquiry() {
                                 <p className="text-xs font-black text-gray-400 uppercase tracking-widest">現在の保護頭数（おおよそ）</p>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold text-gray-500 ml-1">🐶 犬</label>
+                                        <label className="text-xs font-bold text-gray-500 ml-1 flex items-center gap-1">
+                                            <img src="/assets/icon_dog.png" alt="dog" className="w-4 h-4 object-contain" />
+                                            犬
+                                        </label>
                                         <input type="number" name="dogCount"
                                             value={formData.dogCount} onChange={handleChange}
                                             placeholder="0"
                                             className="w-full px-4 py-3 rounded-xl bg-white focus:ring-2 focus:ring-life-green outline-none transition text-gray-800 font-bold" />
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-xs font-bold text-gray-500 ml-1">🐱 猫</label>
+                                        <label className="text-xs font-bold text-gray-500 ml-1 flex items-center gap-1">
+                                            <img src="/assets/icon_cat.png" alt="cat" className="w-4 h-4 object-contain" />
+                                            猫
+                                        </label>
                                         <input type="number" name="catCount"
                                             value={formData.catCount} onChange={handleChange}
                                             placeholder="0"

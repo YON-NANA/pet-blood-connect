@@ -328,7 +328,13 @@ export default function HospitalDashboard() {
                                 {activeRequests.map(req => (
                                     <div key={req.id} className="bg-white rounded-2xl p-4 flex items-center justify-between border border-red-100 shadow-sm">
                                         <div className="flex items-center space-x-4">
-                                            <span className="text-2xl">{req.species === 'dog' ? '🐶' : '🐱'}</span>
+                                            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center p-1 border border-red-50">
+                                                <img 
+                                                  src={req.species === 'dog' ? '/assets/icon_dog.png' : '/assets/icon_cat.png'} 
+                                                  alt={req.species}
+                                                  className="w-full h-full object-contain"
+                                                />
+                                            </div>
                                             <div>
                                                 <p className="font-black text-gray-800 text-sm">
                                                     {req.species === 'dog' ? '犬' : '猫'} ／
@@ -372,7 +378,9 @@ export default function HospitalDashboard() {
                         </div>
                     ) : donors.length === 0 ? (
                         <div className="py-32 bg-white rounded-[40px] border border-gray-100 border-dashed text-center">
-                            <div className="text-4xl mb-6 grayscale opacity-30">🐾</div>
+                            <div className="w-16 h-16 mx-auto mb-6 opacity-20">
+                                <img src="/assets/icon_dog.png" alt="paw" className="w-full h-full object-contain grayscale" />
+                            </div>
                             <p className="text-gray-400 font-bold leading-relaxed mb-6">
                                 現在アクティブなマッチングはありません。
                             </p>
@@ -397,8 +405,12 @@ export default function HospitalDashboard() {
 
                                     <div className="flex justify-between items-start mb-6">
                                         <div className="flex items-center space-x-4">
-                                            <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-3xl shadow-inner font-bold">
-                                                {donor.species === 'dog' ? '🐶' : '🐱'}
+                                            <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center p-2 shadow-inner">
+                                                <img 
+                                                  src={donor.species === 'dog' ? '/assets/icon_dog.png' : '/assets/icon_cat.png'} 
+                                                  alt={donor.species}
+                                                  className="w-full h-full object-contain"
+                                                />
                                             </div>
                                             <div>
                                                 <h3 className="font-black text-lg text-gray-800 leading-tight">{donor.pet_name}</h3>

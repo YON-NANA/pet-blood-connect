@@ -30,16 +30,16 @@ export default function HospitalLandingPage() {
                 {/* ① ファーストビュー */}
                 <section className="pt-40 pb-24 bg-gradient-to-b from-blue-50 to-white px-6">
                     <div className="max-w-4xl mx-auto text-center">
-                        <div className="inline-block bg-green-100 text-life-green text-xs font-black px-4 py-2 rounded-full uppercase tracking-widest mb-6">
-                            ✅ 審査不要・今すぐ利用可能
+                        <div className="bg-amber-100 text-amber-700 text-xs font-black px-4 py-2 rounded-full uppercase tracking-widest mb-6">
+                            🛡️ 事前審査制・信頼のネットワーク
                         </div>
                         <h1 className="text-4xl md:text-5xl font-black text-deep-blue mb-6 leading-tight">
                             医療判断に集中できる<br />
                             供血マッチング
                         </h1>
                         <p className="text-xl md:text-2xl text-trust-blue font-black mb-12">
-                            登録3分、審査なし。<br />
-                            すぐにドナー検索を始められます。
+                            本人確認と実態調査を経て有効化されます。<br />
+                            信頼できる医療機関のみが参加する仕組みです。
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
                             <Link href="/hospital/login" className="bg-life-red text-white text-lg font-black px-12 py-5 rounded-full shadow-2xl shadow-red-200 hover:bg-red-600 transition inline-block">
@@ -95,6 +95,13 @@ export default function HospitalLandingPage() {
                                     </li>
                                 ))}
                             </ul>
+                            <div className="mt-10 bg-blue-50 rounded-2xl p-6 border border-blue-100">
+                                <h3 className="text-sm font-black text-trust-blue uppercase tracking-widest mb-3">病院認証プロセス</h3>
+                                <p className="text-sm text-gray-600 font-bold leading-relaxed">
+                                    本システムへの参加には事前審査があります。<br />
+                                    審査内容：病院所在地・診療内容・輸血対応可否の確認。事務局による審査・承認後、病院アカウントが有効化されます。
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -105,9 +112,9 @@ export default function HospitalLandingPage() {
                         <h2 className="text-3xl font-black text-deep-blue text-center mb-16">登録から運用まで</h2>
                         <div className="space-y-4">
                             {[
-                                { step: '1分', label: '登録', desc: '病院名・メール・パスワードだけで即座に登録完了' },
-                                { step: '即時', label: '利用開始', desc: '審査なし。ダッシュボードからすぐに要請を発令できます' },
-                                { step: '3分', desc: `あとから電話番号・住所・病院紹介を入力してプロフィール完成`, label: '情報補完' },
+                                { step: '1分', label: '申請', desc: '病院名・メール・パスワードを入力して利用申請を送信' },
+                                { step: '審査', label: '認証', desc: '事務局にて実態調査を行い、最短当日〜3営業日以内にアカウントを有効化' },
+                                { step: '即時', desc: `有効化後、すぐに要請を発令しドナー検索が可能になります`, label: '利用開始' },
                                 { step: '随時', label: '選択', desc: '候補者から1名を選択しチャット開始。完全無料' }
                             ].map((item, idx) => (
                                 <div key={idx} className="flex items-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
@@ -133,9 +140,14 @@ export default function HospitalLandingPage() {
             </div>
 
             <footer className="bg-deep-blue/95 text-white/40 py-8 px-6 text-center text-[10px] font-black uppercase tracking-widest border-t border-white/5 flex flex-col items-center gap-4">
-                <div className="flex gap-8">
-                    <Link href="/terms" className="hover:text-white transition">利用規約</Link>
-                    <Link href="/privacy" className="hover:text-white transition">プライバシーポリシー</Link>
+                <div className="flex flex-col gap-4">
+                    <div className="flex gap-8 justify-center">
+                        <Link href="/terms" className="hover:text-white transition">利用規約</Link>
+                        <Link href="/privacy" className="hover:text-white transition">プライバシーポリシー</Link>
+                    </div>
+                    <p className="max-w-2xl mx-auto opacity-60 leading-relaxed text-[8px] md:text-[10px]">
+                        ※本システムはJSVTM（日本獣医輸血研究会）の献血指針・輸血方法指針・交差適合試験指針を参考に設計されています。
+                    </p>
                 </div>
                 <p>© 2026 Animal Mutual Aid Japan (AMAJ)</p>
             </footer>

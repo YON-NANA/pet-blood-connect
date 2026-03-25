@@ -208,7 +208,13 @@ export default function AdminDashboard() {
                         { label: 'Completed Lives', value: matches.filter(m => m.status === 'completed').length, emoji: '❤️' },
                     ].map((stat, i) => (
                         <div key={i} className="bg-white/5 border border-white/10 rounded-3xl p-6 shadow-2xl relative overflow-hidden group">
-                           <div className="absolute top-0 right-0 p-4 opacity-20 transform group-hover:scale-110 transition duration-500">{stat.emoji}</div>
+                           <div className="absolute top-0 right-0 p-4 opacity-20 transform group-hover:scale-110 transition duration-500">
+                                {stat.label === 'Registered Donors' ? (
+                                    <img src="/assets/icon_dog.png" alt="dog" className="w-10 h-10 object-contain" />
+                                ) : (
+                                    <span className="text-4xl">{stat.emoji}</span>
+                                )}
+                            </div>
                            <p className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-2 leading-none">{stat.label}</p>
                            <p className="text-3xl font-black text-white tracking-tighter">{stat.value}</p>
                         </div>
@@ -230,15 +236,18 @@ export default function AdminDashboard() {
                 {/* Tabs */}
                 <div className="flex space-x-2 mb-10 bg-white/5 p-1 rounded-2xl w-fit border border-white/5">
                     {[
-                        { id: 'hospitals', label: '🏥 動物病院' },
-                        { id: 'donors', label: '🐾 ドナー' },
-                        { id: 'matches', label: '💬 マッチング履歴' },
+                        { id: 'hospitals', label: '動物病院' },
+                        { id: 'donors', label: 'ドナー' },
+                        { id: 'matches', label: 'マッチング履歴' },
                     ].map((t) => (
                         <button
                             key={t.id}
                             onClick={() => setActiveTab(t.id as 'hospitals' | 'donors' | 'matches')}
-                            className={`px-8 py-3 rounded-xl font-black text-xs tracking-widest uppercase transition-all duration-300 ${activeTab === t.id ? 'bg-life-red text-white shadow-lg' : 'text-white/40 hover:text-white/60'}`}
+                            className={`px-8 py-3 rounded-xl font-black text-xs tracking-widest uppercase transition-all duration-300 flex items-center gap-2 ${activeTab === t.id ? 'bg-life-red text-white shadow-lg' : 'text-white/40 hover:text-white/60'}`}
                         >
+                            {t.id === 'hospitals' && <span className="text-lg">🏥</span>}
+                            {t.id === 'donors' && <img src="/assets/icon_dog.png" alt="icon" className="w-4 h-4 object-contain" />}
+                            {t.id === 'matches' && <span className="text-lg">💬</span>}
                             {t.label}
                         </button>
                     ))}
@@ -304,7 +313,13 @@ export default function AdminDashboard() {
                                     <tr key={d.id} className="hover:bg-white/5 transition group">
                                         <td className="px-8 py-6">
                                             <div className="flex items-center space-x-4">
-                                                <span className="text-xl">{d.species === 'dog' ? '🐶' : '🐱'}</span>
+                                                <div className="w-8 h-8 flex-shrink-0 flex items-center justify-center p-1 bg-white/5 rounded-lg border border-white/10">
+                                                    <img 
+                                                      src={d.species === 'dog' ? '/assets/icon_dog.png' : '/assets/icon_cat.png'} 
+                                                      alt={d.species}
+                                                      className="w-full h-full object-contain"
+                                                    />
+                                                </div>
                                                 <div>
                                                     <div className="font-black text-white mb-1 group-hover:text-life-red transition">{d.pet_name}</div>
                                                     <div className="text-[11px] text-white/40">{d.breed} / {d.blood_type || '不明'}型</div>

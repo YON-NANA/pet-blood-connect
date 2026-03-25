@@ -117,9 +117,13 @@ export default function TermsPage() {
 
             <footer className="bg-deep-blue py-12 px-6">
                 <div className="max-w-4xl mx-auto text-center">
-                    <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.2em]">
-                        © 2026 Animal Mutual Aid Japan (AMAJ)
-                    </p>
+                    <div className="space-y-3">
+                        <p>© 2026 Animal Mutual Aid Japan (AMAJ) ／ AnimalBloodConnect</p>
+                        <p className="max-w-xl mx-auto opacity-60 leading-relaxed text-[8px] md:text-[9px]">
+                            ※本システムはJSVTM（日本獣医輸血研究会）の献血指針・輸血方法指針・交差適合試験指針を参考に設計されています。
+                        </p>
+                        <p>すべては動物たちの明るい未来のために。</p>
+                    </div>
                 </div>
             </footer>
         </div>

@@ -223,6 +223,9 @@ export default function HospitalInquiry() {
                                 <p className="text-center text-[10px] text-gray-400 font-black uppercase tracking-widest mt-6">
                                     Animal Mutual Aid Japan (AMAJ)
                                 </p>
+                                <p className="text-center text-[8px] text-gray-300 font-bold mt-4 max-w-sm mx-auto leading-relaxed">
+                                    ※本システムはJSVTM（日本獣医輸血研究会）の指針を参考に設計されています。
+                                </p>
                             </div>
                         </form>
                     </div>

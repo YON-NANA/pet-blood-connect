@@ -341,8 +341,12 @@ function ChatContent() {
                         </svg>
                     </button>
                     <div className="flex items-center">
-                        <div className={`w-11 h-11 ${donor?.species === 'dog' ? 'bg-orange-50' : 'bg-blue-50'} rounded-2xl flex items-center justify-center text-2xl mr-3 shadow-sm border ${donor?.species === 'dog' ? 'border-orange-100/50' : 'border-blue-100/50'}`}>
-                            {donor?.species === 'dog' ? '🐶' : '🐱'}
+                        <div className={`w-11 h-11 ${donor?.species === 'dog' ? 'bg-orange-50' : 'bg-blue-50'} rounded-2xl flex items-center justify-center p-1.5 mr-3 shadow-sm border ${donor?.species === 'dog' ? 'border-orange-100/50' : 'border-blue-100/50'}`}>
+                            <img 
+                              src={donor?.species === 'dog' ? '/assets/icon_dog.png' : '/assets/icon_cat.png'} 
+                              alt={donor?.species}
+                              className="w-full h-full object-contain"
+                            />
                         </div>
                         <div>
                             <div className="flex items-center space-x-2">
@@ -418,12 +422,15 @@ function ChatContent() {
                 ref={scrollRef}
                 className="flex-grow p-4 md:px-8 space-y-6 overflow-y-auto scroll-smooth pb-8"
             >
-                {/* Info Text */}
-                <div className="flex justify-center">
-                    <div className="max-w-md bg-black/10 backdrop-blur-sm px-6 py-2.5 rounded-2xl text-center border border-white/5">
-                        <p className="text-[10px] text-white/70 font-bold leading-relaxed tracking-wider">
-                            医療判断と処置はすべて病院の責任において行われます。<br />
-                            個人情報の取り扱いにご注意ください。
+                {/* 🚨 供血適否の警告表示 */}
+                <div className="max-w-xl mx-auto mb-6">
+                    <div className="bg-amber-50/90 backdrop-blur-md border border-amber-200 rounded-2xl px-6 py-4 shadow-lg text-center">
+                        <div className="flex items-center justify-center space-x-2 mb-1">
+                            <span className="text-amber-600 text-lg">⚠️</span>
+                            <span className="text-[11px] font-black text-amber-800 uppercase tracking-widest leading-none">Medical Disclaimer</span>
+                        </div>
+                        <p className="text-xs font-black text-amber-900 leading-relaxed">
+                            登録できても、実際の供血適否は当日の診察と検査によって決まります。登録はあくまで候補としての意思表示です。
                         </p>
                     </div>
                 </div>

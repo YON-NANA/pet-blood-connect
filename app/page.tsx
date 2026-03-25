@@ -91,8 +91,13 @@ export default function Home() {
               </p>
               <div className="hidden sm:flex items-center space-x-3 overflow-hidden">
                 {activeRequests.slice(0, 2).map(req => (
-                  <span key={req.id} className="bg-white/20 rounded-full px-3 py-0.5 text-[10px] font-black whitespace-nowrap">
-                    {req.species === 'dog' ? '🐶' : '🐱'} {req.hospitals?.hospital_name}
+                  <span key={req.id} className="bg-white/20 rounded-full px-3 py-1 text-[10px] font-black whitespace-nowrap flex items-center gap-1">
+                    <img
+                      src={req.species === 'dog' ? '/assets/icon_dog.png' : '/assets/icon_cat.png'}
+                      alt={req.species}
+                      className="w-4 h-4 object-contain"
+                    />
+                    {req.hospitals?.hospital_name}
                   </span>
                 ))}
               </div>
@@ -134,7 +139,12 @@ export default function Home() {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-10 text-sm font-bold">
-              <Link href="/rescue" className="text-life-red hover:text-red-700 font-bold flex items-center transition"><span className="animate-pulse mr-1">🚨</span>緊急時のレスキュー</Link>
+              <Link href="/rescue" className="text-life-red hover:text-red-700 font-bold flex items-center transition">
+                <div className="w-5 h-5 mr-1 animate-pulse">
+                  <img src="/assets/icon_dog.png" alt="rescue" className="w-full h-full object-contain" />
+                </div>
+                緊急時のレスキュー
+              </Link>
               <a href="#about" className="text-gray-500 hover:text-life-red transition">仕組み</a>
               <a href="#story" className="text-gray-500 hover:text-life-red transition">ストーリー</a>
               <Link href="/hospital/login" className="text-trust-blue hover:text-blue-700 transition">動物病院の方へ</Link>
@@ -367,8 +377,9 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <p className="mt-8 text-center text-xs text-gray-400 font-bold">
-            ※本システム上でのマッチングは必ず医療機関（病院）の介入と判断を経て行われます。
+          <p className="mt-8 text-center text-[10px] md:text-xs text-gray-400 font-bold leading-relaxed">
+            ※本システム上でのマッチングは必ず医療機関（病院）の介入と判断を経て行われます。<br />
+            ※本システムはJSVTM（日本獣医輸血研究会）の献血指針・輸血方法指針・交差適合試験指針を参考に設計されています。
           </p>
         </div>
       </section>
@@ -492,7 +503,10 @@ export default function Home() {
             </div>
             <p className="text-blue-300 max-w-sm text-xs font-medium leading-relaxed">
               すべては動物たちの明るい未来のために。<br />
-              日本動物共助機構 (AMAJ) が提供する非営利プロジェクトです。
+              日本動物共助機構 (AMAJ) が提供する非営利プロジェクトです。<br />
+              <span className="text-white/40 mt-3 block text-[10px]">
+                ※本システムはJSVTM（日本獣医輸血研究会）の献血指針・輸血方法指針・交差適合試験指針を参考に設計されています。
+              </span>
             </p>
           </div>
 

@@ -229,8 +229,8 @@ export default function Register() {
                         </label>
                         <div className="grid grid-cols-2 gap-4">
                             {[
-                                { value: 'dog', emoji: '🐶', label: '犬（イヌ）' },
-                                { value: 'cat', emoji: '🐱', label: '猫（ネコ）' },
+                                { value: 'dog', label: '犬（イヌ）', image: '/assets/icon_dog.png.png' },
+                                { value: 'cat', label: '猫（ネコ）', image: '/assets/icon_cat.png.png' },
                             ].map(opt => (
                                 <label key={opt.value} className="cursor-pointer">
                                     <input
@@ -241,8 +241,12 @@ export default function Register() {
                                         checked={formData.type === opt.value}
                                         onChange={() => handleTypeChange(opt.value)}
                                     />
-                                    <div className="border-2 border-gray-100 rounded-2xl p-5 text-center hover:bg-gray-50 transition peer-checked:border-life-red peer-checked:bg-red-50/50 peer-checked:shadow-inner">
-                                        <span className="text-4xl block mb-2">{opt.emoji}</span>
+                                    <div className="border-2 border-gray-100 rounded-2xl p-5 flex flex-col items-center justify-center hover:bg-gray-50 transition peer-checked:border-life-red peer-checked:bg-red-50/50 peer-checked:shadow-inner">
+                                        <img 
+                                          src={opt.image} 
+                                          alt={opt.label}
+                                          className="w-16 h-16 object-contain mb-2"
+                                        />
                                         <span className="font-black text-gray-700">{opt.label}</span>
                                     </div>
                                 </label>
@@ -425,6 +429,17 @@ export default function Register() {
                             <input type="checkbox" required className="w-6 h-6 text-life-red rounded-lg border-gray-300 focus:ring-life-red flex-shrink-0" />
                             <span className="ml-4 font-black text-gray-700 text-sm">規約に同意し、金銭のやり取りを行わないことを誓います</span>
                         </label>
+                    </div>
+                    {/* 🚨 供血適否の警告表示 */}
+                    <div className="bg-amber-50 border-2 border-amber-200 rounded-[32px] p-8 mb-6 shadow-sm">
+                        <div className="flex items-center space-x-3 mb-3">
+                            <span className="text-2xl">⚠️</span>
+                            <h3 className="text-lg font-black text-amber-900 tracking-tight">登録に関する重要事項</h3>
+                        </div>
+                        <p className="text-sm font-black text-amber-800 leading-relaxed">
+                            登録できても、実際の供血適否は当日の診察と検査によって決まります。<br />
+                            この登録は、あくまで「協力できる可能性がある」という意思表示であり、実際の供血を保証・強制するものではありません。
+                        </p>
                     </div>
 
                     {/* Submit */}

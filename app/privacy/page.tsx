@@ -241,8 +241,13 @@ export default function PrivacyPolicy() {
       </div>
 
       <footer className="privacy-footer">
-        © 2026 Animal Mutual Aid Japan (AMAJ) ／ AnimalBloodConnect<br />
-        すべては動物たちの明るい未来のために。
+        <div className="space-y-3">
+          <p>© 2026 Animal Mutual Aid Japan (AMAJ) ／ AnimalBloodConnect</p>
+          <p className="max-w-xl mx-auto opacity-60 leading-relaxed text-[8px] md:text-[9px]">
+            ※本システムはJSVTM（日本獣医輸血研究会）の献血指針・輸血方法指針・交差適合試験指針を参考に設計されています。
+          </p>
+          <p>すべては動物たちの明るい未来のために。</p>
+        </div>
       </footer>
     </div>
   );

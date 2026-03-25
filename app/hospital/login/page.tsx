@@ -125,8 +125,8 @@ export default function HospitalLogin() {
                         <span className="text-trust-blue font-black">{hospitalName}</span> 様、ご登録ありがとうございます。
                     </p>
                     <p className="text-gray-400 text-sm font-medium leading-relaxed mb-10">
-                        すぐにダッシュボードから供血要請の発令や、ドナー候補の確認が可能です。<br />
-                        命をつなぐネットワークへようこそ。
+                        事務局による実態調査（最短当日〜3営業日、所在地・供血対応可否の確認）を行います。<br />
+                        承認・有効化完了後、すぐに全ての機能が利用可能になります。
                     </p>
                     
                     <div className="bg-green-50 rounded-2xl p-5 mb-8 text-left border border-green-100">
@@ -197,7 +197,7 @@ export default function HospitalLogin() {
                             </svg>
                         </div>
                         <h1 className="text-2xl font-black text-deep-blue">動物病院 管理画面</h1>
-                        <p className="text-gray-400 mt-2 font-bold text-sm">事前審査なし・すぐに使えます</p>
+                        <p className="text-gray-400 mt-2 font-bold text-sm">事前審査制・信頼のネットワーク</p>
                     </div>
 
                     {/* タブ切り替え */}
@@ -228,11 +228,10 @@ export default function HospitalLogin() {
                         {/* ── 新規登録フォーム ── */}
                         {tab === 'signup' && (
                             <>
-                                <div className="bg-green-50 border border-green-100 rounded-2xl p-4 mb-6">
-                                    <p className="text-xs font-black text-life-green uppercase tracking-widest mb-1">✅ 審査不要・即時利用可能</p>
+                                <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 mb-6">
+                                    <p className="text-xs font-black text-amber-600 uppercase tracking-widest mb-1">🛡️ 事前審査制による信頼の担保</p>
                                     <p className="text-xs text-gray-500 font-bold leading-relaxed">
-                                        登録後すぐにドナー検索・供血要請が使えます。<br />
-                                        病院詳細情報はダッシュボードの「設定」から後で入力できます。
+                                        本システムは事前審査制です。登録後、事務局による所在・実態確認（最短当日〜3営業日以内）を経てアカウントが有効化されます。
                                     </p>
                                 </div>
 
@@ -358,10 +357,13 @@ export default function HospitalLogin() {
                         )}
 
                         {/* 共通フッター */}
-                        <div className="mt-6 pt-6 border-t border-gray-50 text-center space-y-2">
-                            <p className="text-gray-400 text-xs font-medium leading-relaxed">
+                        <div className="mt-6 pt-6 border-t border-gray-50 text-center space-y-4">
+                            <p className="text-gray-400 text-[10px] font-medium leading-relaxed">
                                 Animal Blood Connect（ABC）<br />
-                                運営: 動物保護団体ヨンナナ × AMAJ
+                                運営: 動物保護団体ヨンナナ × AMAJ<br />
+                                <span className="mt-2 block opacity-60">
+                                    ※本システムはJSVTM（日本獣医輸血研究会）の指針を参考に設計されています。
+                                </span>
                             </p>
                             <Link href="/hospital" className="text-trust-blue text-xs font-black hover:underline block">
                                 病院様向けサービス紹介を見る →

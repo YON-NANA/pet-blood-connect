@@ -177,8 +177,8 @@ export default function PetEdit() {
                                         checked={formData.type === 'dog'}
                                         onChange={handleChange}
                                     />
-                                    <div className="border-2 border-gray-100 rounded-3xl p-6 text-center hover:bg-gray-50 transition peer-checked:border-life-red peer-checked:bg-red-50/50 peer-checked:shadow-inner group">
-                                        <span className="text-3xl block mb-2 group-hover:scale-110 transition">🐶</span>
+                                    <div className="border-2 border-gray-100 rounded-3xl p-6 flex flex-col items-center justify-center hover:bg-gray-50 transition peer-checked:border-life-red peer-checked:bg-red-50/50 peer-checked:shadow-inner group">
+                                        <img src="/assets/icon_dog.png" alt="dog" className="w-12 h-12 object-contain mb-2 group-hover:scale-110 transition" />
                                         <span className="font-black text-sm">犬</span>
                                     </div>
                                 </label>
@@ -191,8 +191,8 @@ export default function PetEdit() {
                                         checked={formData.type === 'cat'}
                                         onChange={handleChange}
                                     />
-                                    <div className="border-2 border-gray-100 rounded-3xl p-6 text-center hover:bg-gray-50 transition peer-checked:border-life-red peer-checked:bg-red-50/50 peer-checked:shadow-inner group">
-                                        <span className="text-3xl block mb-2 group-hover:scale-110 transition">🐱</span>
+                                    <div className="border-2 border-gray-100 rounded-3xl p-6 flex flex-col items-center justify-center hover:bg-gray-50 transition peer-checked:border-life-red peer-checked:bg-red-50/50 peer-checked:shadow-inner group">
+                                        <img src="/assets/icon_cat.png" alt="cat" className="w-12 h-12 object-contain mb-2 group-hover:scale-110 transition" />
                                         <span className="font-black text-sm">猫</span>
                                     </div>
                                 </label>
