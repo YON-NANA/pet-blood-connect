@@ -29,7 +29,7 @@ export default function RescueGuidePage() {
           
           <div className="text-center space-y-4">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-red-50 rounded-full mb-2 animate-pulse p-4">
-              <img src="/assets/icon_dog.png.png" alt="alert" className="w-full h-full object-contain" />
+              <img src="/assets/icon_dog.png" alt="alert" className="w-full h-full object-contain" />
             </div>
             <h1 className="text-3xl md:text-5xl font-black text-deep-blue tracking-tighter">
               道端で負傷動物を見つけたら

@@ -229,8 +229,8 @@ export default function Register() {
                         </label>
                         <div className="grid grid-cols-2 gap-4">
                             {[
-                                { value: 'dog', label: '犬（イヌ）', image: '/assets/icon_dog.png.png' },
-                                { value: 'cat', label: '猫（ネコ）', image: '/assets/icon_cat.png.png' },
+                                { value: 'dog', label: '犬（イヌ）', image: '/assets/icon_dog.png' },
+                                { value: 'cat', label: '猫（ネコ）', image: '/assets/icon_cat.png' },
                             ].map(opt => (
                                 <label key={opt.value} className="cursor-pointer">
                                     <input
