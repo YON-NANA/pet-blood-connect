@@ -332,7 +332,7 @@ export default function HospitalDashboard() {
                                                 <img 
                                                   src={req.species === 'dog' ? '/assets/icon_dog.png' : '/assets/icon_cat.png'} 
                                                   alt={req.species}
-                                                  className="w-full h-full object-contain"
+                                                  className={`w-full h-full object-contain ${req.species === 'cat' ? 'scale-125' : ''}`}
                                                 />
                                             </div>
                                             <div>

@@ -571,7 +571,7 @@ export default function MyPage() {
                                                     <img 
                                                       src={pet.species === 'dog' ? '/assets/icon_dog.png' : '/assets/icon_cat.png'} 
                                                       alt={pet.species}
-                                                      className="w-full h-full object-contain"
+                                                      className={`w-full h-full object-contain ${pet.species === 'cat' ? 'scale-125' : ''}`}
                                                     />
                                                 </div>
                                                 <div className="flex-grow">
