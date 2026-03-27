@@ -31,9 +31,6 @@ export default function Home() {
 
     // 統計データの取得
     const fetchStats = async () => {
-      const now = new Date();
-      const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-
       const [
         { count: donorCount },
         { count: hospitalCount },
@@ -43,7 +40,6 @@ export default function Home() {
         supabase.from('hospitals').select('*', { count: 'exact', head: true }),
         supabase.from('matches').select('*', { count: 'exact', head: true })
           .eq('status', 'completed')
-          .gte('created_at', firstDayOfMonth)
       ]);
 
       setStats({
@@ -314,7 +310,7 @@ export default function Home() {
             </div>
             <div>
               <div className="text-3xl font-bold text-white">{stats.livesSaved}</div>
-              <div className="text-sm text-gray-300">今月救われた命</div>
+              <div className="text-sm text-gray-300">供血実施数（累計）</div>
             </div>
             <div className="col-span-2 md:col-span-1">
               <div className="text-3xl font-bold text-white">{stats.hospitals}</div>
