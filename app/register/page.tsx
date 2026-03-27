@@ -55,7 +55,7 @@ export default function Register() {
         birth_year: '',
         birth_month: '',
         blood_type: '',
-        prefecture: '',
+        prefecture: '東京都',
         city: '',
         travel_distance_km: '20',
         contact_name: '',
@@ -327,7 +327,7 @@ export default function Register() {
                             <div>
                                 <label className="block text-xs font-black text-gray-400 mb-2 uppercase tracking-widest">市区町村 <span className="text-red-400">*</span></label>
                                 <input type="text" name="city" value={formData.city} onChange={handleChange}
-                                    placeholder="徳島市" required
+                                    placeholder="港区" required
                                     className="w-full bg-gray-50 border-none rounded-2xl p-4 font-bold text-gray-800 placeholder-gray-300 focus:ring-2 focus:ring-life-red outline-none transition" />
                             </div>
                             <div>

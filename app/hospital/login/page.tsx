@@ -12,7 +12,7 @@ export default function HospitalLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [hospitalName, setHospitalName] = useState('');
-    const [prefecture, setPrefecture] = useState('徳島県');
+    const [prefecture, setPrefecture] = useState('東京都');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [completed, setCompleted] = useState(false);
