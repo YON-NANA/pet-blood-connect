@@ -146,7 +146,7 @@ export default function Home() {
                 緊急時のレスキュー
               </Link>
               <a href="#about" className="text-gray-500 hover:text-life-red transition">仕組み</a>
-              <a href="#story" className="text-gray-500 hover:text-life-red transition">ストーリー</a>
+              <Link href="/story" className="text-gray-500 hover:text-life-red transition">ストーリー</Link>
               <Link href="/hospital/login" className="text-trust-blue hover:text-blue-700 transition">動物病院の方へ</Link>
 
               <div className="h-6 w-px bg-gray-200"></div>
@@ -192,7 +192,7 @@ export default function Home() {
             <div className="flex flex-col space-y-6 text-lg font-black text-deep-blue">
               <Link href="/rescue" onClick={() => setIsMenuOpen(false)} className="text-life-red hover:text-red-700 transition flex items-center"><span className="animate-pulse mr-2">🚨</span>緊急時のレスキュー</Link>
               <a href="#about" onClick={() => setIsMenuOpen(false)} className="hover:text-life-red transition">仕組み</a>
-              <a href="#story" onClick={() => setIsMenuOpen(false)} className="hover:text-life-red transition">ストーリー</a>
+              <Link href="/story" onClick={() => setIsMenuOpen(false)} className="hover:text-life-red transition">ストーリー</Link>
               <Link href="/hospital/login" onClick={() => setIsMenuOpen(false)} className="hover:text-life-red transition">動物病院の方へ</Link>
               {user ? (
                 <>
