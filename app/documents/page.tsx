@@ -88,7 +88,7 @@ export default function Documents() {
           <ul className="list-inside list-decimal text-red-800 space-y-3 font-medium text-sm">
             <li><strong>応急処置の義務:</strong> 当該動物病院はドナー動物に対して最善の救命・応急処置を無償にて行う義務を負います。</li>
             <li><strong>賠償責任の範囲:</strong> 獣医療上の過失が認められた場合は、動物病院が加入する獣医師賠償責任保険等の範囲で対応が行われます。</li>
-            <li><strong>免責事項:</strong> 事前に予見 불가능한 特異体質や、事前の問診で申告されなかった既往症に起因する事故については、病院側の責任は制限される場合があります。</li>
+            <li><strong>免責事項:</strong> 事前に予見不可能な特異体質や、事前の問診で申告されなかった既往症に起因する事故については、病院側の責任は制限される場合があります。</li>
           </ul>
         </div>
 
