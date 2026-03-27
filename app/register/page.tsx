@@ -108,6 +108,7 @@ export default function Register() {
                     vaccination_status: formData.vaccination_status ? '接種済み' : '未接種',
                     heartworm_prevention: formData.heartworm_prevention,
                     no_previous_transfusion: formData.no_previous_transfusion,
+                    verification_status: 'provisional',
                     created_at: new Date().toISOString(),
                 }]);
 

@@ -24,6 +24,7 @@ interface Pet {
     contact_name: string;
     contact_phone: string;
     created_at: string;
+    verification_status?: string;
 }
 
 interface Match {
@@ -575,7 +576,12 @@ export default function MyPage() {
                                                     />
                                                 </div>
                                                 <div className="flex-grow">
-                                                    <h3 className="font-black text-xl text-deep-blue leading-none mb-2">{pet.pet_name}</h3>
+                                                    <div className="flex items-center gap-3 mb-2">
+                                                        <h3 className="font-black text-xl text-deep-blue leading-none">{pet.pet_name}</h3>
+                                                        <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest ${pet.verification_status === 'verified' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-600'}`}>
+                                                            {pet.verification_status === 'verified' ? '確認済み ✅' : '仮登録中 🐾'}
+                                                        </span>
+                                                    </div>
                                                     <div className="flex items-center space-x-2">
                                                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">{pet.breed}</span>
                                                         <span className="text-gray-200">|</span>

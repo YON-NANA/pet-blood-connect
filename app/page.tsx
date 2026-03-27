@@ -513,6 +513,8 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-12 text-xs">
             <div className="flex flex-col space-y-4">
               <p className="font-black text-white/40 uppercase tracking-widest text-[10px]">Information</p>
+              <Link href="/policy/health-standards" className="font-bold hover:text-life-red transition text-white/60">供血ドナー健康基準</Link>
+              <Link href="/documents" className="font-bold hover:text-life-red transition text-white/60">必要書類一覧・規定</Link>
               <Link href="/terms" className="font-bold hover:text-life-red transition text-white/60">利用規約（厳格版・草案）</Link>
               <Link href="/privacy" className="font-bold hover:text-life-red transition text-white/60">プライバシーポリシー</Link>
             </div>
