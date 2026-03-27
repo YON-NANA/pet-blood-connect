@@ -140,9 +140,7 @@ export default function Home() {
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-10 text-sm font-bold">
               <Link href="/rescue" className="text-life-red hover:text-red-700 font-bold flex items-center transition">
-                <div className="w-5 h-5 mr-1 animate-pulse">
-                  <img src="/assets/icon_dog.png" alt="rescue" className="w-full h-full object-contain" />
-                </div>
+                <span className="animate-pulse mr-1 text-base md:text-lg">🚨</span>
                 緊急時のレスキュー
               </Link>
               <a href="#about" className="text-gray-500 hover:text-life-red transition">仕組み</a>
