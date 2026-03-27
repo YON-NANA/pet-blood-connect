@@ -221,6 +221,19 @@ export default function Register() {
                     </p>
                 </div>
 
+                {/* 健康基準へのリンク */}
+                <div className="bg-red-50 border-l-4 border-life-red rounded-r-2xl p-6 mb-8 text-sm text-gray-700 font-medium shadow-sm">
+                    <h3 className="text-base font-black text-life-red mb-2 flex items-center">
+                        <span className="mr-2">📋</span>登録前に必ずご確認ください
+                    </h3>
+                    <p className="mb-4">
+                        体重、年齢、ワクチン接種歴や、各地域での感染症（バベシア・SFTS等）についてのガイドラインを必ずご一読ください。
+                    </p>
+                    <Link href="/policy/health-standards" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-deep-blue border border-gray-200 px-5 py-2.5 rounded-xl font-bold hover:shadow-md hover:border-gray-300 transition text-xs md:text-sm">
+                        供血ドナー健康基準を見る（別タブで開く） ↗
+                    </Link>
+                </div>
+
                 <form onSubmit={handleSubmit} className="space-y-6">
 
                     {/* ① 種別 */}
