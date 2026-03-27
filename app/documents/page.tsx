@@ -33,9 +33,9 @@ export default function Documents() {
                 供血の意義、流れ、そして伴うリスクや、当日の過ごし方について動物病院から飼い主様へご説明する際の標準的な内容をまとめています。
               </p>
             </div>
-            <button disabled className="w-full bg-gray-100 text-gray-400 font-bold py-4 rounded-full flex justify-center items-center opacity-70 cursor-not-allowed">
-              <span className="mr-2">⬇️</span>PDFダウンロード（準備中）
-            </button>
+            <Link href="/documents/explanation" className="w-full bg-[#E0D8CE] text-[#003366] font-black py-4 rounded-full flex justify-center items-center hover:bg-[#d4c8ba] transition shadow-md">
+              <span className="mr-2">📄</span>書面を表示 / 印刷する
+            </Link>
           </div>
 
           {/* Card 2 */}
@@ -47,9 +47,9 @@ export default function Documents() {
                 動物病院での供血処置前に、獣医師とドナー飼い主様の間で取り交わしていただく同意書のテンプレートです。
               </p>
             </div>
-            <button disabled className="w-full bg-gray-100 text-gray-400 font-bold py-4 rounded-full flex justify-center items-center opacity-70 cursor-not-allowed">
-              <span className="mr-2">⬇️</span>PDFダウンロード（準備中）
-            </button>
+            <Link href="/documents/consent" className="w-full bg-[#E0D8CE] text-[#003366] font-black py-4 rounded-full flex justify-center items-center hover:bg-[#d4c8ba] transition shadow-md">
+              <span className="mr-2">✍️</span>書面を表示 / 印刷する
+            </Link>
           </div>
         </div>
 
