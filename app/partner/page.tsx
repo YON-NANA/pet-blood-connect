@@ -11,7 +11,7 @@ export default function PartnerInquiry() {
         contactName: '',
         email: '',
         phone: '',
-        prefecture: '徳島県',
+        prefecture: '東京都',
         address: '',
         animalCount: '',
         dogCount: '',
@@ -218,7 +218,7 @@ export default function PartnerInquiry() {
                                     <label className="text-xs font-black text-gray-400 uppercase tracking-widest ml-1">所在地（市区町村〜）</label>
                                     <input type="text" name="address"
                                         value={formData.address} onChange={handleChange}
-                                        placeholder="徳島市..."
+                                        placeholder="港区..."
                                         className="w-full px-5 py-4 rounded-2xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-life-green outline-none transition text-gray-800 font-bold" />
                                 </div>
                             </div>
