@@ -231,7 +231,7 @@ export default function Home() {
 
             <div className="pt-4 space-y-3">
               <p className="text-xl md:text-3xl font-black text-white tracking-tight">
-                あなたの愛犬・愛猫も命を救える
+                あなたの愛犬・愛猫も誰かの命を支えることができます
               </p>
               <p className="text-sm md:text-base font-bold text-white/90 leading-relaxed max-w-2xl mx-auto tracking-wide">
                 登録は1分で完了します
@@ -357,7 +357,7 @@ export default function Home() {
       <section id="about" className="py-24 bg-gray-50 rounded-t-[60px] relative z-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-black text-deep-blue mb-4 tracking-tight">供血発令フロー</h2>
+            <h2 className="text-3xl md:text-4xl font-black text-deep-blue mb-4 tracking-tight">供血対応フロー</h2>
             <p className="text-gray-500 font-bold">責任分離された安全なマッチング構造</p>
           </div>
 
