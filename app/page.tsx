@@ -317,6 +317,12 @@ export default function Home() {
               <div className="text-sm text-gray-300">提携動物病院</div>
             </div>
           </div>
+
+          <div className="mt-6 text-center">
+            <a href="#changelog" className="text-sm font-bold text-white/60 hover:text-white transition flex items-center justify-center gap-1">
+              最終更新：2026.04.05　更新履歴を見る →
+            </a>
+          </div>
         </div>
       </section>
 
@@ -338,7 +344,7 @@ export default function Home() {
             </p>
             <p>
               供血は善意によって支えられています。だからこそ、責任と秩序を大切にします。<br />
-              命を救うのは医療です。私たちは、その手前を整えるだけです。
+              命を救うのは獣医療です。Animal Blood Connectはその医療現場を補完するインフラです。
             </p>
             <p className="text-gray-400 text-sm">
               この仕組みは、多くの協力と信頼によって成り立っています。静かな社会インフラとして、必要な瞬間を支え続けます。
@@ -485,6 +491,44 @@ export default function Home() {
           【免責事項】本システムはマッチング機能のみを提供します。医療判断・採血可否・適合判断は病院の責任です。ドナー提供は当事者間の合意に基づきます。
         </p>
       </div>
+
+      {/* Changelog Section */}
+      <section id="changelog" className="py-20 bg-white border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-black text-deep-blue mb-2">更新履歴</h2>
+            <div className="w-12 h-1 bg-life-red mx-auto rounded-full"></div>
+          </div>
+          <div className="bg-gray-50 rounded-3xl p-6 md:p-10 border border-gray-100 shadow-sm max-w-2xl mx-auto">
+            <ul className="space-y-4 text-sm font-bold text-gray-600">
+              <li className="flex flex-col sm:flex-row sm:space-x-6 border-b border-gray-200 pb-4">
+                <span className="text-trust-blue whitespace-nowrap mb-1 sm:mb-0">2026.04.05</span>
+                <span>ドナー登録システムの必須項目処理を修正</span>
+              </li>
+              <li className="flex flex-col sm:flex-row sm:space-x-6 border-b border-gray-200 pb-4">
+                <span className="text-trust-blue whitespace-nowrap mb-1 sm:mb-0">2026.03.27</span>
+                <span>供血実施数（累計）に変更</span>
+              </li>
+              <li className="flex flex-col sm:flex-row sm:space-x-6 border-b border-gray-200 pb-4">
+                <span className="text-trust-blue whitespace-nowrap mb-1 sm:mb-0">2026.03.27</span>
+                <span>MEDICAL DISCLAIMER追加</span>
+              </li>
+              <li className="flex flex-col sm:flex-row sm:space-x-6 border-b border-gray-200 pb-4">
+                <span className="text-trust-blue whitespace-nowrap mb-1 sm:mb-0">2026.03.27</span>
+                <span>JSVTM指針を参考文献として掲載</span>
+              </li>
+              <li className="flex flex-col sm:flex-row sm:space-x-6 border-b border-gray-200 pb-4">
+                <span className="text-trust-blue whitespace-nowrap mb-1 sm:mb-0">2026.03.27</span>
+                <span>供血ドナー健康基準ページを追加</span>
+              </li>
+              <li className="flex flex-col sm:flex-row sm:space-x-6">
+                <span className="text-trust-blue whitespace-nowrap mb-1 sm:mb-0">2026.03.27</span>
+                <span>必要書類一覧・規定ページを追加</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-deep-blue text-white py-16 px-4 overflow-hidden relative">

@@ -20,13 +20,13 @@ const TRAVEL_DISTANCES = [
 ];
 
 const PREFECTURES = [
-    '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県',
-    '茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県',
-    '新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県',
-    '静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県',
-    '奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県',
-    '徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県',
-    '熊本県','大分県','宮崎県','鹿児島県','沖縄県',
+    '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県',
+    '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県',
+    '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県',
+    '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県',
+    '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県',
+    '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県',
+    '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県',
 ];
 
 export default function Register() {
@@ -108,6 +108,7 @@ export default function Register() {
                     vaccination_status: formData.vaccination_status ? '接種済み' : '未接種',
                     heartworm_prevention: formData.heartworm_prevention,
                     no_previous_transfusion: formData.no_previous_transfusion,
+                    rabies_vaccination: formData.rabies_vaccination,
                     verification_status: 'provisional',
                     created_at: new Date().toISOString(),
                 }]);
@@ -119,8 +120,9 @@ export default function Register() {
 
             setCompleted(true);
             window.scrollTo(0, 0);
-        } catch (err: unknown) {
-            const message = err instanceof Error ? err.message : '不明なエラー';
+        } catch (err: any) {
+            const message = err?.message || (typeof err === 'string' ? err : '不明なエラー');
+            console.error('Registration error detail:', err);
             alert('エラーが発生しました: ' + message);
         } finally {
             setLoading(false);
@@ -256,10 +258,10 @@ export default function Register() {
                                         onChange={() => handleTypeChange(opt.value)}
                                     />
                                     <div className="border-2 border-gray-100 rounded-2xl p-5 flex flex-col items-center justify-center hover:bg-gray-50 transition peer-checked:border-life-red peer-checked:bg-red-50/50 peer-checked:shadow-inner">
-                                        <img 
-                                          src={opt.image} 
-                                          alt={opt.label}
-                                          className="w-16 h-16 object-contain mb-2"
+                                        <img
+                                            src={opt.image}
+                                            alt={opt.label}
+                                            className="w-16 h-16 object-contain mb-2"
                                         />
                                         <span className="font-black text-gray-700">{opt.label}</span>
                                     </div>
@@ -390,19 +392,19 @@ export default function Register() {
                                 { name: 'rabies_vaccination', label: '狂犬病予防接種を毎年行っています（犬のみ）', dogOnly: true },
                                 { name: 'no_previous_transfusion', label: 'これまでに輸血を受けたことはありません' },
                             ]
-                            .filter(item => !item.dogOnly || formData.type === 'dog')
-                            .map(item => (
-                                <label key={item.name} className="flex items-center p-4 bg-gray-50 rounded-2xl cursor-pointer hover:bg-gray-100 transition">
-                                    <input
-                                        type="checkbox"
-                                        name={item.name}
-                                        checked={formData[item.name as keyof typeof formData] as boolean}
-                                        onChange={handleChange}
-                                        className="w-5 h-5 text-life-red rounded-lg border-none focus:ring-life-red flex-shrink-0"
-                                    />
-                                    <span className="ml-4 font-bold text-gray-600 text-sm">{item.label}</span>
-                                </label>
-                            ))}
+                                .filter(item => !item.dogOnly || formData.type === 'dog')
+                                .map(item => (
+                                    <label key={item.name} className="flex items-center p-4 bg-gray-50 rounded-2xl cursor-pointer hover:bg-gray-100 transition">
+                                        <input
+                                            type="checkbox"
+                                            name={item.name}
+                                            checked={formData[item.name as keyof typeof formData] as boolean}
+                                            onChange={handleChange}
+                                            className="w-5 h-5 text-life-red rounded-lg border-none focus:ring-life-red flex-shrink-0"
+                                        />
+                                        <span className="ml-4 font-bold text-gray-600 text-sm">{item.label}</span>
+                                    </label>
+                                ))}
                         </div>
                     </div>
 
