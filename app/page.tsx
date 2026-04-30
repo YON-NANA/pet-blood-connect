@@ -320,7 +320,7 @@ export default function Home() {
 
           <div className="mt-6 text-center">
             <a href="#changelog" className="text-sm font-bold text-white/60 hover:text-white transition flex items-center justify-center gap-1">
-              最終更新：2026.04.05　更新履歴を見る →
+              最終更新：2026.05.01　更新履歴を見る →
             </a>
           </div>
         </div>
@@ -501,6 +501,10 @@ export default function Home() {
           </div>
           <div className="bg-gray-50 rounded-3xl p-6 md:p-10 border border-gray-100 shadow-sm max-w-2xl mx-auto">
             <ul className="space-y-4 text-sm font-bold text-gray-600">
+              <li className="flex flex-col sm:flex-row sm:space-x-6 border-b border-gray-200 pb-4">
+                <span className="text-trust-blue whitespace-nowrap mb-1 sm:mb-0">2026.05.01</span>
+                <span>猫ドナー登録フォームに感染症検査状況（FIV・FeLV・ヘモプラズマ等）を追加。供血ドナー健康基準ページに猫の感染症ポリシーを追記</span>
+              </li>
               <li className="flex flex-col sm:flex-row sm:space-x-6 border-b border-gray-200 pb-4">
                 <span className="text-trust-blue whitespace-nowrap mb-1 sm:mb-0">2026.04.05</span>
                 <span>ドナー登録システムの必須項目処理を修正</span>

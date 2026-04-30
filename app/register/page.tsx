@@ -64,6 +64,10 @@ export default function Register() {
         heartworm_prevention: false,
         no_previous_transfusion: false,
         rabies_vaccination: false, // 犬のみ
+        // 猫感染症検査状況
+        fiv_test: '不明',        // 猫エイズ（FIV）
+        felv_test: '不明',       // 猫白血病（FeLV）
+        other_infection_test: '未検査', // その他感染症
     });
 
     // 年・月 → ISO 日付文字列（YYYY-MM-DD）またはnull
@@ -90,9 +94,7 @@ export default function Register() {
         setLoading(true);
 
         try {
-            const { error } = await supabase
-                .from('donors')
-                .insert([{
+            const insertData: Record<string, unknown> = {
                     owner_id: userId,
                     pet_name: formData.pet_name,
                     species: formData.type,
@@ -111,7 +113,18 @@ export default function Register() {
                     rabies_vaccination: formData.rabies_vaccination,
                     verification_status: 'provisional',
                     created_at: new Date().toISOString(),
-                }]);
+            };
+
+            // 猫の場合のみ感染症検査情報を追加
+            if (formData.type === 'cat') {
+                insertData.fiv_test = formData.fiv_test;
+                insertData.felv_test = formData.felv_test;
+                insertData.other_infection_test = formData.other_infection_test;
+            }
+
+            const { error } = await supabase
+                .from('donors')
+                .insert([insertData]);
 
             if (error) {
                 console.error('Supabase Error:', error);
@@ -406,6 +419,94 @@ export default function Register() {
                                     </label>
                                 ))}
                         </div>
+
+                        {/* 猫専用：感染症検査状況 */}
+                        {formData.type === 'cat' && (
+                            <div className="mt-8">
+                                <div className="flex items-center mb-4">
+                                    <span className="text-lg mr-2">🦠</span>
+                                    <h3 className="text-sm font-black text-gray-400 uppercase tracking-widest">感染症検査状況</h3>
+                                </div>
+                                <div className="bg-purple-50 rounded-2xl p-4 mb-5 text-xs text-purple-800 font-bold leading-relaxed">
+                                    猫の輸血では感染症リスクの管理が特に重要です。検査状況を正確にご申告ください。
+                                </div>
+                                <div className="space-y-5">
+
+                                    {/* FIV */}
+                                    <div>
+                                        <label className="block text-xs font-black text-gray-500 mb-2 uppercase tracking-widest">
+                                            猫エイズ（FIV）検査
+                                        </label>
+                                        <div className="grid grid-cols-3 gap-2">
+                                            {['陰性', '未検査', '不明'].map(opt => (
+                                                <label key={opt} className="cursor-pointer">
+                                                    <input
+                                                        type="radio"
+                                                        name="fiv_test"
+                                                        value={opt}
+                                                        className="hidden peer"
+                                                        checked={formData.fiv_test === opt}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <div className="text-center border-2 border-gray-100 rounded-xl py-2.5 text-sm font-black text-gray-500 peer-checked:border-purple-400 peer-checked:bg-purple-50 peer-checked:text-purple-700 transition cursor-pointer">
+                                                        {opt}
+                                                    </div>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* FeLV */}
+                                    <div>
+                                        <label className="block text-xs font-black text-gray-500 mb-2 uppercase tracking-widest">
+                                            猫白血病（FeLV）検査
+                                        </label>
+                                        <div className="grid grid-cols-3 gap-2">
+                                            {['陰性', '未検査', '不明'].map(opt => (
+                                                <label key={opt} className="cursor-pointer">
+                                                    <input
+                                                        type="radio"
+                                                        name="felv_test"
+                                                        value={opt}
+                                                        className="hidden peer"
+                                                        checked={formData.felv_test === opt}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <div className="text-center border-2 border-gray-100 rounded-xl py-2.5 text-sm font-black text-gray-500 peer-checked:border-purple-400 peer-checked:bg-purple-50 peer-checked:text-purple-700 transition cursor-pointer">
+                                                        {opt}
+                                                    </div>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* その他感染症 */}
+                                    <div>
+                                        <label className="block text-xs font-black text-gray-500 mb-2 uppercase tracking-widest">
+                                            その他感染症（ヘモプラズマ等）
+                                        </label>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            {['検査済み', '未検査'].map(opt => (
+                                                <label key={opt} className="cursor-pointer">
+                                                    <input
+                                                        type="radio"
+                                                        name="other_infection_test"
+                                                        value={opt}
+                                                        className="hidden peer"
+                                                        checked={formData.other_infection_test === opt}
+                                                        onChange={handleChange}
+                                                    />
+                                                    <div className="text-center border-2 border-gray-100 rounded-xl py-2.5 text-sm font-black text-gray-500 peer-checked:border-purple-400 peer-checked:bg-purple-50 peer-checked:text-purple-700 transition cursor-pointer">
+                                                        {opt}
+                                                    </div>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {/* ⑤ 飼い主の連絡先 */}

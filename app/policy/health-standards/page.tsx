@@ -75,6 +75,51 @@ export default function HealthStandards() {
           </div>
         </div>
 
+        {/* 猫の感染症ポリシー */}
+        <div className="bg-white rounded-[32px] shadow-sm p-8 md:p-12 mb-10 border border-purple-100">
+          <h2 className="text-xl font-black text-purple-800 mb-6 border-b border-purple-100 pb-4 flex items-center">
+            <span className="text-2xl mr-3">🐱</span>猫の感染症ポリシー
+          </h2>
+          <p className="text-gray-500 text-sm font-medium mb-6 leading-relaxed">
+            猫の輸血においては、以下の感染症リスクの管理が特に重要です。ドナー登録時に検査状況をご申告いただき、担当獣医師が安全性を確認します。
+          </p>
+          <div className="space-y-6">
+            <div className="flex items-start">
+              <span className="text-purple-400 mr-3 mt-0.5">🦠</span>
+              <div>
+                <strong className="text-gray-800">猫エイズ（FIV：猫免疫不全ウイルス）</strong>
+                <p className="text-gray-600 text-sm leading-relaxed mt-1">
+                  FIVは血液・唾液を介して感染する免疫抑制ウイルスです。ドナー登録時に「陰性 / 未検査 / 不明」からご選択ください。<br />
+                  <span className="text-purple-700 font-bold">陰性（検査済み）のドナーが最も推奨されます。</span>未検査・不明の場合、供血前に担当病院での検査が必要になる場合があります。
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start">
+              <span className="text-purple-400 mr-3 mt-0.5">🦠</span>
+              <div>
+                <strong className="text-gray-800">猫白血病（FeLV：猫白血病ウイルス）</strong>
+                <p className="text-gray-600 text-sm leading-relaxed mt-1">
+                  FeLVは免疫抑制・白血病・貧血等を引き起こす感染症です。ドナー登録時に「陰性 / 未検査 / 不明」からご選択ください。<br />
+                  <span className="text-purple-700 font-bold">陰性（検査済み）のドナーが最も推奨されます。</span>陽性ドナーからの供血は原則として行いません。
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start">
+              <span className="text-purple-400 mr-3 mt-0.5">🦠</span>
+              <div>
+                <strong className="text-gray-800">その他感染症（ヘモプラズマ・猫伝染性腹膜炎など）</strong>
+                <p className="text-gray-600 text-sm leading-relaxed mt-1">
+                  ヘモプラズマ（溶血性貧血の原因となるマイコプラズマ属菌）をはじめ、その他の感染症についても輸血時のリスク要因となります。ドナー登録時に「検査済み / 未検査」からご選択ください。<br />
+                  <span className="text-purple-700 font-bold">未検査の場合は、供血前に担当病院でのスクリーニング検査が実施される場合があります。</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-6 bg-purple-50 rounded-2xl p-4 text-xs text-purple-800 font-bold leading-relaxed">
+            ※ 感染症検査の結果が不明・未検査であっても、直ちにドナー登録が却下されるわけではありません。担当獣医師が当日の状態と合わせて総合的に判断します。
+          </div>
+        </div>
+
         <div className="bg-red-50 border-l-4 border-life-red rounded-r-3xl p-8 mb-10">
           <h2 className="text-lg font-black text-red-800 mb-3 flex items-center">
             <span className="text-2xl mr-2">🚨</span>供血当日の体調不良について

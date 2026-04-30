@@ -62,7 +62,7 @@ export default function AdminDashboard() {
 
                 // 現時点では、特定のメールアドレスを持つユーザーを管理者として認める
                 // ヨンナナ様のメールアドレスを管理権限とする
-                const adminEmails = ['animalbloodconnect@gmail.com', 'yonnanahogo@gmail.com']; 
+                const adminEmails = ['animalbloodconnect@gmail.com', 'yonnanahogo@gmail.com', '47yonnana@gmail.com']; 
                 if (!adminEmails.includes(user.email?.toLowerCase() || '')) {
                     alert('管理者権限がありません。');
                     router.push('/');
