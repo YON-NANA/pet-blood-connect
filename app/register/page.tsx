@@ -73,8 +73,19 @@ export default function Register() {
     // 年・月 → ISO 日付文字列（YYYY-MM-DD）またはnull
     const getBirthDateISO = (): string | null => {
         if (!formData.birth_year) return null;
-        const month = formData.birth_month ? formData.birth_month.padStart(2, '0') : '01';
-        return `${formData.birth_year}-${month}-01`;
+        const today = new Date();
+        const year = formData.birth_year;
+        
+        if (formData.birth_month) {
+            // 月が指定されている場合は、その月の1日を誕生日とする
+            const month = formData.birth_month.padStart(2, '0');
+            return `${year}-${month}-01`;
+        } else {
+            // 誕生月の記載がない場合：登録日の「月・日」を使用して、登録年齢からスタートさせる
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
     };
 
     // 種別変更時に血液型をリセット
@@ -82,12 +93,45 @@ export default function Register() {
         setFormData(prev => ({ ...prev, type: newType, blood_type: '' }));
     };
 
+    // 年齢算出ヘルパー（生年月日から現在の年齢を返す）
+    const calculateAge = (): number | null => {
+        if (!formData.birth_year) return null;
+        const month = formData.birth_month ? parseInt(formData.birth_month) : 1;
+        const birthDate = new Date(parseInt(formData.birth_year), month - 1, 1);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    };
+
+    const currentAge = calculateAge();
+    const minWeight = formData.type === 'dog' ? 15 : 4;
+    const maxAge = formData.type === 'dog' ? 8 : 7;
+    const weightValue = parseFloat(formData.weight) || 0;
+    const isWeightUnder = formData.weight !== '' && weightValue < minWeight;
+    const isAgeOutOfRange = currentAge !== null && (currentAge < 1 || currentAge > maxAge);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!userId) {
             alert('ログインが必要です。');
             router.push('/login?redirect=/register');
+            return;
+        }
+
+        // 体重バリデーション
+        if (isWeightUnder) {
+            alert(`${formData.type === 'dog' ? '犬' : '猫'}のドナー登録には体重${minWeight}kg以上が必要です。`);
+            return;
+        }
+
+        // 年齢バリデーション
+        if (isAgeOutOfRange) {
+            alert(`${formData.type === 'dog' ? '犬' : '猫'}のドナー登録は1歳〜${maxAge}歳の範囲が対象です。`);
             return;
         }
 
@@ -283,6 +327,36 @@ export default function Register() {
                         </div>
                     </div>
 
+                    {/* ドナー登録条件（種別に応じて表示） */}
+                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-[32px] p-8 shadow-sm border border-blue-100">
+                        <div className="flex items-center mb-4">
+                            <span className="text-2xl mr-3">{formData.type === 'dog' ? '🐕' : '🐈'}</span>
+                            <h2 className="text-lg font-black text-deep-blue tracking-tight">
+                                {formData.type === 'dog' ? '犬のドナー登録条件' : '猫のドナー登録条件'}
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="bg-white rounded-2xl p-5 border border-blue-100 shadow-sm">
+                                <p className="text-[10px] font-black text-trust-blue uppercase tracking-widest mb-2">体重条件</p>
+                                <p className="text-2xl font-black text-deep-blue">
+                                    {formData.type === 'dog' ? '15kg' : '4kg'}<span className="text-base text-gray-400 ml-1">以上</span>
+                                </p>
+                            </div>
+                            <div className="bg-white rounded-2xl p-5 border border-blue-100 shadow-sm">
+                                <p className="text-[10px] font-black text-trust-blue uppercase tracking-widest mb-2">年齢条件</p>
+                                <p className="text-2xl font-black text-deep-blue">
+                                    1歳〜{formData.type === 'dog' ? '8' : '7'}歳
+                                </p>
+                            </div>
+                        </div>
+                        <p className="text-xs text-gray-500 font-bold mt-4 leading-relaxed">
+                            {formData.type === 'dog'
+                                ? '※ 犬は9歳になった時点で自動的にドナー終了となります。登録日の年齢から経過日数で計算されます。'
+                                : '※ 猫は8歳になった時点で自動的にドナー終了となります。登録日の年齢から経過日数で計算されます。'
+                            }
+                        </p>
+                    </div>
+
                     {/* ② 基本情報 */}
                     <div className="bg-white rounded-[32px] p-8 shadow-sm border border-gray-100">
                         <h2 className="text-sm font-black text-gray-400 uppercase tracking-widest mb-6">基本情報</h2>
@@ -303,11 +377,18 @@ export default function Register() {
                                     体重 (kg) <span className="text-red-400">*</span>
                                 </label>
                                 <input type="number" name="weight" step="0.1" value={formData.weight} onChange={handleChange}
-                                    placeholder={formData.type === 'dog' ? '25.0 (20kg以上推奨)' : '5.0 (4kg以上推奨)'} required
-                                    className="w-full bg-gray-50 border-none rounded-2xl p-4 font-bold text-gray-800 placeholder-gray-300 focus:ring-2 focus:ring-life-red outline-none transition" />
-                                <p className="text-xs text-gray-400 font-bold mt-1.5 ml-1">
-                                    {formData.type === 'dog' ? '犬は20kg以上が供血の目安です' : '猫は4kg以上が供血の目安です'}
-                                </p>
+                                    placeholder={formData.type === 'dog' ? '25.0 (15kg以上必須)' : '5.0 (4kg以上必須)'} required
+                                    className={`w-full bg-gray-50 border-2 rounded-2xl p-4 font-bold text-gray-800 placeholder-gray-300 focus:ring-2 focus:ring-life-red outline-none transition ${isWeightUnder ? 'border-red-400 bg-red-50' : 'border-transparent'}`} />
+                                {isWeightUnder ? (
+                                    <p className="text-xs text-red-500 font-black mt-1.5 ml-1 flex items-center">
+                                        <span className="mr-1">⚠️</span>
+                                        {formData.type === 'dog' ? '犬は15kg以上が登録条件です' : '猫は4kg以上が登録条件です'}
+                                    </p>
+                                ) : (
+                                    <p className="text-xs text-gray-400 font-bold mt-1.5 ml-1">
+                                        {formData.type === 'dog' ? '犬は15kg以上が供血の条件です' : '猫は4kg以上が供血の条件です'}
+                                    </p>
+                                )}
                             </div>
                             <div>
                                 <label className="block text-xs font-black text-gray-400 mb-2 uppercase tracking-widest">生年月日（目安） <span className="text-red-400">*</span></label>
@@ -337,6 +418,12 @@ export default function Register() {
                                         ))}
                                     </select>
                                 </div>
+                                {isAgeOutOfRange && (
+                                    <p className="text-xs text-red-500 font-black mt-2 ml-1 flex items-center">
+                                        <span className="mr-1">⚠️</span>
+                                        {formData.type === 'dog' ? '犬のドナーは1歳〜8歳が対象です' : '猫のドナーは1歳〜7歳が対象です'}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </div>

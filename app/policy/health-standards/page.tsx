@@ -30,7 +30,15 @@ export default function HealthStandards() {
               <span className="text-life-green mr-3">✔</span>
               <div>
                 <strong>体重・年齢:</strong><br/>
-                犬は概ね20kg以上、猫は概ね4kg以上。1歳〜8歳未満の健康な成犬・成猫であることを推奨しています。
+                <span className="block mt-1 mb-1">
+                  <strong className="text-trust-blue">犬：</strong>体重 <strong>15kg以上</strong>、年齢 <strong>1歳〜8歳</strong>
+                </span>
+                <span className="block mb-1">
+                  <strong className="text-trust-blue">猫：</strong>体重 <strong>4kg以上</strong>、年齢 <strong>1歳〜7歳</strong>
+                </span>
+                <span className="block text-sm text-gray-500 mt-2">
+                  ※ 登録日の年齢から経過日数で計算し、犬は9歳、猫は8歳に達した時点で自動的にドナー終了となります。終了時に感謝メッセージが表示されます。
+                </span>
               </div>
             </li>
             <li className="flex items-start">

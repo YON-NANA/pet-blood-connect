@@ -24,6 +24,7 @@ interface Pet {
     contact_name: string;
     contact_phone: string;
     created_at: string;
+    birth_date: string | null;
     verification_status?: string;
 }
 
@@ -82,6 +83,8 @@ export default function MyPage() {
         species: 'dog',
         breed: '',
         weight_kg: '',
+        birth_year: '',
+        birth_month: '',
         blood_type: '',
         prefecture: '東京都',
         city: '',
@@ -96,6 +99,8 @@ export default function MyPage() {
         species: 'dog',
         breed: '',
         weight_kg: '',
+        birth_year: '',
+        birth_month: '',
         blood_type: '',
         prefecture: '東京都',
         city: '',
@@ -308,6 +313,13 @@ export default function MyPage() {
             const { data: { user } } = await supabase.auth.getUser();
             if (!user) return;
 
+            const today = new Date();
+            const birthDateISO = newDonor.birth_year ? (
+                newDonor.birth_month 
+                ? `${newDonor.birth_year}-${newDonor.birth_month.padStart(2, '0')}-01`
+                : `${newDonor.birth_year}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+            ) : null;
+
             const { data, error } = await supabase
                 .from('donors')
                 .insert([{
@@ -316,6 +328,7 @@ export default function MyPage() {
                     species: newDonor.species,
                     breed: newDonor.breed,
                     weight_kg: Number(newDonor.weight_kg),
+                    birth_date: birthDateISO,
                     blood_type: newDonor.blood_type || null,
                     prefecture: newDonor.prefecture,
                     city: newDonor.city,
@@ -339,12 +352,24 @@ export default function MyPage() {
     };
 
     const handleEditStart = (pet: Pet) => {
+        let bYear = '';
+        let bMonth = '';
+        if (pet.birth_date) {
+            const date = new Date(pet.birth_date);
+            bYear = String(date.getFullYear());
+            // 元のデータが1日以外なら月は未指定（登録日基準）とみなす、という運用も可能ですが、
+            // ここではシンプルに月を取得します。
+            bMonth = String(date.getMonth() + 1);
+        }
+
         setEditingPetId(pet.id);
         setEditDonor({
             pet_name: pet.pet_name,
             species: pet.species,
             breed: pet.breed,
             weight_kg: String(pet.weight_kg),
+            birth_year: bYear,
+            birth_month: bMonth,
             blood_type: pet.blood_type || '',
             prefecture: pet.prefecture || '東京都',
             city: pet.city || '',
@@ -358,6 +383,13 @@ export default function MyPage() {
         try {
             if (!editingPetId) return;
 
+            const today = new Date();
+            const birthDateISO = editDonor.birth_year ? (
+                editDonor.birth_month 
+                ? `${editDonor.birth_year}-${editDonor.birth_month.padStart(2, '0')}-01`
+                : `${editDonor.birth_year}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+            ) : null;
+
             const { data, error } = await supabase
                 .from('donors')
                 .update({
@@ -365,6 +397,7 @@ export default function MyPage() {
                     species: editDonor.species,
                     breed: editDonor.breed,
                     weight_kg: Number(editDonor.weight_kg),
+                    birth_date: birthDateISO,
                     blood_type: editDonor.blood_type || null,
                     prefecture: editDonor.prefecture,
                     city: editDonor.city,
@@ -565,22 +598,64 @@ export default function MyPage() {
                                 </div>
                             ) : (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {pets.map(pet => (
-                                        <div key={pet.id} className="bg-white p-8 rounded-[40px] shadow-sm border border-gray-100 group relative transition duration-500 hover:shadow-2xl hover:shadow-gray-200/50">
+                                    {pets.map(pet => {
+                                        // ドナー年齢上限チェック（犬: 9歳で終了、猫: 8歳で終了）
+                                        const retirementAge = pet.species === 'dog' ? 9 : 8;
+                                        let isDonorRetired = false;
+                                        let currentPetAge: number | null = null;
+                                        if (pet.birth_date) {
+                                            const birthDate = new Date(pet.birth_date);
+                                            const today = new Date();
+                                            let age = today.getFullYear() - birthDate.getFullYear();
+                                            const monthDiff = today.getMonth() - birthDate.getMonth();
+                                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                                                age--;
+                                            }
+                                            currentPetAge = age;
+                                            isDonorRetired = age >= retirementAge;
+                                        }
+
+                                        return (
+                                        <div key={pet.id} className={`bg-white p-8 rounded-[40px] shadow-sm border group relative transition duration-500 hover:shadow-2xl hover:shadow-gray-200/50 ${isDonorRetired ? 'border-amber-200 opacity-90' : 'border-gray-100'}`}>
+                                            {/* ドナー終了バナー */}
+                                            {isDonorRetired && (
+                                                <div className="mb-6 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-5 text-center">
+                                                    <div className="text-3xl mb-2">🌸</div>
+                                                    <p className="text-sm font-black text-amber-800 mb-1">ドナー活動を終了しました</p>
+                                                    <p className="text-xs text-amber-700 font-bold leading-relaxed">
+                                                        {pet.pet_name} ちゃんは{currentPetAge}歳になりました。<br />
+                                                        今までお世話になりました。ありがとうございました。🐾
+                                                    </p>
+                                                    <p className="text-[10px] text-amber-500 font-bold mt-2">
+                                                        {pet.species === 'dog' ? '犬' : '猫'}のドナーは{retirementAge}歳で自動終了となります
+                                                    </p>
+                                                </div>
+                                            )}
                                             <div className="flex items-center space-x-5">
-                                                <div className="w-16 h-16 bg-gray-50 flex items-center justify-center rounded-[24px] shadow-inner p-2">
+                                                <div className={`w-16 h-16 flex items-center justify-center rounded-[24px] shadow-inner p-2 ${isDonorRetired ? 'bg-amber-50' : 'bg-gray-50'}`}>
                                                     <img 
                                                       src={pet.species === 'dog' ? '/assets/icon_dog.png' : '/assets/icon_cat.png'} 
                                                       alt={pet.species}
-                                                      className={`w-full h-full object-contain ${pet.species === 'cat' ? 'scale-125' : ''}`}
+                                                      className={`w-full h-full object-contain ${pet.species === 'cat' ? 'scale-125' : ''} ${isDonorRetired ? 'grayscale opacity-60' : ''}`}
                                                     />
                                                 </div>
                                                 <div className="flex-grow">
-                                                    <div className="flex items-center gap-3 mb-2">
+                                                    <div className="flex items-center gap-3 mb-2 flex-wrap">
                                                         <h3 className="font-black text-xl text-deep-blue leading-none">{pet.pet_name}</h3>
-                                                        <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest ${pet.verification_status === 'verified' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-600'}`}>
-                                                            {pet.verification_status === 'verified' ? '確認済み ✅' : '仮登録中 🐾'}
-                                                        </span>
+                                                        {isDonorRetired ? (
+                                                            <span className="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest bg-amber-100 text-amber-700">
+                                                                終了 🌸
+                                                            </span>
+                                                        ) : (
+                                                            <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest ${pet.verification_status === 'verified' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-600'}`}>
+                                                                {pet.verification_status === 'verified' ? '確認済み ✅' : '仮登録中 🐾'}
+                                                            </span>
+                                                        )}
+                                                        {currentPetAge !== null && !isDonorRetired && (
+                                                            <span className="text-[10px] font-bold text-gray-400">
+                                                                {currentPetAge}歳（{retirementAge}歳で終了）
+                                                            </span>
+                                                        )}
                                                     </div>
                                                     <div className="flex items-center space-x-2">
                                                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">{pet.breed}</span>
@@ -598,7 +673,8 @@ export default function MyPage() {
                                                 </button>
                                             </div>
                                         </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             )}
                         </section>
@@ -774,6 +850,37 @@ export default function MyPage() {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
+                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Birth Year</label>
+                                    <select
+                                        value={newDonor.birth_year}
+                                        onChange={e => setNewDonor({ ...newDonor, birth_year: e.target.value })}
+                                        className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
+                                        required
+                                    >
+                                        <option value="">年を選択</option>
+                                        {Array.from({ length: 20 }, (_, i) => {
+                                            const year = new Date().getFullYear() - i;
+                                            return <option key={year} value={String(year)}>{year}年</option>;
+                                        })}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Birth Month (Optional)</label>
+                                    <select
+                                        value={newDonor.birth_month}
+                                        onChange={e => setNewDonor({ ...newDonor, birth_month: e.target.value })}
+                                        className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
+                                    >
+                                        <option value="">不明</option>
+                                        {Array.from({ length: 12 }, (_, i) => (
+                                            <option key={i + 1} value={String(i + 1)}>{i + 1}月</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
                                     <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Breed</label>
                                     <input
                                         type="text"
@@ -925,16 +1032,36 @@ export default function MyPage() {
                                         required
                                     />
                                 </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Weight (kg)</label>
-                                    <input
-                                        type="number"
-                                        step="0.1"
-                                        value={editDonor.weight_kg}
-                                        onChange={e => setEditDonor({ ...editDonor, weight_kg: e.target.value })}
+                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Birth Year</label>
+                                    <select
+                                        value={editDonor.birth_year}
+                                        onChange={e => setEditDonor({ ...editDonor, birth_year: e.target.value })}
                                         className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
                                         required
-                                    />
+                                    >
+                                        <option value="">年を選択</option>
+                                        {Array.from({ length: 20 }, (_, i) => {
+                                            const year = new Date().getFullYear() - i;
+                                            return <option key={year} value={String(year)}>{year}年</option>;
+                                        })}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Birth Month (Optional)</label>
+                                    <select
+                                        value={editDonor.birth_month}
+                                        onChange={e => setEditDonor({ ...editDonor, birth_month: e.target.value })}
+                                        className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-sm font-bold text-gray-800 focus:outline-none focus:ring-2 focus:ring-trust-blue/20"
+                                    >
+                                        <option value="">不明</option>
+                                        {Array.from({ length: 12 }, (_, i) => (
+                                            <option key={i + 1} value={String(i + 1)}>{i + 1}月</option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
 
