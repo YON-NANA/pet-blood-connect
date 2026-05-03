@@ -12,7 +12,7 @@ interface Profile {
     avatar_url: string | null;
 }
 
-interface Pet {
+interface PetDonor {
     id: string;
     pet_name: string;
     species: string;
@@ -61,7 +61,7 @@ export default function MyPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [profile, setProfile] = useState<Profile | null>(null);
-    const [pets, setPets] = useState<Pet[]>([]);
+    const [pets, setPets] = useState<PetDonor[]>([]);
     const [matches, setMatches] = useState<Match[]>([]);
     const [activeRequests, setActiveRequests] = useState<BloodRequest[]>([]);
     const [selectedRequest, setSelectedRequest] = useState<BloodRequest | null>(null);
@@ -133,7 +133,7 @@ export default function MyPage() {
                     .eq('owner_id', user.id)
                     .order('created_at', { ascending: false });
                 if (petsData) {
-                    setPets(petsData as Pet[]);
+                    setPets(petsData as PetDonor[]);
                     if (petsData.length > 0) {
                         setSelectedPetId(petsData[0].id);
                     }
@@ -340,10 +340,22 @@ export default function MyPage() {
             if (error) throw error;
 
             if (data && data.length > 0) {
-                setPets([data[0] as unknown as Pet, ...pets]);
+                setPets([data[0] as unknown as PetDonor, ...pets]);
             }
             setIsRegistering(false);
-            setNewDonor({ pet_name: '', species: 'dog', breed: '', weight_kg: '', blood_type: '', prefecture: '東京都', city: '', contact_name: '', contact_phone: '' });
+            setNewDonor({ 
+                pet_name: '', 
+                species: 'dog', 
+                breed: '', 
+                weight_kg: '', 
+                birth_year: '',
+                birth_month: '',
+                blood_type: '', 
+                prefecture: '東京都', 
+                city: '', 
+                contact_name: '', 
+                contact_phone: '' 
+            });
             alert('ドナーペットの登録が完了しました。');
         } catch (err: unknown) {
             const message = err instanceof Error ? err.message : '不明なエラー';
@@ -351,7 +363,7 @@ export default function MyPage() {
         }
     };
 
-    const handleEditStart = (pet: Pet) => {
+    const handleEditStart = (pet: PetDonor) => {
         let bYear = '';
         let bMonth = '';
         if (pet.birth_date) {
@@ -410,7 +422,7 @@ export default function MyPage() {
             if (error) throw error;
 
             if (data && data.length > 0) {
-                setPets(pets.map(p => p.id === editingPetId ? (data[0] as unknown as Pet) : p));
+                setPets(pets.map(p => p.id === editingPetId ? (data[0] as unknown as PetDonor) : p));
             }
             setEditingPetId(null);
             alert('登録情報を更新しました。');
