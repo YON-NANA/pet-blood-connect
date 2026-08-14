@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Download } from "lucide-react";
+import { Download, X, Share, MoreVertical } from "lucide-react";
 
 export default function PwaInstallButton() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [isInstallable, setIsInstallable] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+  const [isIos, setIsIos] = useState(false);
 
   useEffect(() => {
     // サービスワーカーの登録
@@ -13,55 +15,34 @@ export default function PwaInstallButton() {
       navigator.serviceWorker.register("/sw.js").catch(console.error);
     }
 
-    // iOS判定
-    const isIos =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-      !(window as any).MSStream;
+    // OS & Standalone 判定
+    const ios =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    setIsIos(ios);
 
-    // インストール済み判定（standalone モードで起動中）
-    const isStandalone =
+    const standalone =
       window.matchMedia("(display-mode: standalone)").matches ||
       (navigator as any).standalone === true;
+    setIsStandalone(standalone);
 
-    if (isStandalone) return; // インストール済みなら何もしない
-
-    if (isIos) {
-      // iOS は beforeinstallprompt が発火しないので常に表示
-      setIsInstallable(true);
-      return;
-    }
-
-    // ① layout.tsx の Script が既に捕まえていた場合
+    // layout.tsx でプロンプトが取れていれば保持
     if ((window as any).__pwaPrompt) {
       setDeferredPrompt((window as any).__pwaPrompt);
-      setIsInstallable(true);
-      return;
     }
 
-    // ② まだの場合は「pwa-prompt-ready」カスタムイベントを待つ
     const onPromptReady = () => {
       const p = (window as any).__pwaPrompt;
-      if (p) {
-        setDeferredPrompt(p);
-        setIsInstallable(true);
-      }
+      if (p) setDeferredPrompt(p);
     };
     window.addEventListener("pwa-prompt-ready", onPromptReady);
 
-    // ③ 念のため beforeinstallprompt も直接リスンする
     const onBeforeInstall = (e: Event) => {
       e.preventDefault();
       (window as any).__pwaPrompt = e;
       setDeferredPrompt(e);
-      setIsInstallable(true);
     };
     window.addEventListener("beforeinstallprompt", onBeforeInstall);
-
-    // インストール完了後は非表示
-    window.addEventListener("appinstalled", () => {
-      setIsInstallable(false);
-      setDeferredPrompt(null);
-    });
 
     return () => {
       window.removeEventListener("pwa-prompt-ready", onPromptReady);
@@ -69,45 +50,127 @@ export default function PwaInstallButton() {
     };
   }, []);
 
-  const handleInstallClick = async () => {
-    // iOS はホーム画面追加の手順を案内
-    const isIos =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-      !(window as any).MSStream;
-    if (isIos) {
-      alert(
-        "【iPhoneの場合】\nSafariのブラウザ下部にある「共有」アイコン（四角から矢印が出たマーク）をタップし、「ホーム画面に追加」を選択してください。"
-      );
-      return;
-    }
+  // すでにアプリ（スタンドアロンモード）として起動している場合はボタンを出さない
+  if (isStandalone) return null;
 
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") {
-      setIsInstallable(false);
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === "accepted") {
+        setDeferredPrompt(null);
+        (window as any).__pwaPrompt = null;
+        return;
+      }
     }
-    (window as any).__pwaPrompt = null;
-    setDeferredPrompt(null);
+    // プロンプトが使えない環境（iOS Safari / 各種インアプリブラウザ等）はモーダルガイドを表示
+    setShowModal(true);
   };
 
-  if (!isInstallable) return null;
-
   return (
-    <button
-      id="pwa-install-btn"
-      onClick={handleInstallClick}
-      className="fixed bottom-6 right-6 z-[100] flex items-center gap-2 bg-trust-blue text-white px-5 py-3 rounded-full shadow-2xl hover:bg-blue-600 transition-all transform hover:scale-105 font-bold border border-white/20"
-      style={{ animation: "slideUp 0.4s ease-out" }}
-    >
-      <Download className="w-5 h-5" />
-      <span>アプリをインストール</span>
-      <style>{`
-        @keyframes slideUp {
-          from { transform: translateY(100px); opacity: 0; }
-          to   { transform: translateY(0);     opacity: 1; }
-        }
-      `}</style>
-    </button>
+    <>
+      {/* 画面右下のフローティングボタン */}
+      <button
+        id="pwa-install-btn"
+        onClick={handleInstallClick}
+        className="fixed bottom-6 right-6 z-[100] flex items-center gap-2.5 bg-trust-blue hover:bg-blue-600 text-white px-5 py-3.5 rounded-full shadow-2xl transition-all transform hover:scale-105 active:scale-95 font-bold border border-white/20"
+      >
+        <Download className="w-5 h-5 animate-bounce" />
+        <span className="text-sm">アプリをインストール</span>
+      </button>
+
+      {/* インストール手順ガイドモーダル */}
+      {showModal && (
+        <div className="fixed inset-0 z-[110] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl relative space-y-6 text-gray-800">
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="text-center space-y-2">
+              <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto text-trust-blue mb-2">
+                <Download className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-black text-deep-blue">
+                ホーム画面に追加
+              </h3>
+              <p className="text-xs text-gray-500 font-medium">
+                スマートフォンにアイコンを配置して、アプリとしてすぐに移動できます。
+              </p>
+            </div>
+
+            {isIos ? (
+              /* iOSの手順 */
+              <div className="bg-gray-50 rounded-2xl p-4 space-y-4 border border-gray-100 text-sm">
+                <div className="flex items-start gap-3">
+                  <span className="bg-trust-blue text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+                    1
+                  </span>
+                  <div>
+                    <p className="font-bold text-gray-800">
+                      画面下の <Share className="w-4 h-4 inline text-blue-600 mx-1" /> 「共有」アイコンをタップ
+                    </p>
+                    <p className="text-[11px] text-gray-500">
+                      Safariブラウザの最下部にあるメニューバーにあります。
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="bg-trust-blue text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+                    2
+                  </span>
+                  <div>
+                    <p className="font-bold text-gray-800">
+                      「ホーム画面に追加」をタップ
+                    </p>
+                    <p className="text-[11px] text-gray-500">
+                      メニューを下にスクロールすると見つかります。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* Android / その他ブラウザの手順 */
+              <div className="bg-gray-50 rounded-2xl p-4 space-y-4 border border-gray-100 text-sm">
+                <div className="flex items-start gap-3">
+                  <span className="bg-trust-blue text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+                    1
+                  </span>
+                  <div>
+                    <p className="font-bold text-gray-800">
+                      右上メニュー <MoreVertical className="w-4 h-4 inline text-gray-700 mx-1" /> をタップ
+                    </p>
+                    <p className="text-[11px] text-gray-500">
+                      ブラウザ右上の3つの点アイコンを押します。
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="bg-trust-blue text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+                    2
+                  </span>
+                  <div>
+                    <p className="font-bold text-gray-800">
+                      「アプリをインストール」または「ホーム画面に追加」を選択
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={() => setShowModal(false)}
+              className="w-full bg-trust-blue text-white py-3.5 rounded-full font-black text-sm shadow-lg hover:bg-blue-600 transition"
+            >
+              とじる
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
+
