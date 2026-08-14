@@ -22,3 +22,9 @@ self.addEventListener('notificationclick', function (event) {
     clients.openWindow(event.notification.data.url)
   );
 });
+
+// PWA インストール要件を満たすためのダミー fetch リスナー
+self.addEventListener('fetch', function (event) {
+  // キャッシュ戦略などは必要に応じてここに実装
+});
+

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { User } from "@supabase/supabase-js";
+import PwaInstallButton from "./components/PwaInstallButton";
 
 interface ActiveRequest {
   id: string;
@@ -585,6 +586,7 @@ export default function Home() {
           </a>
         </div>
       </footer>
+      <PwaInstallButton />
     </div>
   );
 }

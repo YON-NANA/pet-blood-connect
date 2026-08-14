@@ -1,0 +1,21 @@
+{
+  "name": "Animal Blood Connect",
+  "short_name": "ABC",
+  "description": "動物の命をつなぐ供血ネットワーク",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#003366",
+  "icons": [
+    {
+      "src": "/assets/abc.icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/abc.icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
