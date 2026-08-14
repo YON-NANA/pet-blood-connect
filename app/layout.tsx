@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   title: "AnimalBloodConnect | Animal Mutual Aid Japan (AMAJ)",
   description: "全国の動物病院と飼い主を繋ぐ、命を救うための献血マッチングプラットフォーム。日本動物共助機構 (AMAJ) が提供する非営利プロジェクトです。",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/assets/abc.icon.png",
+    apple: "/assets/abc.icon.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

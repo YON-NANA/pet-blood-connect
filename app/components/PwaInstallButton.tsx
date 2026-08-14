@@ -131,6 +131,9 @@ export default function PwaInstallButton() {
                     </p>
                   </div>
                 </div>
+                <div className="text-[11px] text-amber-700 bg-amber-50 p-2.5 rounded-xl border border-amber-200/60 font-medium">
+                  ⚠️ LINEやYahooなどのアプリ内ブラウザで開いている場合は、右上の「⋮」メニューから「Safariで開く」を選択してから追加してください。
+                </div>
               </div>
             ) : (
               /* Android / その他ブラウザの手順 */
@@ -157,6 +160,9 @@ export default function PwaInstallButton() {
                       「アプリをインストール」または「ホーム画面に追加」を選択
                     </p>
                   </div>
+                </div>
+                <div className="text-[11px] text-amber-700 bg-amber-50 p-2.5 rounded-xl border border-amber-200/60 font-medium">
+                  ⚠️ LINEやX(Twitter)などのアプリ内ブラウザで開いている場合は、右上のメニューから「Chromeで開く」または「デフォルトのブラウザで開く」を選択してから追加してください。
                 </div>
               </div>
             )}
