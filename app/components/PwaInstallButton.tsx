@@ -33,10 +33,7 @@ export default function PwaInstallButton() {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) {
-      alert("すでにインストール済みか、この環境ではインストール条件を満たしていません。");
-      return;
-    }
+    if (!deferredPrompt) return;
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === "accepted") {
@@ -44,6 +41,8 @@ export default function PwaInstallButton() {
     }
     setDeferredPrompt(null);
   };
+
+  if (!isInstallable) return null;
 
 
   return (
