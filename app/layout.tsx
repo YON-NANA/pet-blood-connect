@@ -52,9 +52,11 @@ export default function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-              window.__pwaPrompt = null;
+              window.deferredPrompt = window.deferredPrompt || null;
+              window.__pwaPrompt = window.__pwaPrompt || null;
               window.addEventListener('beforeinstallprompt', function(e) {
                 e.preventDefault();
+                window.deferredPrompt = e;
                 window.__pwaPrompt = e;
                 window.dispatchEvent(new Event('pwa-prompt-ready'));
               });

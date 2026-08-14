@@ -54,13 +54,19 @@ export default function PwaInstallButton() {
   if (isStandalone) return null;
 
   const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === "accepted") {
-        setDeferredPrompt(null);
-        (window as any).__pwaPrompt = null;
-        return;
+    const promptEvent = deferredPrompt || (window as any).deferredPrompt || (window as any).__pwaPrompt;
+    if (promptEvent) {
+      try {
+        await promptEvent.prompt();
+        const { outcome } = await promptEvent.userChoice;
+        if (outcome === "accepted") {
+          setDeferredPrompt(null);
+          (window as any).__pwaPrompt = null;
+          (window as any).deferredPrompt = null;
+          return;
+        }
+      } catch (err) {
+        console.error("Install prompt error:", err);
       }
     }
     // プロンプトが使えない環境（iOS Safari / 各種インアプリブラウザ等）はモーダルガイドを表示
