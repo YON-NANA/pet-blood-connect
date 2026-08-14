@@ -13,26 +13,58 @@ export default function PwaInstallButton() {
       navigator.serviceWorker.register("/sw.js").catch(console.error);
     }
 
-    const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
+    // iOSデバイスの判定
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    // 既にPWAとして起動しているか（iOSの場合はstandalone、Android等はmatchMedia）
+    const isStandalone = window.matchMedia("(display-mode: standalone)").matches || (navigator as any).standalone === true;
+
+    if (isStandalone) {
+      // すでにインストール済みの場合は非表示
+      setIsInstallable(false);
+      return;
+    }
+
+    if (isIos) {
+      // iOSの場合はインストールプロンプトが出ないので強制表示（クリック時に手動追加を案内）
       setIsInstallable(true);
-    };
+    } else {
+      // Android / PCの場合: 既にlayout.tsxで発火した可能性のあるイベントをチェック
+      const checkPrompt = () => {
+        if ((window as any).deferredPrompt) {
+          setDeferredPrompt((window as any).deferredPrompt);
+          setIsInstallable(true);
+        }
+      };
+      
+      checkPrompt(); // 初回チェック
+      // それでもまだならリスナーを追加
+      const handleBeforeInstallPrompt = (e: Event) => {
+        e.preventDefault();
+        (window as any).deferredPrompt = e;
+        setDeferredPrompt(e);
+        setIsInstallable(true);
+      };
+      window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 
-    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+      return () => {
+        window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+      };
+    }
 
-    // インストール済みの場合は非表示
     window.addEventListener("appinstalled", () => {
       setIsInstallable(false);
       setDeferredPrompt(null);
     });
-
-    return () => {
-      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-    };
   }, []);
 
   const handleInstallClick = async () => {
+    // iOSの場合はブラウザの共有メニューからの追加を案内
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    if (isIos) {
+      alert("iPhone (iOS) の場合：\nブラウザ下部の「共有アイコン」から「ホーム画面に追加」を選択してください。");
+      return;
+    }
+
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
@@ -40,6 +72,7 @@ export default function PwaInstallButton() {
       setIsInstallable(false);
     }
     setDeferredPrompt(null);
+    (window as any).deferredPrompt = null;
   };
 
   if (!isInstallable) return null;
