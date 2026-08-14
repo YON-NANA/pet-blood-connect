@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -37,23 +38,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <script
+    <html lang="ja">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {/* beforeinstallprompt をページ描画より早く捕捉する */}
+        <Script
+          id="pwa-install-capture"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-              window.deferredPrompt = window.deferredPrompt || null;
+              window.__pwaPrompt = null;
               window.addEventListener('beforeinstallprompt', function(e) {
                 e.preventDefault();
-                window.deferredPrompt = e;
+                window.__pwaPrompt = e;
+                window.dispatchEvent(new Event('pwa-prompt-ready'));
               });
             `,
           }}
         />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
         {children}
       </body>
     </html>

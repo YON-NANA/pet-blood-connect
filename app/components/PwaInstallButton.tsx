@@ -13,55 +13,71 @@ export default function PwaInstallButton() {
       navigator.serviceWorker.register("/sw.js").catch(console.error);
     }
 
-    // iOSデバイスの判定
-    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
-    // 既にPWAとして起動しているか（iOSの場合はstandalone、Android等はmatchMedia）
-    const isStandalone = window.matchMedia("(display-mode: standalone)").matches || (navigator as any).standalone === true;
+    // iOS判定
+    const isIos =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+      !(window as any).MSStream;
 
-    if (isStandalone) {
-      // すでにインストール済みの場合は非表示
-      setIsInstallable(false);
+    // インストール済み判定（standalone モードで起動中）
+    const isStandalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (navigator as any).standalone === true;
+
+    if (isStandalone) return; // インストール済みなら何もしない
+
+    if (isIos) {
+      // iOS は beforeinstallprompt が発火しないので常に表示
+      setIsInstallable(true);
       return;
     }
 
-    if (isIos) {
-      // iOSの場合はインストールプロンプトが出ないので強制表示（クリック時に手動追加を案内）
+    // ① layout.tsx の Script が既に捕まえていた場合
+    if ((window as any).__pwaPrompt) {
+      setDeferredPrompt((window as any).__pwaPrompt);
       setIsInstallable(true);
-    } else {
-      // Android / PCの場合: 既にlayout.tsxで発火した可能性のあるイベントをチェック
-      const checkPrompt = () => {
-        if ((window as any).deferredPrompt) {
-          setDeferredPrompt((window as any).deferredPrompt);
-          setIsInstallable(true);
-        }
-      };
-      
-      checkPrompt(); // 初回チェック
-      // それでもまだならリスナーを追加
-      const handleBeforeInstallPrompt = (e: Event) => {
-        e.preventDefault();
-        (window as any).deferredPrompt = e;
-        setDeferredPrompt(e);
-        setIsInstallable(true);
-      };
-      window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
-      return () => {
-        window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-      };
+      return;
     }
 
+    // ② まだの場合は「pwa-prompt-ready」カスタムイベントを待つ
+    const onPromptReady = () => {
+      const p = (window as any).__pwaPrompt;
+      if (p) {
+        setDeferredPrompt(p);
+        setIsInstallable(true);
+      }
+    };
+    window.addEventListener("pwa-prompt-ready", onPromptReady);
+
+    // ③ 念のため beforeinstallprompt も直接リスンする
+    const onBeforeInstall = (e: Event) => {
+      e.preventDefault();
+      (window as any).__pwaPrompt = e;
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+    window.addEventListener("beforeinstallprompt", onBeforeInstall);
+
+    // インストール完了後は非表示
     window.addEventListener("appinstalled", () => {
       setIsInstallable(false);
       setDeferredPrompt(null);
     });
+
+    return () => {
+      window.removeEventListener("pwa-prompt-ready", onPromptReady);
+      window.removeEventListener("beforeinstallprompt", onBeforeInstall);
+    };
   }, []);
 
   const handleInstallClick = async () => {
-    // iOSの場合はブラウザの共有メニューからの追加を案内
-    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    // iOS はホーム画面追加の手順を案内
+    const isIos =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+      !(window as any).MSStream;
     if (isIos) {
-      alert("iPhone (iOS) の場合：\nブラウザ下部の「共有アイコン」から「ホーム画面に追加」を選択してください。");
+      alert(
+        "【iPhoneの場合】\nSafariのブラウザ下部にある「共有」アイコン（四角から矢印が出たマーク）をタップし、「ホーム画面に追加」を選択してください。"
+      );
       return;
     }
 
@@ -71,20 +87,27 @@ export default function PwaInstallButton() {
     if (outcome === "accepted") {
       setIsInstallable(false);
     }
+    (window as any).__pwaPrompt = null;
     setDeferredPrompt(null);
-    (window as any).deferredPrompt = null;
   };
 
   if (!isInstallable) return null;
 
-
   return (
     <button
+      id="pwa-install-btn"
       onClick={handleInstallClick}
-      className="fixed bottom-6 right-6 z-[100] flex items-center gap-2 bg-trust-blue text-white px-5 py-3 rounded-full shadow-2xl hover:bg-blue-600 transition-all transform hover:scale-105 font-bold border border-white/20 animate-in fade-in slide-in-from-bottom-4"
+      className="fixed bottom-6 right-6 z-[100] flex items-center gap-2 bg-trust-blue text-white px-5 py-3 rounded-full shadow-2xl hover:bg-blue-600 transition-all transform hover:scale-105 font-bold border border-white/20"
+      style={{ animation: "slideUp 0.4s ease-out" }}
     >
-      <Download className="w-5 h-5 animate-bounce" />
+      <Download className="w-5 h-5" />
       <span>アプリをインストール</span>
+      <style>{`
+        @keyframes slideUp {
+          from { transform: translateY(100px); opacity: 0; }
+          to   { transform: translateY(0);     opacity: 1; }
+        }
+      `}</style>
     </button>
   );
 }
