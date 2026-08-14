@@ -65,7 +65,11 @@ export default function PwaInstallButton() {
       return;
     }
 
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      alert("自動インストール画面を表示できませんでした。\n\nAndroid / PC の場合：\nブラウザの右上のメニュー（︙）から「ホーム画面に追加」または「アプリをインストール」を選択してください。\n\n※アイコン画像のサイズ要件等により、自動ポップアップがブロックされることがあります。");
+      return;
+    }
+
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === "accepted") {
@@ -75,8 +79,10 @@ export default function PwaInstallButton() {
     (window as any).deferredPrompt = null;
   };
 
-  if (!isInstallable) return null;
-
+  // すでにインストール済みの場合は非表示
+  if (isInstallable === false && (typeof window !== "undefined" && window.matchMedia("(display-mode: standalone)").matches)) {
+    return null;
+  }
 
   return (
     <button
