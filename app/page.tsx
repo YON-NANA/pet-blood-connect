@@ -216,9 +216,14 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-deep-blue/40 md:bg-deep-blue/60 z-0"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-md text-white rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest mb-8 border border-white/20">
-            日本動物共助機構<br className="md:hidden" /><span className="md:ml-2 opacity-80">(AMAJ) Animal Mutual Aid Japan</span>
-          </div>
+          <a 
+            href="https://amaj-official-portal.vercel.app/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="inline-block px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest mb-8 border border-white/20 transition cursor-pointer"
+          >
+            日本動物共助機構 ↗<br className="md:hidden" /><span className="md:ml-2 opacity-80">(AMAJ) Animal Mutual Aid Japan</span>
+          </a>
 
           <div className="mb-12 space-y-8">
             <div className="space-y-3">
@@ -557,7 +562,14 @@ export default function Home() {
             </div>
             <p className="text-blue-300 max-w-sm text-xs font-medium leading-relaxed">
               すべては動物たちの明るい未来のために。<br />
-              日本動物共助機構 (AMAJ) が提供する非営利プロジェクトです。<br />
+              <a
+                href="https://amaj-official-portal.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white transition decoration-blue-400/50 underline-offset-2"
+              >
+                日本動物共助機構 (AMAJ)
+              </a> が提供する非営利プロジェクトです。<br />
               <span className="text-white/40 mt-3 block text-[10px]">
                 ※本システムはJSVTM（日本獣医輸血研究会）の献血指針・輸血方法指針・交差適合試験指針を参考に設計されています。
               </span>
@@ -571,6 +583,14 @@ export default function Home() {
               <Link href="/documents" className="font-bold hover:text-life-red transition text-white/60">必要書類一覧・規定</Link>
               <Link href="/terms" className="font-bold hover:text-life-red transition text-white/60">利用規約（厳格版・草案）</Link>
               <Link href="/privacy" className="font-bold hover:text-life-red transition text-white/60">プライバシーポリシー</Link>
+              <a
+                href="https://amaj-official-portal.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold hover:text-life-red transition text-white/60 flex items-center gap-1"
+              >
+                日本動物共助機構 (AMAJ) ↗
+              </a>
             </div>
             <div className="flex flex-col space-y-4">
               <p className="font-black text-white/40 uppercase tracking-widest text-[10px]">Admin</p>
@@ -580,7 +600,9 @@ export default function Home() {
         </div>
 
         <div className="max-w-6xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/20">
-          <p>© 2026 Animal Mutual Aid Japan (AMAJ)</p>
+          <p>
+            © 2026 <a href="https://amaj-official-portal.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white/40 transition">Animal Mutual Aid Japan (AMAJ)</a>
+          </p>
           <a href="mailto:animalbloodconnect@gmail.com" className="text-white/40 hover:text-white/60 transition normal-case tracking-normal">
             📧 animalbloodconnect@gmail.com
           </a>

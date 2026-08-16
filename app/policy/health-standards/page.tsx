@@ -145,7 +145,7 @@ export default function HealthStandards() {
       </main>
 
       <footer className="bg-[#E0D8CE] py-6 text-center text-[#888] text-sm font-bold">
-        © 2026 Animal Mutual Aid Japan (AMAJ)
+        © 2026 <a href="https://amaj-official-portal.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:underline">Animal Mutual Aid Japan (AMAJ)</a>
       </footer>
     </div>
   );

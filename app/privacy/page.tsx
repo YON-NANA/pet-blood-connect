@@ -232,7 +232,7 @@ export default function PrivacyPolicy() {
         <div className="privacy-contact-box">
           <h3>📧 お問い合わせ・削除依頼</h3>
           <p>
-            運営：日本動物共助機構（AMAJ）<br />
+            運営：<a href="https://amaj-official-portal.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>日本動物共助機構（AMAJ）</a><br />
             Animal Mutual Aid Japan<br /><br />
             メール：<a href="mailto:animalbloodconnect@gmail.com">animalbloodconnect@gmail.com</a><br />
             サイト：<a href="https://animal-blood-connect.vercel.app/">animal-blood-connect.vercel.app</a>
@@ -242,7 +242,7 @@ export default function PrivacyPolicy() {
 
       <footer className="privacy-footer">
         <div className="space-y-3">
-          <p>© 2026 Animal Mutual Aid Japan (AMAJ) ／ AnimalBloodConnect</p>
+          <p>© 2026 <a href="https://amaj-official-portal.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Animal Mutual Aid Japan (AMAJ)</a> ／ AnimalBloodConnect</p>
           <p className="max-w-xl mx-auto opacity-60 leading-relaxed text-[8px] md:text-[9px]">
             ※本システムはJSVTM（日本獣医輸血研究会）の献血指針・輸血方法指針・交差適合試験指針を参考に設計されています。
           </p>
