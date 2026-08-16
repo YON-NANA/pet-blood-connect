@@ -62,22 +62,26 @@ body {
 .hero-bg {
   background-image: url('/assets/hero-bg.png');
   background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #1D3557;
   background-position: center center;
   position: relative;
 }
 
-/* スマートフォン：背景画像を少し縮小して全体が見えるように */
+/* スマートフォン：coverより約20%引いたサイズ感に */
 @media (max-width: 767px) {
   .hero-bg {
-    background-size: 150%;
-    background-position: 50% 60%;
+    background-size: 120%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
   }
 }
 
 /* タブレット：中間サイズ */
 @media (min-width: 768px) and (max-width: 1023px) {
   .hero-bg {
-    background-size: 120%;
+    background-size: 110%;
+    background-repeat: no-repeat;
     background-position: center center;
   }
 }
