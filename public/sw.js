@@ -1,4 +1,4 @@
-const CACHE_NAME = 'abc-cache-v4';
+const CACHE_NAME = 'abc-cache-v5';
 const PRECACHE_URLS = ['/'];
 
 self.addEventListener('install', function(event) {
@@ -11,7 +11,19 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    }).then(function() {
+      return self.clients.claim();
+    })
+  );
 });
 
 self.addEventListener('fetch', function(event) {
@@ -46,4 +58,3 @@ self.addEventListener('notificationclick', function (event) {
     clients.openWindow(event.notification.data.url)
   );
 });
-
