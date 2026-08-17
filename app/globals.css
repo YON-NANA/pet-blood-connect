@@ -58,31 +58,31 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
-/* 基本の背景設定（PC・デスクトップ：2倍サイズで最上部に配置） */
+/* 基本の背景設定（PC・デスクトップ：2倍サイズで上部寄り少し下へ配置） */
 .hero-bg {
   background-image: url('/assets/hero-bg.png');
   background-size: 200%;
   background-repeat: no-repeat;
   background-color: #1D3557;
-  background-position: 60% top;
+  background-position: 60% 6%;
   position: relative;
 }
 
-/* スマートフォン：2倍サイズ（240%）で最上部に配置 */
+/* スマートフォン：2倍サイズ（240%）で上部寄り少し下へ配置 */
 @media (max-width: 767px) {
   .hero-bg {
     background-size: 240%;
     background-repeat: no-repeat;
-    background-position: 50% top;
+    background-position: 50% 6%;
   }
 }
 
-/* タブレット：2倍サイズ（220%）で最上部に配置 */
+/* タブレット：2倍サイズ（220%）で上部寄り少し下へ配置 */
 @media (min-width: 768px) and (max-width: 1023px) {
   .hero-bg {
     background-size: 220%;
     background-repeat: no-repeat;
-    background-position: 55% top;
+    background-position: 55% 6%;
   }
 }
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'abc-cache-v3';
+const CACHE_NAME = 'abc-cache-v4';
 const PRECACHE_URLS = ['/'];
 
 self.addEventListener('install', function(event) {
