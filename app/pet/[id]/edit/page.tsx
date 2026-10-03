@@ -4,6 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
+const PREFECTURES = [
+    '北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県',
+    '茨城県','栃木県','群馬県','埼玉県','千葉県','東京都','神奈川県',
+    '新潟県','富山県','石川県','福井県','山梨県','長野県','岐阜県',
+    '静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県',
+    '奈良県','和歌山県','鳥取県','島根県','岡山県','広島県','山口県',
+    '徳島県','香川県','愛媛県','高知県','福岡県','佐賀県','長崎県',
+    '熊本県','大分県','宮崎県','鹿児島県','沖縄県',
+];
 export default function PetEdit() {
     const router = useRouter();
     const params = useParams();
@@ -108,7 +117,7 @@ export default function PetEdit() {
     };
 
     const handleDelete = async () => {
-        if (!window.confirm(`${formData.pet_name} ちゃんの登録を削除してもよろしいですか？\n※この操作は取り消せません。`)) {
+        if (!window.confirm(`${formData.pet_name} ちゃんの登録を削除してもよろしいですか？\n※ペットが亡くなった場合や、登録を解除する場合にご利用ください。\n※この操作は取り消せません。`)) {
             return;
         }
 
@@ -248,6 +257,39 @@ export default function PetEdit() {
                             </div>
                         </div>
 
+                        {/* Address */}
+                        <div className="space-y-6 pt-6 border-t border-gray-100">
+                            <h2 className="text-xl font-black text-deep-blue border-l-4 border-life-red pl-4">所在地（引っ越し時などに変更）</h2>
+                            <div className="grid md:grid-cols-2 gap-8">
+                                <div className="space-y-2">
+                                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">都道府県</label>
+                                    <select
+                                        name="prefecture"
+                                        value={formData.prefecture}
+                                        onChange={handleChange}
+                                        className="w-full bg-gray-50 border-none rounded-2xl p-4 focus:ring-2 focus:ring-life-red transition font-bold"
+                                        required
+                                    >
+                                        <option value="">選択してください</option>
+                                        {PREFECTURES.map(pref => (
+                                            <option key={pref} value={pref}>{pref}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest px-1">市区町村</label>
+                                    <input
+                                        type="text"
+                                        name="city"
+                                        value={formData.city}
+                                        onChange={handleChange}
+                                        className="w-full bg-gray-50 border-none rounded-2xl p-4 focus:ring-2 focus:ring-life-red transition font-bold"
+                                        placeholder="例: 渋谷区"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
                         {/* Medical Info */}
                         <div className="space-y-6 pt-6 border-t border-gray-100">
                             <h2 className="text-xl font-black text-deep-blue border-l-4 border-life-red pl-4">医療情報</h2>
@@ -319,9 +361,10 @@ export default function PetEdit() {
                                 type="button"
                                 onClick={handleDelete}
                                 disabled={saving}
-                                className="w-full bg-white text-gray-400 font-bold py-4 rounded-[32px] hover:text-red-600 transition duration-300 disabled:opacity-50"
+                                className="w-full bg-white text-gray-400 font-bold py-4 rounded-[32px] hover:text-red-600 transition duration-300 disabled:opacity-50 flex flex-col items-center justify-center"
                             >
-                                登録を削除する
+                                <span>登録を削除する</span>
+                                <span className="text-xs font-normal mt-1 opacity-70">（ペットの死亡・登録解除など）</span>
                             </button>
                         </div>
                     </form>
