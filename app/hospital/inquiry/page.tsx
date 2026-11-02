@@ -119,7 +119,10 @@ export default function HospitalInquiry() {
                 <div className="max-w-2xl mx-auto">
                     <div className="text-center mb-12">
                         <h1 className="text-3xl md:text-4xl font-black text-deep-blue mb-4">新規提携・お問い合わせ</h1>
-                        <p className="text-gray-500 font-medium">日本動物共助機構（AMAJ）供血ネットワークへの参加申請</p>
+                        <p className="text-gray-500 font-medium flex items-center justify-center gap-1.5">
+                            <img src="/assets/amaj_logo.jpg" alt="AMAJ" className="w-4 h-4 rounded-sm object-contain inline-block" />
+                            日本動物共助機構（AMAJ）供血ネットワークへの参加申請
+                        </p>
                     </div>
 
                     <div className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12 border border-blue-50">

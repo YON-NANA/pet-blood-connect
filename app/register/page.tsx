@@ -240,6 +240,13 @@ export default function Register() {
                             <li>💬 要請が来たらシステムからお知らせします</li>
                             <li>🩸 供血後は「最終提供日」を更新してください</li>
                         </ul>
+                        <div className="mt-4 pt-3 border-t border-blue-100 flex items-start text-xs font-bold text-amber-900 bg-amber-50/80 p-3 rounded-xl border border-amber-200">
+                            <span className="text-base mr-2 flex-shrink-0">⚠️</span>
+                            <div>
+                                <span className="font-black block mb-0.5">SNS等への投稿はお控えください</span>
+                                患者動物や動物病院のプライバシー保護、およびトラブル防止のため、マッチング情報や供血要請に関するSNS等への投稿はお控えくださいますようお願いいたします。
+                            </div>
+                        </div>
                     </div>
                     <div className="flex flex-col gap-3">
                         <Link href="/mypage" className="block w-full bg-deep-blue text-white font-black py-4 rounded-[24px] shadow-xl hover:bg-trust-blue transition">
@@ -636,14 +643,23 @@ export default function Register() {
                     </div>
                     {/* 🚨 供血適否の警告表示 */}
                     <div className="bg-amber-50 border-2 border-amber-200 rounded-[32px] p-8 mb-6 shadow-sm">
-                        <div className="flex items-center space-x-3 mb-3">
+                        <div className="flex items-center space-x-3 mb-4">
                             <span className="text-2xl">⚠️</span>
                             <h3 className="text-lg font-black text-amber-900 tracking-tight">登録に関する重要事項</h3>
                         </div>
-                        <p className="text-sm font-black text-amber-800 leading-relaxed">
-                            登録できても、実際の供血適否は当日の診察と検査によって決まります。<br />
-                            この登録は、あくまで「協力できる可能性がある」という意思表示であり、実際の供血を保証・強制するものではありません。
-                        </p>
+                        <div className="space-y-4 text-sm font-bold text-amber-900 leading-relaxed">
+                            <p>
+                                ・登録できても、実際の供血適否は当日の診察と検査によって決まります。この登録は、あくまで「協力できる可能性がある」という意思表示であり、実際の供血を保証・強制するものではありません。
+                            </p>
+                            <div className="bg-white/80 p-4 rounded-2xl border border-amber-200 shadow-sm">
+                                <p className="font-black text-amber-950 flex items-center mb-1">
+                                    <span className="mr-1.5">🤫</span> SNS等への投稿はお控えください
+                                </p>
+                                <p className="text-xs text-amber-800 font-bold leading-relaxed">
+                                    患者動物やご家族、動物病院のプライバシー保護およびトラブル防止のため、マッチング情報や供血要請、病院名等に関するSNS等への投稿はお控えくださいますようお願いいたします（利用規約第8条）。
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Submit */}

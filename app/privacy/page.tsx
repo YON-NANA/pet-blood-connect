@@ -232,7 +232,10 @@ export default function PrivacyPolicy() {
         <div className="privacy-contact-box">
           <h3>📧 お問い合わせ・削除依頼</h3>
           <p>
-            運営：<a href="https://amaj-official-portal.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>日本動物共助機構（AMAJ）</a><br />
+            運営：<a href="https://amaj-official-portal.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }} className="inline-flex items-center gap-1">
+              <img src="/assets/amaj_logo.jpg" alt="AMAJ" className="w-3.5 h-3.5 rounded-sm object-contain inline-block align-middle" />
+              日本動物共助機構（AMAJ）
+            </a><br />
             Animal Mutual Aid Japan<br /><br />
             メール：<a href="mailto:animalbloodconnect@gmail.com">animalbloodconnect@gmail.com</a><br />
             サイト：<a href="https://animal-blood-connect.vercel.app/">animal-blood-connect.vercel.app</a>

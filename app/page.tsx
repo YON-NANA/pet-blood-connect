@@ -219,9 +219,16 @@ export default function Home() {
             href="https://amaj-official-portal.vercel.app/" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="inline-block px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest mb-8 border border-white/20 transition cursor-pointer"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 md:px-4 md:py-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest mb-8 border border-white/20 transition cursor-pointer shadow-sm group"
           >
-            日本動物共助機構 ↗<br className="md:hidden" /><span className="md:ml-2 opacity-80">(AMAJ) Animal Mutual Aid Japan</span>
+            <img 
+              src="/assets/amaj_logo.jpg" 
+              alt="AMAJ ロゴマーク" 
+              className="w-4 h-4 md:w-5 md:h-5 rounded-sm object-contain bg-white shrink-0 group-hover:scale-105 transition"
+            />
+            <span className="text-left md:text-center">
+              日本動物共助機構 ↗<br className="md:hidden" /><span className="md:ml-2 opacity-80">(AMAJ) Animal Mutual Aid Japan</span>
+            </span>
           </a>
 
           <div className="mb-12 space-y-8">
@@ -565,8 +572,9 @@ export default function Home() {
                 href="https://amaj-official-portal.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:text-white transition decoration-blue-400/50 underline-offset-2"
+                className="inline-flex items-center gap-1.5 underline hover:text-white transition decoration-blue-400/50 underline-offset-2"
               >
+                <img src="/assets/amaj_logo.jpg" alt="AMAJ" className="w-3.5 h-3.5 rounded-sm object-contain bg-white inline-block shrink-0" />
                 日本動物共助機構 (AMAJ)
               </a> が提供する非営利プロジェクトです。<br />
               <span className="text-white/40 mt-3 block text-[10px]">
@@ -586,8 +594,9 @@ export default function Home() {
                 href="https://amaj-official-portal.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-bold hover:text-life-red transition text-white/60 flex items-center gap-1"
+                className="font-bold hover:text-life-red transition text-white/60 flex items-center gap-1.5"
               >
+                <img src="/assets/amaj_logo.jpg" alt="AMAJ" className="w-3.5 h-3.5 rounded-sm object-contain bg-white inline-block shrink-0" />
                 日本動物共助機構 (AMAJ) ↗
               </a>
             </div>
