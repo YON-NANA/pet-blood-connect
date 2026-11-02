@@ -5,7 +5,7 @@ const VAPID_PUBLIC_KEY = 'BCdXosRHPOQ5j_E7IFZm0P7iZPl76xLSFrouFjCCt7LLST_B0oPghz
 const VAPID_PRIVATE_KEY = 'CeKZB-G7Xh_QtDVzyeJohzRCFshvTFc8ojGJe7FBM2E';
 
 webPush.setVapidDetails(
-  'mailto:animalbloodconnect@gmail.com',
+  'mailto:animal.mutual.aid.japan@gmail.com',
   VAPID_PUBLIC_KEY,
   VAPID_PRIVATE_KEY
 );

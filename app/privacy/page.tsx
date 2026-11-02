@@ -237,7 +237,7 @@ export default function PrivacyPolicy() {
               日本動物共助機構（AMAJ）
             </a><br />
             Animal Mutual Aid Japan<br /><br />
-            メール：<a href="mailto:animalbloodconnect@gmail.com">animalbloodconnect@gmail.com</a><br />
+            メール：<a href="mailto:animal.mutual.aid.japan@gmail.com">animal.mutual.aid.japan@gmail.com</a><br />
             サイト：<a href="https://animal-blood-connect.vercel.app/">animal-blood-connect.vercel.app</a>
           </p>
         </div>

@@ -611,8 +611,8 @@ export default function Home() {
           <p>
             © 2026 <a href="https://amaj-official-portal.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white/40 transition">Animal Mutual Aid Japan (AMAJ)</a>
           </p>
-          <a href="mailto:animalbloodconnect@gmail.com" className="text-white/40 hover:text-white/60 transition normal-case tracking-normal">
-            📧 animalbloodconnect@gmail.com
+          <a href="mailto:animal.mutual.aid.japan@gmail.com" className="text-white/40 hover:text-white/60 transition normal-case tracking-normal">
+            📧 animal.mutual.aid.japan@gmail.com
           </a>
         </div>
       </footer>
